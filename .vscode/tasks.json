@@ -1,0 +1,57 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run EurekaServerN",
+      "type": "shell",
+      "command": "mvn spring-boot:run",
+      "args": [],
+      "options": {
+        "cwd": "${workspaceFolder}\\EurekaServerN"
+      },
+      "presentation": {
+        "panel": "new",
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run ApiArticuloN",
+      "type": "shell",
+      "command": "mvn spring-boot:run",
+      "args": [],
+      "options": {
+        "cwd": "${workspaceFolder}\\ApiArticuloN"
+      },
+      "presentation": {
+        "panel": "new",
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run ApiBoletaN",
+      "type": "shell",
+      "command": "mvn spring-boot:run",
+      "args": [],
+      "options": {
+        "cwd": "${workspaceFolder}\\ApiBoletaN"
+      },
+      "presentation": {
+        "panel": "new",
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run all (Eureka -> Articulo -> Boleta)",
+      "type": "shell",
+      "command": "powershell -NoExit -Command \"Start-Process powershell -ArgumentList '-NoExit','-Command','cd \"${workspaceFolder}\\EurekaServerN\"; mvn spring-boot:run' ; Start-Sleep -s 5 ; Start-Process powershell -ArgumentList '-NoExit','-Command','cd \"${workspaceFolder}\\ApiArticuloN\"; mvn spring-boot:run' ; Start-Sleep -s 2 ; Start-Process powershell -ArgumentList '-NoExit','-Command','cd \"${workspaceFolder}\\ApiBoletaN\"; mvn spring-boot:run'\"",
+      "presentation": {
+        "panel": "new",
+        "clear": false
+      },
+      "problemMatcher": []
+    }
+  ]
+}
