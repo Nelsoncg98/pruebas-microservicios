@@ -4,8 +4,19 @@
  */
 package Tienda.ApiArticuloN;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Articulo {
-    private String cod,nom;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+
+    private String cod;
+    private String nom;
     private double pre;
 
     public Articulo() {
@@ -16,6 +27,7 @@ public class Articulo {
         this.nom = nom;
         this.pre = pre;
     }
+    
 
     public String getCod() {
         return cod;
@@ -39,6 +51,14 @@ public class Articulo {
 
     public void setPre(double pre) {
         this.pre = pre;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
     
 }
