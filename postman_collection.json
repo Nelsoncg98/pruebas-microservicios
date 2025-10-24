@@ -1,0 +1,681 @@
+{
+  "info": {
+    "name": "Microservicios - Tienda",
+    "_postman_id": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
+    "description": "Colección para probar Eureka, ApiArticuloN y ApiBoletaN en local (puertos 8761, 8081, 8082)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Eureka",
+      "item": [
+        {
+          "name": "Eureka - UI",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8761",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8761"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ApiArticuloN",
+      "item": [
+        {
+          "name": "Listar Articulos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/articulo/listar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["articulo","listar"]
+            }
+          }
+        },
+        {
+          "name": "Guardar Articulo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cod\": \"A001\",\n  \"nom\": \"Producto ejemplo\",\n  \"pre\": 10.5\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/articulo/guardar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["articulo","guardar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar Articulo por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/articulo/buscar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["articulo","buscar","1"]
+            }
+          }
+        }
+        ,
+        {
+          "name": "Eliminar Articulo por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/articulo/eliminar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["articulo","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar Articulos (borrar todos)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/articulo/limpiar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["articulo","limpiar"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ApiBoletaN",
+      "item": [
+        {
+          "name": "Listar (Boleta)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/boleta",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8082",
+              "path": ["boleta"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-personaladministrativo",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/personaladministrativo",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["personaladministrativo"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/personaladministrativo/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["personaladministrativo","1"]
+            }
+          }
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Pérez\",\n  \"telefono\": \"999-123\",\n  \"cargo\": \"Asistente\",\n  \"fecha\": \"2025-01-01\",\n  \"estado\": \"ACTIVO\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/personaladministrativo",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["personaladministrativo"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Pérez\",\n  \"telefono\": \"999-456\",\n  \"cargo\": \"Coordinadora\",\n  \"fecha\": \"2025-01-02\",\n  \"estado\": \"ACTIVO\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/personaladministrativo/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["personaladministrativo","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/personaladministrativo/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["personaladministrativo","1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-horariomedico",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8085/horariomedico/listar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8085",
+              "path": ["horariomedico","listar"]
+            }
+          }
+        },
+        {
+          "name": "Guardar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2025-10-23\",\n  \"horaInicio\": \"09:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"medicoId\": 1,\n  \"consultorio\": \"C1\",\n  \"disponible\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8085/horariomedico/guardar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8085",
+              "path": ["horariomedico","guardar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8085/horariomedico/buscar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8085",
+              "path": ["horariomedico","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8085/horariomedico/eliminar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8085",
+              "path": ["horariomedico","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar (borrar todos)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8085/horariomedico/limpiar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8085",
+              "path": ["horariomedico","limpiar"]
+            }
+          }
+        },
+        {
+          "name": "Disponibles (filtros opcionales)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8085/horariomedico/disponibles?fecha=2025-10-23&medicoId=1&consultorio=C1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8085",
+              "path": ["horariomedico","disponibles"],
+              "query": [
+                {"key":"fecha","value":"2025-10-23"},
+                {"key":"medicoId","value":"1"},
+                {"key":"consultorio","value":"C1"}
+              ]
+            }
+          }
+        }
+      ]
+    }
+    ,
+    {
+      "name": "ms-medico",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8091/medico/listar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8091",
+              "path": ["medico","listar"]
+            }
+          }
+        },
+        {
+          "name": "Guardar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\",\n  \"especialidad\": \"Cardiologia\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8091/medico/guardar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8091",
+              "path": ["medico","guardar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8091/medico/buscar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8091",
+              "path": ["medico","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8091/medico/eliminar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8091",
+              "path": ["medico","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar (borrar todos)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8091/medico/limpiar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8091",
+              "path": ["medico","limpiar"]
+            }
+          }
+        }
+      ]
+    }
+    ,
+    {
+      "name": "ms-paciente",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8092/paciente/listar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8092",
+              "path": ["paciente","listar"]
+            }
+          }
+        },
+        {
+          "name": "Guardar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Ramos\",\n  \"documento\": \"12345678\",\n  \"fechaNacimiento\": \"2000-01-01\",\n  \"telefono\": \"999-888\",\n  \"email\": \"luis@example.com\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8092/paciente/guardar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8092",
+              "path": ["paciente","guardar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8092/paciente/buscar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8092",
+              "path": ["paciente","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8092/paciente/eliminar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8092",
+              "path": ["paciente","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar (borrar todos)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8092/paciente/limpiar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8092",
+              "path": ["paciente","limpiar"]
+            }
+          }
+        }
+      ]
+    }
+    ,
+    {
+      "name": "ms-enfermera",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8093/enfermera/listar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8093",
+              "path": ["enfermera","listar"]
+            }
+          }
+        },
+        {
+          "name": "Guardar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sara\",\n  \"apellido\": \"Lopez\",\n  \"area\": \"Emergencias\",\n  \"turno\": \"Mañana\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8093/enfermera/guardar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8093",
+              "path": ["enfermera","guardar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8093/enfermera/buscar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8093",
+              "path": ["enfermera","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8093/enfermera/eliminar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8093",
+              "path": ["enfermera","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar (borrar todos)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8093/enfermera/limpiar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8093",
+              "path": ["enfermera","limpiar"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-programacionmedica",
+      "item": [
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"administrativoId\": 12,\n  \"horariosIds\": []\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8087/programacionmedica/crear",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8087",
+              "path": ["programacionmedica","crear"]
+            }
+          }
+        },
+        {
+          "name": "Agregar líneas (horariosIds)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"horariosIds\": [1,2,3]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8087/programacionmedica/agregar-lineas/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8087",
+              "path": ["programacionmedica","agregar-lineas","1"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8087/programacionmedica/buscar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8087",
+              "path": ["programacionmedica","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8087/programacionmedica/listar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8087",
+              "path": ["programacionmedica","listar"]
+            }
+          }
+        }
+        ,
+        {
+          "name": "Inactivar (soft delete)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8087/programacionmedica/eliminar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8087",
+              "path": ["programacionmedica","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Reactivar",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8087/programacionmedica/reactivar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8087",
+              "path": ["programacionmedica","reactivar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar (eliminar todos)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8087/programacionmedica/limpiar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8087",
+              "path": ["programacionmedica","limpiar"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

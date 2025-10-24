@@ -18,7 +18,9 @@ public class ApiBoletaNControl {
     private RestTemplate resTem;
     @GetMapping
     public List<Articulo>listarArticulos(){
-        String url="http://ApiArticuloN/listar";
+        // Resuelve por nombre de servicio registrado en Eureka (via RestTemplate @LoadBalanced)
+        // Nota: el controlador de ApiArticuloN mapea bajo "/articulo", por lo que el path correcto es "/articulo/listar".
+        String url="http://ApiArticuloN/articulo/listar";
         return resTem.getForObject(url,List.class);
     }
 }
