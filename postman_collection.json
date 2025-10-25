@@ -2,7 +2,7 @@
   "info": {
     "name": "Microservicios - Tienda",
     "_postman_id": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
-    "description": "Colección para probar Eureka, ApiArticuloN y ApiBoletaN en local (puertos 8761, 8081, 8082)",
+    "description": "Colección para probar Eureka y microservicios (puertos 8761, 8081, 8082)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -30,7 +30,6 @@
         {
           "name": "Listar Articulos",
           "request": {
-            "method": "GET",
             "header": [],
             "url": {
               "raw": "http://localhost:8081/articulo/listar",

@@ -40,4 +40,9 @@ public class MedicoControl {
     public void limpiar(){
         serv.limpiar();
     }
+
+    @PostMapping("/reactivar/{id}")
+    public void reactivar(@PathVariable Long id){
+        serv.reactivar(id);
+    }
 }

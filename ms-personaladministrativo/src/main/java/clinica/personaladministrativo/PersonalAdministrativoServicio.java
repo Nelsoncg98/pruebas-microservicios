@@ -18,5 +18,7 @@ public class PersonalAdministrativoServicio {
         p.setNumero(id);
         return repo.save(p);
     }
-    public void eliminar(Long id) { repo.deleteById(id); }
+    public void eliminar(Long id) { 
+        repo.deleteById(id); 
+    }
 }

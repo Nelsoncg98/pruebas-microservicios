@@ -10,6 +10,7 @@ public class MedicoServicio {
     @Autowired
     private MedicoRepositorio repo;
 
+    // muestra todos los medicos
     public List<Medico> listar(){
         return repo.findAll();
     }
@@ -24,7 +25,23 @@ public class MedicoServicio {
     }
 
     public void eliminar(Long id){
-        repo.deleteById(id);
+        Medico medico = repo.findById(id);
+        if (medico.isEstado()){
+            medico.setActivo(false);
+            repo.save(medico);
+        }
+
+
+
+        //repo.deleteById(id);
+    }
+
+    public void reactivar(Long id){
+        Medico medico = repo.findById(id);
+        if (!medico.isEstado()){
+            medico.setActivo(true);
+            repo.save(medico);
+        }
     }
 
     public void limpiar(){
