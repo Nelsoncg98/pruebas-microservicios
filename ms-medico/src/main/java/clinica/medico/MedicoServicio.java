@@ -25,9 +25,9 @@ public class MedicoServicio {
     }
 
     public void eliminar(Long id){
-        Medico medico = repo.findById(id);
+        Medico medico =repo.findById(id).get();
         if (medico.isEstado()){
-            medico.setActivo(false);
+            medico.setEstado(false);
             repo.save(medico);
         }
 
@@ -37,9 +37,9 @@ public class MedicoServicio {
     }
 
     public void reactivar(Long id){
-        Medico medico = repo.findById(id);
+        Medico medico = repo.findById(id).get();
         if (!medico.isEstado()){
-            medico.setActivo(true);
+            medico.setEstado(true);
             repo.save(medico);
         }
     }
