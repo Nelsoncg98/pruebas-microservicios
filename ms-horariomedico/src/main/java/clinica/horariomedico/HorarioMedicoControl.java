@@ -33,8 +33,13 @@ public class HorarioMedicoControl {
     public ResponseEntity<?> guardar(@RequestBody HorarioMedico h){
         try{
             HorarioMedico saved = serv.guardar(h);
+
+
             URI location = URI.create("/horariomedico/buscar/" + saved.getNumero());
+
+
             return ResponseEntity.created(location).body(saved); // 201 Created
+            
         } catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage())); // 400
         } catch (IllegalStateException e){

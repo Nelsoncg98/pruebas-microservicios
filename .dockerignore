@@ -1,0 +1,9 @@
+# General
+.git
+.vscode
+.idx
+**/target
+**/.mvn
+**/data
+**/.DS_Store
+**/node_modules
