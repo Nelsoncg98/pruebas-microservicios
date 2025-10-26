@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  eureka:
+    build: ./EurekaServerN
+    container_name: eureka
+    environment:
+      - PORT=8761
+      - JAVA_OPTS=-Xms128m -Xmx256m
+    ports:
+      - "8761:8761"
+
+  ms-medico:
+    build: ./ms-medico
+    container_name: ms-medico
+    depends_on:
+      - eureka
+    environment:
+      - PORT=8091
+      - EUREKA_URL=http://eureka:8761/eureka
+      - JAVA_OPTS=-Xms128m -Xmx256m
+    ports:
+      - "8091:8091"
+    volumes:
+      - medico-data:/app/data
+
+  ms-horariomedico:
+    build: ./ms-horariomedico
+    container_name: ms-horariomedico
+    depends_on:
+      - eureka
+      - ms-medico
+    environment:
+      - PORT=8085
+      - EUREKA_URL=http://eureka:8761/eureka
+      - JAVA_OPTS=-Xms128m -Xmx256m
+    ports:
+      - "8085:8085"
+    volumes:
+      - horariomedico-data:/app/data
+
+  ms-programacionmedica:
+    build: ./ms-programacionmedica
+    container_name: ms-programacionmedica
+    depends_on:
+      - eureka
+    environment:
+      - PORT=8087
+      - EUREKA_URL=http://eureka:8761/eureka
+      - JAVA_OPTS=-Xms128m -Xmx256m
+    ports:
+      - "8087:8087"
+    volumes:
+      - programacion-data:/app/data
+
+volumes:
+  medico-data:
+  horariomedico-data:
+  programacion-data:
