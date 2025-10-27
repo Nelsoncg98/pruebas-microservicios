@@ -1,0 +1,60 @@
+@startuml
+title Clínica — Microservicios (visión de negocio)
+
+' Actor
+actor "Frontend / Cliente" as FE
+
+' Discovery
+rectangle "Eureka (Service Discovery)\nport: 8761" as EUREKA
+
+' Core services (business-level, sin entidades)
+rectangle "ms-horariomedico\n(port 8085)\nexposes: /horariomedico/*" as HORARIO
+rectangle "ms-medico\n(port 8091)\nexposes: /medico/*" as MEDICO
+rectangle "ms-programacionmedica\n(port 8087)\nexposes: /programacionmedica/*" as PROGRAMACION
+rectangle "ms-carritohorariomedico\n(port 8094)\nexposes: /carritohorario/*" as CARRITO
+
+' Support services
+rectangle "ms-personaladministrativo\n(port 8081)\nexposes: /personaladministrativo/*" as ADMIN
+rectangle "ms-paciente\n(port 8092)\nexposes: /paciente/*" as PACIENTE
+rectangle "ms-enfermera\n(port 8093)\nexposes: /enfermera/*" as ENFERMERA
+
+' Example storefront services
+rectangle "ApiArticuloN (ejemplo)\n(port 8081)\nexposes: /articulo/*" as ARTICULO
+rectangle "ApiBoletaN (ejemplo)\n(port 8082)\nexposes: /boleta" as BOLETA
+
+' Relationships (alto nivel — llamadas HTTP entre servicios)
+FE --> HORARIO : consulta horarios (/horariomedico/disponibles)
+FE --> PROGRAMACION : gestiona programaciones
+FE --> CARRITO : agrega / revisa carrito de horarios
+FE --> ARTICULO : ejemplo de catálogo
+
+' Descubrimiento
+HORARIO --> EUREKA : registra / descubre
+MEDICO --> EUREKA : registra / descubre
+PROGRAMACION --> EUREKA : registra / descubre
+CARRITO --> EUREKA : registra / descubre
+ADMIN --> EUREKA : registra / descubre
+PACIENTE --> EUREKA : registra / descubre
+ENFERMERA --> EUREKA : registra / descubre
+ARTICULO --> EUREKA : registra / descubre
+BOLETA --> EUREKA : registra / descubre
+
+' Inter-servicio (según llamadas encontradas en el código)
+PROGRAMACION --> CARRITO : usa /carritohorario/listar (composición de vista)
+CARRITO --> HORARIO : obtiene horarios (/horariomedico/buscar/{id})
+HORARIO --> MEDICO : consulta datos de médico (/medico/buscar/{id})
+BOLETA --> CARRITO : usa endpoints del carrito (flujo de venta/boleta)
+
+' Notas
+note right of PROGRAMACION
+  Diagrama de negocio: servicios y responsabilidades.
+  No incluye entidades ni nombres de archivo.
+  Usa puertos expuestos y rutas públicas principales.
+end note
+
+legend right
+  Rectángulos = microservicios (nombre, puerto, rutas públicas)
+  Flechas = llamadas HTTP / relaciones de negocio
+endlegend
+
+@enduml
