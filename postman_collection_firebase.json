@@ -1,0 +1,680 @@
+{
+  "info": {
+    "name": "Microservicios - Tienda (Firebase Studio)",
+    "_postman_id": "firebase-collection-001",
+    "description": "Colección personalizada para Firebase Studio: cada servicio usa el host proporcionado por Cloud Workstations (https)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Eureka",
+      "item": [
+        {
+          "name": "Eureka - UI",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8761-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev",
+              "protocol": "https",
+              "host": ["8761-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ApiArticuloN",
+      "item": [
+        {
+          "name": "Listar Articulos",
+          "request": {
+            "header": [],
+            "url": {
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/articulo/listar",
+              "protocol": "https",
+              "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["articulo","listar"]
+            }
+          }
+        },
+        {
+          "name": "Guardar Articulo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cod\": \"A001\",\n  \"nom\": \"Producto ejemplo\",\n  \"pre\": 10.5\n}"
+            },
+            "url": {
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/articulo/guardar",
+              "protocol": "https",
+              "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["articulo","guardar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar Articulo por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/articulo/buscar/1",
+              "protocol": "https",
+              "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["articulo","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Articulo por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/articulo/eliminar/1",
+              "protocol": "https",
+              "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["articulo","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar Articulos (borrar todos)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/articulo/limpiar",
+              "protocol": "https",
+              "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["articulo","limpiar"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ApiBoletaN",
+      "item": [
+        {
+          "name": "Listar (Boleta)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8082-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/boleta",
+              "protocol": "https",
+              "host": ["8082-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["boleta"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-personaladministrativo",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo",
+              "protocol": "https",
+              "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["personaladministrativo"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo/1",
+              "protocol": "https",
+              "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["personaladministrativo","1"]
+            }
+          }
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Pérez\",\n  \"telefono\": \"999-123\",\n  \"cargo\": \"Asistente\",\n  \"fecha\": \"2025-01-01\",\n  \"estado\": \"ACTIVO\"\n}"
+            },
+            "url": {
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo",
+              "protocol": "https",
+              "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["personaladministrativo"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Pérez\",\n  \"telefono\": \"999-456\",\n  \"cargo\": \"Coordinadora\",\n  \"fecha\": \"2025-01-02\",\n  \"estado\": \"ACTIVO\"\n}"
+            },
+            "url": {
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo/1",
+              "protocol": "https",
+              "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["personaladministrativo","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo/1",
+              "protocol": "https",
+              "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["personaladministrativo","1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-horariomedico",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8085-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/horariomedico/listar",
+              "protocol": "https",
+              "host": ["8085-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["horariomedico","listar"]
+            }
+          }
+        },
+        {
+          "name": "Guardar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2025-10-23\",\n  \"horaInicio\": \"09:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"medicoId\": 1,\n  \"consultorio\": \"C1\",\n  \"disponible\": true\n}"
+            },
+            "url": {
+              "raw": "https://8085-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/horariomedico/guardar",
+              "protocol": "https",
+              "host": ["8085-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["horariomedico","guardar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8085-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/horariomedico/buscar/1",
+              "protocol": "https",
+              "host": ["8085-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["horariomedico","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8085-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/horariomedico/eliminar/1",
+              "protocol": "https",
+              "host": ["8085-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["horariomedico","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar (borrar todos)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8085-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/horariomedico/limpiar",
+              "protocol": "https",
+              "host": ["8085-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["horariomedico","limpiar"]
+            }
+          }
+        },
+        {
+          "name": "Disponibles (filtros opcionales)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8085-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/horariomedico/disponibles?fecha=2025-10-23&medicoId=1&consultorio=C1",
+              "protocol": "https",
+              "host": ["8085-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["horariomedico","disponibles"],
+              "query": [
+                {"key":"fecha","value":"2025-10-23"},
+                {"key":"medicoId","value":"1"},
+                {"key":"consultorio","value":"C1"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-medico",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8091-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/medico/listar",
+              "protocol": "https",
+              "host": ["8091-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["medico","listar"]
+            }
+          }
+        },
+        {
+          "name": "Guardar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\",\n  \"especialidad\": \"Cardiologia\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "https://8091-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/medico/guardar",
+              "protocol": "https",
+              "host": ["8091-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["medico","guardar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8091-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/medico/buscar/1",
+              "protocol": "https",
+              "host": ["8091-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["medico","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8091-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/medico/eliminar/1",
+              "protocol": "https",
+              "host": ["8091-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["medico","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar (borrar todos)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8091-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/medico/limpiar",
+              "protocol": "https",
+              "host": ["8091-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["medico","limpiar"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-paciente",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8092-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/paciente/listar",
+              "protocol": "https",
+              "host": ["8092-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["paciente","listar"]
+            }
+          }
+        },
+        {
+          "name": "Guardar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Ramos\",\n  \"documento\": \"12345678\",\n  \"fechaNacimiento\": \"2000-01-01\",\n  \"telefono\": \"999-888\",\n  \"email\": \"luis@example.com\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "https://8092-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/paciente/guardar",
+              "protocol": "https",
+              "host": ["8092-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["paciente","guardar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8092-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/paciente/buscar/1",
+              "protocol": "https",
+              "host": ["8092-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["paciente","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8092-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/paciente/eliminar/1",
+              "protocol": "https",
+              "host": ["8092-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["paciente","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar (borrar todos)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8092-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/paciente/limpiar",
+              "protocol": "https",
+              "host": ["8092-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["paciente","limpiar"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-enfermera",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8093-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/enfermera/listar",
+              "protocol": "https",
+              "host": ["8093-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["enfermera","listar"]
+            }
+          }
+        },
+        {
+          "name": "Guardar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sara\",\n  \"apellido\": \"Lopez\",\n  \"area\": \"Emergencias\",\n  \"turno\": \"Mañana\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "https://8093-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/enfermera/guardar",
+              "protocol": "https",
+              "host": ["8093-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["enfermera","guardar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8093-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/enfermera/buscar/1",
+              "protocol": "https",
+              "host": ["8093-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["enfermera","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8093-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/enfermera/eliminar/1",
+              "protocol": "https",
+              "host": ["8093-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["enfermera","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar (borrar todos)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8093-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/enfermera/limpiar",
+              "protocol": "https",
+              "host": ["8093-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["enfermera","limpiar"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-programacionmedica",
+      "item": [
+        {
+          "name": "Nueva (por idAdministrativo)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://8087-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/programacionmedica/nueva/12",
+              "protocol": "https",
+              "host": ["8087-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["programacionmedica","nueva","12"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8087-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/programacionmedica/buscar/1",
+              "protocol": "https",
+              "host": ["8087-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["programacionmedica","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8087-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/programacionmedica/listar",
+              "protocol": "https",
+              "host": ["8087-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["programacionmedica","listar"]
+            }
+          }
+        },
+        {
+          "name": "Inactivar (soft delete)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://8087-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/programacionmedica/eliminar/1",
+              "protocol": "https",
+              "host": ["8087-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["programacionmedica","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Reactivar",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://8087-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/programacionmedica/reactivar/1",
+              "protocol": "https",
+              "host": ["8087-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["programacionmedica","reactivar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar (eliminar todos)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://8087-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/programacionmedica/limpiar",
+              "protocol": "https",
+              "host": ["8087-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["programacionmedica","limpiar"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-carritohorariomedico",
+      "item": [
+        {
+          "name": "Agregar por ID (desde ms-horariomedico)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://8094-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/carritohorario/agregar/1",
+              "protocol": "https",
+              "host": ["8094-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["carritohorario","agregar","1"]
+            }
+          }
+        },
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8094-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/carritohorario/listar",
+              "protocol": "https",
+              "host": ["8094-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["carritohorario","listar"]
+            }
+          }
+        },
+        {
+          "name": "Total",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8094-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/carritohorario/total",
+              "protocol": "https",
+              "host": ["8094-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["carritohorario","total"]
+            }
+          }
+        },
+        {
+          "name": "Quitar por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8094-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/carritohorario/quitar/1",
+              "protocol": "https",
+              "host": ["8094-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["carritohorario","quitar","1"]
+            }
+          }
+        },
+        {
+          "name": "Nuevo (limpiar)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://8094-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/carritohorario/nuevo",
+              "protocol": "https",
+              "host": ["8094-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["carritohorario","nuevo"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
