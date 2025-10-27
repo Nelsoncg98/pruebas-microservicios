@@ -1,5 +1,5 @@
 ## Microservicios – Clínica (Grupo 1)
-
+ds
 Este repositorio contiene un conjunto de microservicios para un escenario académico de clínica (Grupo 1). Está orientado a la práctica y las pruebas locales, con componentes independientes que se comunican mediante REST y registro en Eureka.
 
 Incluye:
