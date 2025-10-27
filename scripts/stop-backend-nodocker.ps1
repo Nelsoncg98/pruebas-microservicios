@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "SilentlyContinue"
 
-$ports = @(8761, 8091, 8085, 8087, 8081, 8092, 8093)
+$ports = @(8761, 8091, 8085, 8087, 8081, 8092, 8093, 8094)
 
 foreach($port in $ports){
   Write-Host "[stop] Port $port" -ForegroundColor Cyan

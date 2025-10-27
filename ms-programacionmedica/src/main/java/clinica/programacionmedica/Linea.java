@@ -1,36 +1,38 @@
-package clinica.horariomedico;
+package clinica.programacionmedica;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Entity
-public class HorarioMedico {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Linea {
+    private Long id;
     private Long numero;
 
     private LocalDate fecha;
     private LocalTime horaInicio;
     private LocalTime horaFin;
-    private Long medicoId;       // Id del médico en ms-medico (obligatorio)
+    private Long medicoId; // Id del médico en ms-medico (obligatorio)
     private String consultorio;
 
-    public HorarioMedico() {}
+    public Linea() {
+    }
 
-    public HorarioMedico(Long numero, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Long medicoId, String consultorio) {
+    public Linea(Long id,Long numero, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Long medicoId,
+            String consultorio) {
+        this.id = id;
         this.numero = numero;
         this.fecha = fecha;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.medicoId = medicoId;
         this.consultorio = consultorio;
-        
     }
 
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public Long getNumero() {
         return numero;
     }
@@ -79,5 +81,4 @@ public class HorarioMedico {
         this.consultorio = consultorio;
     }
 
-    
 }

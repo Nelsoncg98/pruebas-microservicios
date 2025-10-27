@@ -34,6 +34,8 @@ Start-Sleep -Seconds 2
 $pC = Start-Mvn "ms-paciente" "ms-paciente"; $pids += $pC.Id
 Start-Sleep -Seconds 2
 $pN = Start-Mvn "ms-enfermera" "ms-enfermera"; $pids += $pN.Id
+Start-Sleep -Seconds 2
+$pCH = Start-Mvn "ms-carritohorariomedico" "ms-carritohorariomedico"; $pids += $pCH.Id
 
 # Register cleanup on PowerShell exit (Ctrl+C or window close)
 $null = Register-EngineEvent PowerShell.Exiting -Action {

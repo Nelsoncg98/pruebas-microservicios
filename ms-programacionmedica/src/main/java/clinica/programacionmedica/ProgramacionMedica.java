@@ -1,11 +1,10 @@
 package clinica.programacionmedica;
 
-import jakarta.persistence.Convert;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +15,32 @@ public class ProgramacionMedica {
     private Long id;
 
     private Long administrativoId;
-    private LocalDateTime fechaProgramacion;
+    private String fechaProgramacion;
     private boolean activo = true; // estado: activo/inactivo
-    @Convert(converter = ListLongJsonConverter.class)
-    private List<Long> horariosIds = new ArrayList<>();
+    
+    private List<Linea> horarios = new ArrayList<>();
 
     public ProgramacionMedica() {}
+
+    public ProgramacionMedica(Long administrativoId, String fechaProgramacion, boolean activo,
+            List<Linea> horarios) {
+        this.administrativoId = administrativoId;
+        this.fechaProgramacion = fechaProgramacion;
+        this.activo = activo;
+        this.horarios = horarios;
+    }
+    
+
+    public ProgramacionMedica(Long id, Long administrativoId, String fechaProgramacion, boolean activo,
+            List<Linea> horarios) {
+        this.id = id;
+        this.administrativoId = administrativoId;
+        this.fechaProgramacion = fechaProgramacion;
+        this.activo = activo;
+        this.horarios = horarios;
+    }
+
+
 
     public Long getId() {
         return id;
@@ -39,11 +58,10 @@ public class ProgramacionMedica {
         this.administrativoId = administrativoId;
     }
 
-    public LocalDateTime getFechaProgramacion() {
+    public String getFechaProgramacion() {
         return fechaProgramacion;
     }
-
-    public void setFechaProgramacion(LocalDateTime fechaProgramacion) {
+    public void setFechaProgramacion(String fechaProgramacion) {
         this.fechaProgramacion = fechaProgramacion;
     }
 
@@ -55,11 +73,11 @@ public class ProgramacionMedica {
         this.activo = activo;
     }
 
-    public List<Long> getHorariosIds() {
-        return horariosIds;
+    public List<Linea> getHorarios() {
+        return horarios;
+    }
+    public void setHorarios(List<Linea> horarios) {
+        this.horarios = horarios;
     }
 
-    public void setHorariosIds(List<Long> horariosIds) {
-        this.horariosIds = horariosIds;
-    }
 }

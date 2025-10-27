@@ -2,6 +2,7 @@ package clinica.horariomedico;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,13 +68,25 @@ public class HorarioMedicoControl {
         }
     }
 
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<?> actualizar(@RequestParam Long id, @RequestBody HorarioMedico h){
+        try{
+            HorarioMedico updated = serv.actualizar(id, h);
+            return ResponseEntity.ok(updated); // 200
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage())); // 400
+        } catch (IllegalStateException e){
+            return ResponseEntity.status(409).body(Map.of("message", "Conflicto en el estado del recurso por " + e.getMessage())); // 409 Conflict
+        }
+    }
+
     @DeleteMapping("/limpiar")
     public ResponseEntity<Void> limpiar(){
         serv.limpiar();
         return ResponseEntity.noContent().build(); // 204
     }
 
-    @GetMapping("/disponibles")
+    @GetMapping("/disponibles") // lista de horarios disponibles con filtros opcionales
     public ResponseEntity<List<HorarioMedico>> disponibles(
         @RequestParam(required = false)
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -82,4 +96,16 @@ public class HorarioMedicoControl {
     ){
         return ResponseEntity.ok(serv.disponibles(fecha, medicoId, consultorio));
     }
+
+    @GetMapping("/medicosdisponibles") // lista de médicos disponibles en un rango de hora en una fecha dada
+    public ResponseEntity<List<?>> medicosDisponibles(
+        @RequestParam(required = true) 
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
+        LocalDate fecha,
+        @RequestParam(required = true) LocalTime horaInicio,
+        @RequestParam(required = true) LocalTime horaFin
+    ) {
+        return ResponseEntity.ok(serv.medicosDisponibles(fecha, horaInicio, horaFin));
+    }
+    
 }

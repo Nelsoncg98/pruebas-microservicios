@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface HorarioMedicoRepositorio extends JpaRepository<HorarioMedico, Long> {
-    List<HorarioMedico> findByDisponibleTrue();
-    List<HorarioMedico> findByFechaAndDisponibleTrue(LocalDate fecha);
-    List<HorarioMedico> findByFechaAndMedicoIdAndDisponibleTrue(LocalDate fecha, Long medicoId);
-    List<HorarioMedico> findByMedicoIdAndDisponibleTrue(Long medicoId);
+    
+    List<HorarioMedico> findByFecha(LocalDate fecha);
+    List<HorarioMedico> findByFechaAndMedicoId(LocalDate fecha, Long medicoId);
+    List<HorarioMedico> findByMedicoId(Long medicoId);
 }

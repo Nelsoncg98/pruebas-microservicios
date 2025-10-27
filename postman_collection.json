@@ -564,42 +564,16 @@
       "name": "ms-programacionmedica",
       "item": [
         {
-          "name": "Crear",
+          "name": "Nueva (por idAdministrativo)",
           "request": {
             "method": "POST",
-            "header": [
-              {"key":"Content-Type","value":"application/json"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"administrativoId\": 12,\n  \"horariosIds\": []\n}"
-            },
+            "header": [],
             "url": {
-              "raw": "http://localhost:8087/programacionmedica/crear",
+              "raw": "http://localhost:8087/programacionmedica/nueva/12",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8087",
-              "path": ["programacionmedica","crear"]
-            }
-          }
-        },
-        {
-          "name": "Agregar líneas (horariosIds)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {"key":"Content-Type","value":"application/json"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"horariosIds\": [1,2,3]\n}"
-            },
-            "url": {
-              "raw": "http://localhost:8087/programacionmedica/agregar-lineas/1",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8087",
-              "path": ["programacionmedica","agregar-lineas","1"]
+              "path": ["programacionmedica","nueva","12"]
             }
           }
         },
@@ -630,8 +604,7 @@
               "path": ["programacionmedica","listar"]
             }
           }
-        }
-        ,
+        },
         {
           "name": "Inactivar (soft delete)",
           "request": {
@@ -671,6 +644,81 @@
               "host": ["localhost"],
               "port": "8087",
               "path": ["programacionmedica","limpiar"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-carritohorariomedico",
+      "item": [
+        {
+          "name": "Agregar por ID (desde ms-horariomedico)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8094/carritohorario/agregar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8094",
+              "path": ["carritohorario","agregar","1"]
+            }
+          }
+        },
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8094/carritohorario/listar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8094",
+              "path": ["carritohorario","listar"]
+            }
+          }
+        },
+        {
+          "name": "Total",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8094/carritohorario/total",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8094",
+              "path": ["carritohorario","total"]
+            }
+          }
+        },
+        {
+          "name": "Quitar por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8094/carritohorario/quitar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8094",
+              "path": ["carritohorario","quitar","1"]
+            }
+          }
+        },
+        {
+          "name": "Nuevo (limpiar)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8094/carritohorario/nuevo",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8094",
+              "path": ["carritohorario","nuevo"]
             }
           }
         }
