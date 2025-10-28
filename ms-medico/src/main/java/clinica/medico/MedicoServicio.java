@@ -48,6 +48,18 @@ public class MedicoServicio {
         repo.deleteAll();
     }
 
+    // Actualizar un médico existente: devuelve la entidad actualizada o null si no existe
+    public Medico actualizar(Long id, Medico m){
+        Optional<Medico> op = repo.findById(id);
+        if (op.isEmpty()) return null;
+        Medico existente = op.get();
+        existente.setNombre(m.getNombre());
+        existente.setApellido(m.getApellido());
+        existente.setEspecialidad(m.getEspecialidad());
+        existente.setEstado(m.isEstado());
+        return repo.save(existente);
+    }
+
     // Buscar medicos por especialidad (p. ej. "Cardiologia")
     public List<Medico> buscarPorEspecialidad(String especialidad){
         if (especialidad == null || especialidad.isBlank()){

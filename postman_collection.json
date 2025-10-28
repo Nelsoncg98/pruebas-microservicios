@@ -404,6 +404,26 @@
           }
         },
         {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Carlos\",\n  \"apellido\": \"Gomez\",\n  \"especialidad\": \"Dermatologia\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8091/medico/actualizar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8091",
+              "path": ["medico","actualizar","1"]
+            }
+          }
+        },
+        {
           "name": "Eliminar por id",
           "request": {
             "method": "DELETE",
