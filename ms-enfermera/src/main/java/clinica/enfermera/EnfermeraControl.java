@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+@CrossOrigin(origins = "http://localhost:5173") // habilitar CORS para el frontend en desarrollo
 @RestController
 @RequestMapping("/enfermera")
 public class EnfermeraControl {
