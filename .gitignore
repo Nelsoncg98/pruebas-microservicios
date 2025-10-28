@@ -32,3 +32,11 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+
+# H2 database files (file-based)
+# Ignore H2 database files and generated data folders
+**/data/*.mv.db
+**/data/*.trace.db
+**/data/*.h2.db
+**/data/
+!**/data/.gitkeep

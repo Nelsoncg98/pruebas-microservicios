@@ -12,13 +12,18 @@ public class CarritoHorarioMedicoServicio {
     @Autowired
     private RestTemplate resTem;
 
-    public Linea agregarPorIdHorario(Long horarioId) {
 
-        String url = "http://localhost:8085/horariomedico/buscar/" + horarioId;
+    public Linea agregar(Linea horario) {
+        String url = "http://localhost:8091/medico/buscar/" + horario.getMedicoId();
+        Object resp = resTem.getForObject(url, Object.class);
+        if (resp == null) {
+            throw new IllegalArgumentException("El médico con id=" + horario.getMedicoId() + " no existe en ms-medico");
+        }
 
-        Linea lin = resTem.getForObject(url, Linea.class);
-        return repo.save(lin);
+        return repo.save(horario);
     }
+
+
 
     
 

@@ -2,7 +2,9 @@ package clinica.programacionmedica;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import jakarta.persistence.Embeddable;
 
+@Embeddable
 public class Linea {
     private Long id;
     private Long numero;

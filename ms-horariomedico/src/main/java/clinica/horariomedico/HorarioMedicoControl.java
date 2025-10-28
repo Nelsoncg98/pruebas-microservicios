@@ -110,4 +110,5 @@ public class HorarioMedicoControl {
         return ResponseEntity.ok(serv.medicosDisponibles(fecha, horaInicio, horaFin));
     }
     
+
 }

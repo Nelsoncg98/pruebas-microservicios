@@ -86,7 +86,8 @@ public class HorarioMedicoServicio {
 
     public boolean existeMedicoPorId(Long id){
         try{
-            Object resp = resTem.getForObject("http://localhost:8091/medico/buscar/{id}", Object.class, id);
+            RestTemplate plain = new RestTemplate(); // no LoadBalancer
+            Object resp = plain.getForObject("http://localhost:8091/medico/buscar/{id}", Object.class, id);
             return resp != null;
         } catch (RestClientException ex){
             return false;

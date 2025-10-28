@@ -293,6 +293,25 @@
             }
           }
         }
+        ,
+        {
+          "name": "Medicos disponibles (rango hora)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8085-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/horariomedico/medicosdisponibles?fecha=2025-10-23&horaInicio=09:00:00&horaFin=10:00:00",
+              "protocol": "https",
+              "host": ["8085-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["horariomedico","medicosdisponibles"],
+              "query": [
+                {"key":"fecha","value":"2025-10-23"},
+                {"key":"horaInicio","value":"09:00:00"},
+                {"key":"horaFin","value":"10:00:00"}
+              ]
+            }
+          }
+        }
       ]
     },
     {
@@ -308,6 +327,22 @@
               "protocol": "https",
               "host": ["8091-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
               "path": ["medico","listar"]
+            }
+          }
+        },
+        {
+          "name": "Por especialidad",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://8091-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/medico/porEspecialidad?especialidad=Cardiologia",
+              "protocol": "https",
+              "host": ["8091-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["medico","porEspecialidad"],
+              "query": [
+                {"key":"especialidad","value":"Cardiologia"}
+              ]
             }
           }
         },
@@ -340,6 +375,25 @@
               "protocol": "https",
               "host": ["8091-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
               "path": ["medico","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Carlos\",\n  \"apellido\": \"Gomez\",\n  \"especialidad\": \"Dermatologia\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "https://8091-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/medico/actualizar/1",
+              "protocol": "https",
+              "host": ["8091-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["medico","actualizar","1"]
             }
           }
         },
@@ -610,15 +664,21 @@
       "name": "ms-carritohorariomedico",
       "item": [
         {
-          "name": "Agregar por ID (desde ms-horariomedico)",
+          "name": "Agregar (enviar línea)",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2025-10-23\",\n  \"horaInicio\": \"09:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"medicoId\": 1,\n  \"consultorio\": \"C1\"\n}"
+            },
             "url": {
-              "raw": "https://8094-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/carritohorario/agregar/1",
+              "raw": "https://8094-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/carritohorario/agregar",
               "protocol": "https",
               "host": ["8094-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
-              "path": ["carritohorario","agregar","1"]
+              "path": ["carritohorario","agregar"]
             }
           }
         },

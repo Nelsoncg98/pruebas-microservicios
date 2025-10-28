@@ -1,17 +1,12 @@
-package clinica.horariomedico;
+package clinica.programacionmedica;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 import jakarta.persistence.Column;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Entity
 public class HorarioMedico {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
     private Long numero;
 
     private LocalDate fecha;
@@ -94,3 +89,4 @@ public class HorarioMedico {
 
     
 }
+
