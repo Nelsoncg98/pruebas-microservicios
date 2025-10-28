@@ -2,6 +2,9 @@ package clinica.programacionmedica;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,6 +21,8 @@ public class ProgramacionMedica {
     private String fechaProgramacion;
     private boolean activo = true; // estado: activo/inactivo
     
+    @ElementCollection
+    @CollectionTable(name = "programacion_linea", joinColumns = @JoinColumn(name = "programacion_id"))
     private List<Linea> horarios = new ArrayList<>();
 
     public ProgramacionMedica() {}

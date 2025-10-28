@@ -1,13 +1,11 @@
 package clinica.programacionmedica;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -26,13 +24,35 @@ public class ProgramacionMedicaServicio {
         return sdf.format(dat);
     }
 
+    public boolean existeAdministrativo(Long idAdministrativo){
+        String url = "http://localhost:8081/personaladministrativo/buscar/" + idAdministrativo;
+        Object resp = resTem.getForObject(url, Object.class);
+        return resp != null;
+    }
+
 
     public ProgramacionMedica nueva( Long idAdministrativo){
+        if (!existeAdministrativo(idAdministrativo)){
+            throw new IllegalArgumentException("El administrativo con id=" + idAdministrativo + " no existe");
+        }
+
         List<Linea> horarios = resTem.getForObject("http://localhost:8094/carritohorario/listar", List.class);
-        
-        ProgramacionMedica p = new ProgramacionMedica( idAdministrativo, fecha(), true, horarios);
-        
-        return p;
+        List<Linea> lineasguardadas = new ArrayList<>();
+
+        // guardar los horarios medicos
+        for (Linea h : horarios) {
+            HorarioMedico guardado = resTem.postForObject("http://localhost:8085/horariomedico/guardar", h, HorarioMedico.class);
+
+            h.setNumero(guardado.getNumero());
+            lineasguardadas.add(h);
+        }
+
+    ProgramacionMedica p = new ProgramacionMedica( idAdministrativo, fecha(), true, lineasguardadas);
+    // Persistir la programación antes de limpiar el carrito
+    ProgramacionMedica guardada = repo.save(p);
+    resTem.delete("http://localhost:8094/carritohorario/nuevo");
+
+    return guardada;
     }
 
     

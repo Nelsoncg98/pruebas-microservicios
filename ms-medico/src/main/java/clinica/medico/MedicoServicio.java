@@ -47,4 +47,12 @@ public class MedicoServicio {
     public void limpiar(){
         repo.deleteAll();
     }
+
+    // Buscar medicos por especialidad (p. ej. "Cardiologia")
+    public List<Medico> buscarPorEspecialidad(String especialidad){
+        if (especialidad == null || especialidad.isBlank()){
+            return List.of();
+        }
+        return repo.findByEspecialidadIgnoreCase(especialidad);
+    }
 }

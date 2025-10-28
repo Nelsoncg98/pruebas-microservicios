@@ -12,18 +12,18 @@ public class PersonalAdministrativoControl {
         this.servicio = servicio;
     }
 
-    @GetMapping
+    @GetMapping("/listar")
     public List<PersonalAdministrativo> listar() { return servicio.listar(); }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public PersonalAdministrativo buscar(@PathVariable Long id) { return servicio.buscar(id); }
 
-    @PostMapping
+    @PostMapping("/guardar")
     public PersonalAdministrativo guardar(@RequestBody PersonalAdministrativo p) { return servicio.guardar(p); }
 
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     public PersonalAdministrativo actualizar(@PathVariable Long id, @RequestBody PersonalAdministrativo p) { return servicio.actualizar(id, p); }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public void eliminar(@PathVariable Long id) { servicio.eliminar(id); }
 }
