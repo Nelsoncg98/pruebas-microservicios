@@ -2,9 +2,12 @@ package clinica.programacionmedica;
 
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Embeddable
 public class HorarioMedico {
     
     private Long numero;

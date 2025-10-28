@@ -69,7 +69,7 @@ public class HorarioMedicoControl {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<?> actualizar(@RequestParam Long id, @RequestBody HorarioMedico h){
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody HorarioMedico h){
         try{
             HorarioMedico updated = serv.actualizar(id, h);
             return ResponseEntity.ok(updated); // 200

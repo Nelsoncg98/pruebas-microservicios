@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Transient;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,27 +23,32 @@ public class ProgramacionMedica {
     private boolean activo = true; // estado: activo/inactivo
     
     @ElementCollection
-    @CollectionTable(name = "programacion_linea", joinColumns = @JoinColumn(name = "programacion_id"))
-    private List<Linea> horarios = new ArrayList<>();
+    @CollectionTable(name = "programacion_horarios", joinColumns = @JoinColumn(name = "horario_medico_numero"))
+    private List<Long> horarioMedicoIds  = new ArrayList<>();
+
+
+    @Transient
+    private List<HorarioMedico> horarios;
+
 
     public ProgramacionMedica() {}
 
     public ProgramacionMedica(Long administrativoId, String fechaProgramacion, boolean activo,
-            List<Linea> horarios) {
+            List<Long> horarioMedicoIds) {
         this.administrativoId = administrativoId;
         this.fechaProgramacion = fechaProgramacion;
         this.activo = activo;
-        this.horarios = horarios;
+        this.horarioMedicoIds = horarioMedicoIds;
     }
     
 
     public ProgramacionMedica(Long id, Long administrativoId, String fechaProgramacion, boolean activo,
-            List<Linea> horarios) {
+            List<Long> horarioMedicoIds) {
         this.id = id;
         this.administrativoId = administrativoId;
         this.fechaProgramacion = fechaProgramacion;
         this.activo = activo;
-        this.horarios = horarios;
+        this.horarioMedicoIds = horarioMedicoIds;
     }
 
 
@@ -78,11 +84,19 @@ public class ProgramacionMedica {
         this.activo = activo;
     }
 
-    public List<Linea> getHorarios() {
+    public List<HorarioMedico> getHorarios() {
         return horarios;
     }
-    public void setHorarios(List<Linea> horarios) {
+    public void setHorarios(List<HorarioMedico> horarios) {
         this.horarios = horarios;
+    }
+
+    public List<Long> getHorarioMedicoIds() {
+        return horarioMedicoIds;
+    }
+
+    public void setHorarioMedicoIds(List<Long> horarioMedicoIds) {
+        this.horarioMedicoIds = horarioMedicoIds;
     }
 
 }

@@ -136,11 +136,11 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8081/personaladministrativo",
+              "raw": "http://localhost:8081/personaladministrativo/listar",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8081",
-              "path": ["personaladministrativo"]
+              "path": ["personaladministrativo","listar"]
             }
           }
         },
@@ -150,11 +150,11 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8081/personaladministrativo/1",
+              "raw": "http://localhost:8081/personaladministrativo/buscar/1",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8081",
-              "path": ["personaladministrativo","1"]
+              "path": ["personaladministrativo","buscar","1"]
             }
           }
         },
@@ -170,11 +170,11 @@
               "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Pérez\",\n  \"telefono\": \"999-123\",\n  \"cargo\": \"Asistente\",\n  \"fecha\": \"2025-01-01\",\n  \"estado\": \"ACTIVO\"\n}"
             },
             "url": {
-              "raw": "http://localhost:8081/personaladministrativo",
+              "raw": "http://localhost:8081/personaladministrativo/guardar",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8081",
-              "path": ["personaladministrativo"]
+              "path": ["personaladministrativo","guardar"]
             }
           }
         },
@@ -190,11 +190,11 @@
               "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Pérez\",\n  \"telefono\": \"999-456\",\n  \"cargo\": \"Coordinadora\",\n  \"fecha\": \"2025-01-02\",\n  \"estado\": \"ACTIVO\"\n}"
             },
             "url": {
-              "raw": "http://localhost:8081/personaladministrativo/1",
+              "raw": "http://localhost:8081/personaladministrativo/actualizar/1",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8081",
-              "path": ["personaladministrativo","1"]
+              "path": ["personaladministrativo","actualizar","1"]
             }
           }
         },
@@ -204,11 +204,11 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:8081/personaladministrativo/1",
+              "raw": "http://localhost:8081/personaladministrativo/eliminar/1",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8081",
-              "path": ["personaladministrativo","1"]
+              "path": ["personaladministrativo","eliminar","1"]
             }
           }
         }
@@ -262,6 +262,26 @@
               "host": ["localhost"],
               "port": "8085",
               "path": ["horariomedico","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2025-10-23\",\n  \"horaInicio\": \"09:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"medicoId\": 1,\n  \"consultorio\": \"C1\",\n  \"disponible\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8085/horariomedico/actualizar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8085",
+              "path": ["horariomedico","actualizar","1"]
             }
           }
         },
@@ -506,6 +526,26 @@
           }
         },
         {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Ramos\",\n  \"documento\": \"12345678\",\n  \"fechaNacimiento\": \"2000-01-01\",\n  \"telefono\": \"999-888\",\n  \"email\": \"luis@example.com\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8092/paciente/actualizar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8092",
+              "path": ["paciente","actualizar","1"]
+            }
+          }
+        },
+        {
           "name": "Eliminar por id",
           "request": {
             "method": "DELETE",
@@ -588,6 +628,26 @@
           }
         },
         {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sara\",\n  \"apellido\": \"Lopez\",\n  \"area\": \"Emergencias\",\n  \"turno\": \"Mañana\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8093/enfermera/actualizar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8093",
+              "path": ["enfermera","actualizar","1"]
+            }
+          }
+        },
+        {
           "name": "Eliminar por id",
           "request": {
             "method": "DELETE",
@@ -654,11 +714,15 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8087/programacionmedica/listar",
+              "raw": "http://localhost:8087/programacionmedica/listar?page=0&size=5",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8087",
-              "path": ["programacionmedica","listar"]
+              "path": ["programacionmedica","listar"],
+              "query": [
+                {"key":"page","value":"0"},
+                {"key":"size","value":"5"}
+              ]
             }
           }
         },

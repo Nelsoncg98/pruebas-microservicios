@@ -14,7 +14,7 @@ public class CarritoHorarioMedicoServicio {
 
 
     public Linea agregar(Linea horario) {
-        String url = "http://localhost:8091/medico/buscar/" + horario.getMedicoId();
+        String url = "http://ms-medico/medico/buscar/" + horario.getMedicoId();
         Object resp = resTem.getForObject(url, Object.class);
         if (resp == null) {
             throw new IllegalArgumentException("El médico con id=" + horario.getMedicoId() + " no existe en ms-medico");

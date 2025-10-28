@@ -34,6 +34,10 @@ public class HorarioMedicoServicio {
         if (!existe) {
             throw new IllegalArgumentException("El médico con id=" + h.getMedicoId() + " no existe en ms-medico");
         }
+        // Valor por defecto robusto: si no viene en el payload, marcar disponible=true
+        if (h.getDisponible() == null) {
+            h.setDisponible(Boolean.TRUE);
+        }
         return repo.save(h);
     }
 

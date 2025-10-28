@@ -15,4 +15,16 @@ public class EnfermeraServicio {
     public List<Enfermera> listar(){ return repo.findAll(); }
     public Enfermera buscar(Long id){ Optional<Enfermera> op = repo.findById(id); return op.orElse(null);} 
     public void limpiar(){ repo.deleteAll(); }
+
+    public Enfermera actualizar(Long id, Enfermera e) {
+        Optional<Enfermera> op = repo.findById(id);
+        if (op.isEmpty()) return null;
+        Enfermera existente = op.get();
+        existente.setNombre(e.getNombre());
+        existente.setApellido(e.getApellido());
+        existente.setArea(e.getArea());
+        existente.setTurno(e.getTurno());
+        existente.setEstado(e.isEstado());
+        return repo.save(existente);
+    }
 }

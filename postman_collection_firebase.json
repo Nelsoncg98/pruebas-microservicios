@@ -128,10 +128,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo",
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo/listar",
               "protocol": "https",
               "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
-              "path": ["personaladministrativo"]
+              "path": ["personaladministrativo","listar"]
             }
           }
         },
@@ -141,10 +141,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo/1",
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo/buscar/1",
               "protocol": "https",
               "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
-              "path": ["personaladministrativo","1"]
+              "path": ["personaladministrativo","buscar","1"]
             }
           }
         },
@@ -160,10 +160,10 @@
               "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Pérez\",\n  \"telefono\": \"999-123\",\n  \"cargo\": \"Asistente\",\n  \"fecha\": \"2025-01-01\",\n  \"estado\": \"ACTIVO\"\n}"
             },
             "url": {
-              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo",
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo/guardar",
               "protocol": "https",
               "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
-              "path": ["personaladministrativo"]
+              "path": ["personaladministrativo","guardar"]
             }
           }
         },
@@ -179,10 +179,10 @@
               "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Pérez\",\n  \"telefono\": \"999-456\",\n  \"cargo\": \"Coordinadora\",\n  \"fecha\": \"2025-01-02\",\n  \"estado\": \"ACTIVO\"\n}"
             },
             "url": {
-              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo/1",
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo/actualizar/1",
               "protocol": "https",
               "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
-              "path": ["personaladministrativo","1"]
+              "path": ["personaladministrativo","actualizar","1"]
             }
           }
         },
@@ -192,10 +192,10 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo/1",
+              "raw": "https://8081-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/personaladministrativo/eliminar/1",
               "protocol": "https",
               "host": ["8081-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
-              "path": ["personaladministrativo","1"]
+              "path": ["personaladministrativo","eliminar","1"]
             }
           }
         }
@@ -246,6 +246,25 @@
               "protocol": "https",
               "host": ["8085-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
               "path": ["horariomedico","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2025-10-23\",\n  \"horaInicio\": \"09:00:00\",\n  \"horaFin\": \"10:00:00\",\n  \"medicoId\": 1,\n  \"consultorio\": \"C1\",\n  \"disponible\": true\n}"
+            },
+            "url": {
+              "raw": "https://8085-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/horariomedico/actualizar/1",
+              "protocol": "https",
+              "host": ["8085-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["horariomedico","actualizar","1"]
             }
           }
         },
@@ -474,6 +493,25 @@
           }
         },
         {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Ramos\",\n  \"documento\": \"12345678\",\n  \"fechaNacimiento\": \"2000-01-01\",\n  \"telefono\": \"999-888\",\n  \"email\": \"luis@example.com\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "https://8092-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/paciente/actualizar/1",
+              "protocol": "https",
+              "host": ["8092-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["paciente","actualizar","1"]
+            }
+          }
+        },
+        {
           "name": "Eliminar por id",
           "request": {
             "method": "DELETE",
@@ -550,6 +588,25 @@
           }
         },
         {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sara\",\n  \"apellido\": \"Lopez\",\n  \"area\": \"Emergencias\",\n  \"turno\": \"Mañana\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "https://8093-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/enfermera/actualizar/1",
+              "protocol": "https",
+              "host": ["8093-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
+              "path": ["enfermera","actualizar","1"]
+            }
+          }
+        },
+        {
           "name": "Eliminar por id",
           "request": {
             "method": "DELETE",
@@ -612,10 +669,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://8087-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/programacionmedica/listar",
+              "raw": "https://8087-firebase-pruebas-microse-1760998363118.cluster-ocv3ypmyqfbqysslgd7zlhmxek.cloudworkstations.dev/programacionmedica/listar?page=0&size=5",
               "protocol": "https",
               "host": ["8087-firebase-pruebas-microse-1760998363118","cluster-ocv3ypmyqfbqysslgd7zlhmxek","cloudworkstations","dev"],
-              "path": ["programacionmedica","listar"]
+              "path": ["programacionmedica","listar"],
+              "query": [
+                {"key":"page","value":"0"},
+                {"key":"size","value":"5"}
+              ]
             }
           }
         },
