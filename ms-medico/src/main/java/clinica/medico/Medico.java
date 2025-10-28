@@ -10,7 +10,6 @@ public class Medico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long numero;
-
     private String nombre;
     private String apellido;
     private String especialidad; // p.ej. "Cardiología"
