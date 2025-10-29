@@ -59,27 +59,31 @@ public class HorarioMedicoServicio {
         repo.deleteAll();
     }
 
-    public List<HorarioMedico> disponibles(LocalDate fecha, Long medicoId, String consultorio) {
-        // Estrategia por ID: valida ms-medico si se envía medicoId y filtra por
-        // disponible=true
+    public List<HorarioMedico> disponibles(LocalDate fecha, Long medicoId, String consultorio, Boolean disponible) {
+        // Si no se pasa el parámetro 'disponible', por defecto lo consideramos true
+        if (disponible == null) {
+            disponible = Boolean.TRUE;
+        }
 
-        List<HorarioMedico> base;
-
-        // Si no existe el médico, retorna lista vacía
+        // Si se envía medicoId, primero validar que el médico exista
         if (medicoId != null && !existeMedicoPorId(medicoId)) {
             return List.of();
         }
 
+        List<HorarioMedico> base;
+
+        // Usar consultas específicas que incluyan el flag 'disponible' cuando sea posible
         if (fecha != null && medicoId != null) {
-            base = repo.findByFechaAndMedicoId(fecha, medicoId);
+            base = repo.findByFechaAndMedicoIdAndDisponible(fecha, medicoId, disponible);
         } else if (fecha != null) {
-            base = repo.findByFecha(fecha);
+            base = repo.findByFechaAndDisponible(fecha, disponible);
         } else if (medicoId != null) {
-            base = repo.findByMedicoId(medicoId);
+            base = repo.findByMedicoIdAndDisponible(medicoId, disponible);
         } else {
-            base = repo.findAll();
+            base = repo.findByDisponible(disponible);
         }
 
+        // Filtrar por consultorio si se especificó
         if (consultorio != null && !consultorio.isBlank()) {
             base = base.stream()
                     .filter(h -> consultorio.equalsIgnoreCase(h.getConsultorio())).toList();
@@ -90,8 +94,7 @@ public class HorarioMedicoServicio {
 
     public boolean existeMedicoPorId(Long id){
         try{
-            RestTemplate plain = new RestTemplate(); // no LoadBalancer
-            Object resp = plain.getForObject("http://localhost:8091/medico/buscar/{id}", Object.class, id);
+            Object resp = resTem.getForObject("http://ms-medico/medico/buscar/{id}", Object.class, id);
             return resp != null;
         } catch (RestClientException ex){
             return false;
@@ -102,10 +105,11 @@ public class HorarioMedicoServicio {
         // obtiene todos los horarios disponibles en el rango indicado
         List<HorarioMedico> horarios = repo.findByFecha(fecha);
 
-        // filtra por horaInicio y horaFin proporcionados
-        horarios = horarios.stream()
-                .filter(h -> !h.getHoraInicio().isAfter(horaFin) && !h.getHoraFin().isBefore(horaInicio))
-                .collect(Collectors.toList());
+    // filtra por disponibilidad y por horaInicio/horaFin proporcionados
+    horarios = horarios.stream()
+        .filter(h -> Boolean.TRUE.equals(h.getDisponible())) // sólo horarios disponibles
+        .filter(h -> !h.getHoraInicio().isAfter(horaFin) && !h.getHoraFin().isBefore(horaInicio))
+        .collect(Collectors.toList());
 
         // Extrae los IDs únicos de los médicos libres
         List<Long> medicosLibres = horarios.stream()
@@ -119,6 +123,11 @@ public class HorarioMedicoServicio {
     String url = "http://ms-medico/medico/listar";
 
     Linea[] medicos = resTem.getForObject(url, Linea[].class);
+
+        // Si el servicio de médicos respondió null o vacío, devolver lista vacía
+        if (medicos == null || medicos.length == 0) {
+            return List.of();
+        }
 
         // Filtrar médicos disponibles
         return Arrays.stream(medicos)

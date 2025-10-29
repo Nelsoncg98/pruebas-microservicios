@@ -9,4 +9,10 @@ public interface HorarioMedicoRepositorio extends JpaRepository<HorarioMedico, L
     List<HorarioMedico> findByFecha(LocalDate fecha);
     List<HorarioMedico> findByFechaAndMedicoId(LocalDate fecha, Long medicoId);
     List<HorarioMedico> findByMedicoId(Long medicoId);
+    
+    // Consultas que incluyen el flag disponible
+    List<HorarioMedico> findByFechaAndDisponible(LocalDate fecha, Boolean disponible);
+    List<HorarioMedico> findByFechaAndMedicoIdAndDisponible(LocalDate fecha, Long medicoId, Boolean disponible);
+    List<HorarioMedico> findByMedicoIdAndDisponible(Long medicoId, Boolean disponible);
+    List<HorarioMedico> findByDisponible(Boolean disponible);
 }

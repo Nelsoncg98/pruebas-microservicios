@@ -94,9 +94,10 @@ public class HorarioMedicoControl {
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
         LocalDate fecha,
         @RequestParam(required = false) Long medicoId,
-        @RequestParam(required = false) String consultorio
+        @RequestParam(required = false) String consultorio,
+        @RequestParam(required = false) Boolean disponible
     ){
-        return ResponseEntity.ok(serv.disponibles(fecha, medicoId, consultorio));
+        return ResponseEntity.ok(serv.disponibles(fecha, medicoId, consultorio, disponible));
     }
 
     @GetMapping("/medicosdisponibles") // lista de médicos disponibles en un rango de hora en una fecha dada
