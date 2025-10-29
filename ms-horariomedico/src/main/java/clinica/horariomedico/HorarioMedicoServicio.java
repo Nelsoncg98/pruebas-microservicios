@@ -115,7 +115,7 @@ public class HorarioMedicoServicio {
 
 
         // lista de medicos con rest template
-        String url = "http://localhost:8091/medicos/listar";
+        String url = "http://ms-medico/medicos/listar";
 
         Linea[] medicos = resTem.getForObject(url, Linea[].class);
 
