@@ -114,10 +114,11 @@ public class HorarioMedicoServicio {
                 .collect(Collectors.toList());
 
 
-        // lista de medicos con rest template
-        String url = "http://ms-medico/medicos/listar";
+    // lista de medicos con rest template — ruta correcta en ms-medico es '/medico/listar'
+    // usamos el serviceId para que el RestTemplate @LoadBalanced lo resuelva via Eureka
+    String url = "http://ms-medico/medico/listar";
 
-        Linea[] medicos = resTem.getForObject(url, Linea[].class);
+    Linea[] medicos = resTem.getForObject(url, Linea[].class);
 
         // Filtrar médicos disponibles
         return Arrays.stream(medicos)

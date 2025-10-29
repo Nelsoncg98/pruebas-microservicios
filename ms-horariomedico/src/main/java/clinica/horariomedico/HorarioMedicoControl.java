@@ -102,10 +102,10 @@ public class HorarioMedicoControl {
     @GetMapping("/medicosdisponibles") // lista de médicos disponibles en un rango de hora en una fecha dada
     public ResponseEntity<List<?>> medicosDisponibles(
         @RequestParam(required = true) 
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // yyyy-MM-dd
         LocalDate fecha,
-        @RequestParam(required = true) LocalTime horaInicio,
-        @RequestParam(required = true) LocalTime horaFin
+        @RequestParam(required = true) LocalTime horaInicio, // HH:mm:ss
+        @RequestParam(required = true) LocalTime horaFin  // HH:mm:ss
     ) {
         return ResponseEntity.ok(serv.medicosDisponibles(fecha, horaInicio, horaFin));
     }
