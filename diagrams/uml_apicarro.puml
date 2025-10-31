@@ -1,0 +1,139 @@
+@startuml ApiCarro
+
+' Configuración
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad Linea (superior derecha)
+class Linea {
+  -id: Long
+  -nom: String
+  -pre: double
+  -can: int
+  +getImporte(): double
+}
+
+' Entidad Carro (superior centro)
+class Carro {
+  -tot: double
+  -ces: List
+}
+
+' Entidad Boleta (inferior derecha)
+class Boleta {
+  -fec: String
+  -tot: String
+  -lis: List
+}
+
+' Entidad Linea (inferior extremo derecha)
+class "Linea" as Linea2 {
+  -id: Long
+  -nom: String
+  -pre: double
+  -can: int
+  +getImporte(): double
+}
+
+' Servicio ApiCarro (izquierda-centro)
+class "Servicio" as ServicioCarro {
+  +agregar(lin: Linea): Carro
+  +quitar(id: Long): Carro
+  +nuevo(): Carro
+}
+
+' Servicio ApiCarrito (centro-derecha)
+class "Servicio" as ServicioCarrito {
+  +agregar(lin: Linea): Linea
+  +quitar(id: Long): void
+  +listar(): List
+  +total(): double
+  +nuevo(): void
+}
+
+' Servicio ApiBoleta (inferior centro)
+class "Servicio" as ServicioBoleta {
+  +nuevo(): Boleta
+}
+
+' Interfaz Repositorio
+interface Repositorio {
+}
+
+' JpaRepository
+class JpaRepository {
+}
+
+' EurekaServer
+class EurekaServer {
+}
+
+' Controlador Carrito
+class Carrito {
+}
+
+' API Central
+circle ApiCarro
+circle ApiCarrito
+circle ApiBoletaCarrito
+
+' Operaciones
+class Nuevo {
+}
+
+class Agregar {
+}
+
+class Quitar {
+}
+
+' Relaciones - Carrito a Operaciones
+Carrito --> Nuevo
+Carrito --> Agregar
+Carrito --> Quitar
+
+' Relaciones inversas (opcionales, comentadas)
+' Nuevo --> Carrito
+' Agregar --> Carrito
+' Quitar --> Carrito
+
+' Conexiones entre microservicios mediante endpoints
+ServicioCarro -- ApiCarrito
+ServicioBoleta -- ApiCarrito
+
+' Relaciones - Operaciones a ApiCarro
+Nuevo --> ApiCarro
+Agregar --> ApiCarro
+Quitar --> ApiCarro
+
+' Relaciones - ApiCarro a ServicioCarro
+ApiCarro --> ServicioCarro
+
+' Relaciones - ServicioCarro a Carro
+ServicioCarro ..> Carro
+
+' Relaciones - ApiCarrito a ServicioCarrito
+ApiCarrito --> ServicioCarrito
+
+' Relaciones - ServicioCarrito a Repositorio
+ServicioCarrito --> Repositorio
+
+' Relaciones - Repositorio a JpaRepository
+Repositorio o--> JpaRepository
+
+' Relaciones - Repositorio a Linea (superior)
+Repositorio o..> Linea
+
+' Relaciones - ServicioCarrito a EurekaServer
+ServicioCarrito ..> EurekaServer
+
+' Relaciones - ApiBoletaCarrito a ServicioBoleta
+ApiBoletaCarrito --> ServicioBoleta
+
+' Relaciones - ServicioBoleta a Boleta
+ServicioBoleta ..> Boleta
+
+' Relaciones - ServicioBoleta a Linea2 (inferior)
+ServicioBoleta ..> Linea2
+
+@enduml

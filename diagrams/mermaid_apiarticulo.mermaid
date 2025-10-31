@@ -1,0 +1,101 @@
+classDiagram
+    %% Entidad Articulo
+    class Articulo {
+        -Long id
+        -String nom
+        -double pre
+        -int sto
+    }
+    
+    %% Servicio
+    class Servicio {
+        +grabar(art: Articulo) Articulo
+        +buscar(id: Long) Articulo
+        +listar() List
+        +actualizar(id: Long, art: Articulo) Articulo
+        +eliminar(id: Long) void
+    }
+    
+    %% Repositorio
+    class Repositorio {
+        <<interface>>
+    }
+    
+    %% JpaRepository
+    class JpaRepository {
+    }
+    
+    %% EurekaServer
+    class EurekaServer {
+    }
+    
+    %% Controladores
+    class Grabar {
+    }
+    
+    class Mensaje {
+    }
+    
+    class Buscar {
+    }
+    
+    class Datos {
+    }
+    
+    class Listado {
+    }
+    
+    class Catalogo {
+    }
+    
+    %% API Central
+    class ApiArticulo {
+        <<circle>>
+    }
+    
+    %% Operaciones intermedias
+    class GrabarOp {
+        <<Grabar>>
+    }
+    
+    class BuscarOp {
+        <<Buscar>>
+    }
+    
+    class ListarOp1 {
+        <<Listar>>
+    }
+    
+    class ListarOp2 {
+        <<Listar>>
+    }
+    
+    %% Relaciones - Controladores a Operaciones
+    Grabar --> GrabarOp
+    GrabarOp --> ApiArticulo
+    GrabarOp --> Mensaje
+    
+    Buscar --> BuscarOp
+    BuscarOp --> ApiArticulo
+    BuscarOp --> Datos
+    
+    Listado --> ListarOp1
+    ListarOp1 --> ApiArticulo
+    
+    Catalogo --> ListarOp2
+    ListarOp2 --> ApiArticulo
+    
+    %% Relaciones - ApiArticulo a Servicio
+    ApiArticulo --> Servicio
+    
+    %% Relaciones - Servicio a Repositorio
+    Servicio --> Repositorio
+    
+    %% Relaciones - Repositorio a JpaRepository
+    Repositorio o-- JpaRepository
+    
+    %% Relaciones - Repositorio a Articulo
+    Repositorio ..> Articulo
+    
+    %% Relaciones - ApiArticulo a EurekaServer
+    ApiArticulo ..> EurekaServer

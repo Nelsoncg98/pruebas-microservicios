@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonAlias;
 
 @Entity
 public class Medico {
@@ -14,6 +16,13 @@ public class Medico {
     private String apellido;
     private String especialidad; // p.ej. "Cardiología"
     private boolean estado = true; // activo/inactivo
+    // Nuevo: DNI único del médico dentro del MS
+    @Column(unique = true)
+    @JsonAlias({"Dni", "dniMedico", "DniMedico"})
+    private String dni;
+    // Nuevos: datos de contacto
+    private String telefono;
+    private String email;
 
     public Medico() {}
 
@@ -64,4 +73,11 @@ public class Medico {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    public String getDni() { return dni; }
+    public void setDni(String dni) { this.dni = dni; }
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 }

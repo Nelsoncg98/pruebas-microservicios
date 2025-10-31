@@ -23,20 +23,35 @@ public class EnfermeraControl {
     private EnfermeraServicio serv;
 
     @PostMapping("/guardar")
-    public Enfermera guardar(@RequestBody Enfermera e){ return serv.guardar(e); }
+    public Enfermera guardar(@RequestBody Enfermera e) {
+        return serv.guardar(e);
+    }
+
     @DeleteMapping("/eliminar/{id}")
-    public void eliminar(@PathVariable Long id){ serv.eliminar(id); }
+    public void eliminar(@PathVariable Long id) {
+        serv.eliminar(id);
+    }
+
     @GetMapping("/listar")
-    public List<Enfermera> listar(){ return serv.listar(); }
+    public List<Enfermera> listar() {
+        return serv.listar();
+    }
+
     @GetMapping("/buscar/{id}")
-    public Enfermera buscar(@PathVariable Long id){ return serv.buscar(id); }
+    public Enfermera buscar(@PathVariable Long id) {
+        return serv.buscar(id);
+    }
+
     @DeleteMapping("/limpiar")
-    public void limpiar(){ serv.limpiar(); }
+    public void limpiar() {
+        serv.limpiar();
+    }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Enfermera> actualizar(@PathVariable Long id, @RequestBody Enfermera e){
+    public ResponseEntity<Enfermera> actualizar(@PathVariable Long id, @RequestBody Enfermera e) {
         Enfermera updated = serv.actualizar(id, e);
-        if (updated == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if (updated == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.ok(updated);
     }
 }

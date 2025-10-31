@@ -1,0 +1,65 @@
+@startuml ClinicMsPaciente
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Paciente {
+  -id: Long
+  -dni: String
+  -nombre: String
+  -apellido: String
+  -fechaNacimiento: LocalDate
+  -telefono: String
+  -direccion: String
+  -email: String
+  -estado: boolean
+}
+
+' Servicio
+class ServicioPaciente {
+  +guardar(p: Paciente): Paciente
+  +buscar(id: Long): Paciente
+  +listar(): List
+  +actualizar(id: Long, p: Paciente): Paciente
+  +eliminar(id: Long): void
+  +limpiar(): void
+}
+
+' Repositorio e infra
+interface Repositorio
+class JpaRepository
+class EurekaServer
+
+' API y controlador/operaciones
+circle ApiPaciente
+class Guardar
+class Buscar
+class Listar
+class Actualizar
+class Eliminar
+class Limpiar
+class Mensaje
+class Datos
+class Catalogo
+
+' Flujo
+Guardar --> ApiPaciente
+Guardar --> Mensaje
+Buscar --> ApiPaciente
+Buscar --> Datos
+Listar --> ApiPaciente
+Listar --> Catalogo
+Actualizar --> ApiPaciente
+Actualizar --> Mensaje
+Eliminar --> ApiPaciente
+Eliminar --> Mensaje
+Limpiar --> ApiPaciente
+Limpiar --> Mensaje
+
+ApiPaciente --> ServicioPaciente
+ServicioPaciente --> Repositorio
+Repositorio o--> JpaRepository
+Repositorio o..> Paciente
+ApiPaciente ..> EurekaServer
+
+@enduml

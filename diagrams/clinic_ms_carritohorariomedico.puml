@@ -1,0 +1,63 @@
+@startuml ClinicMsCarritoHorarioMedico
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad Línea del carrito
+class LineaCarrito {
+  -id: Long
+  -fecha: LocalDate
+  -horaInicio: LocalTime
+  -horaFin: LocalTime
+  -medicoId: Long
+  -consultorio: String
+}
+
+' Servicio carrito
+class ServicioCarritoHorario {
+  +agregar(l: LineaCarrito): LineaCarrito
+  +quitar(id: Long): void
+  +listar(): List
+  +total(): double
+  +nuevo(): void
+}
+
+' Repositorio e infra
+interface Repositorio
+class JpaRepository
+class EurekaServer
+
+' API y controlador/operaciones
+circle ApiCarritoHorario
+class Agregar
+class Quitar
+class Listar
+class Total
+class Nuevo
+class Mensaje
+class Datos
+class Listado
+
+' Operaciones -> API y vistas
+Agregar --> ApiCarritoHorario
+Agregar --> Mensaje
+Quitar --> ApiCarritoHorario
+Quitar --> Mensaje
+Listar --> ApiCarritoHorario
+Listar --> Listado
+Total --> ApiCarritoHorario
+Total --> Datos
+Nuevo --> ApiCarritoHorario
+Nuevo --> Mensaje
+
+' API -> Servicio
+ApiCarritoHorario --> ServicioCarritoHorario
+
+' Persistencia
+ServicioCarritoHorario --> Repositorio
+Repositorio o--> JpaRepository
+Repositorio o..> LineaCarrito
+
+' Eureka
+ApiCarritoHorario ..> EurekaServer
+
+@enduml

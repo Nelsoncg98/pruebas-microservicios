@@ -56,6 +56,9 @@ public class MedicoServicio {
         existente.setNombre(m.getNombre());
         existente.setApellido(m.getApellido());
         existente.setEspecialidad(m.getEspecialidad());
+        existente.setDni(m.getDni());
+        existente.setTelefono(m.getTelefono());
+        existente.setEmail(m.getEmail());
         existente.setEstado(m.isEstado());
         return repo.save(existente);
     }

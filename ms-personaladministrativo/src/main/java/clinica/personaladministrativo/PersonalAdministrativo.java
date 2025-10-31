@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import java.time.LocalDate;
 
 @Entity
@@ -18,6 +20,12 @@ public class PersonalAdministrativo {
     private String cargo;
     private LocalDate fecha;
     private String estado;
+    
+    // Nuevo: DNI único y email para contacto
+    @Column(unique = true)
+    @JsonAlias({"documento", "Dni", "dniPersonal"})
+    private String dni;
+    private String email;
 
     public Long getNumero() { return numero; }
     public void setNumero(Long numero) { this.numero = numero; }
@@ -33,4 +41,8 @@ public class PersonalAdministrativo {
     public void setFecha(LocalDate fecha) { this.fecha = fecha; }
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+    public String getDni() { return dni; }
+    public void setDni(String dni) { this.dni = dni; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 }

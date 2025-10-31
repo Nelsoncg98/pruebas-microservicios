@@ -1,0 +1,79 @@
+@startuml ClinicMsHorarioMedico
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad principal
+class HorarioMedico {
+  -id: Long
+  -fecha: LocalDate
+  -horaInicio: LocalTime
+  -horaFin: LocalTime
+  -medicoId: Long
+  -consultorio: String
+  -disponible: boolean
+}
+
+' Servicio
+class ServicioHorarioMedico {
+  +guardar(h: HorarioMedico): HorarioMedico
+  +buscar(id: Long): HorarioMedico
+  +listar(): List
+  +actualizar(id: Long, h: HorarioMedico): HorarioMedico
+  +eliminar(id: Long): void
+  +disponibles(fecha: LocalDate, medicoId: Long, consultorio: String, disponible: Boolean): List
+  +medicosDisponibles(fecha: LocalDate, horaInicio: LocalTime, horaFin: LocalTime): List
+}
+
+' Repositorio e infra
+interface Repositorio
+class JpaRepository
+class EurekaServer
+
+' API y Controlador/Operaciones
+circle ApiHorarioMedico
+class Guardar
+class Buscar
+class Listar
+class Actualizar
+class Eliminar
+class Disponibles
+class MedicosDisponibles
+class Mensaje
+class Datos
+class Listado
+class Catalogo
+
+' Flujo HTTP externo
+class ApiMedico
+
+' Operaciones -> API y vistas de respuesta
+Guardar --> ApiHorarioMedico
+Guardar --> Mensaje
+Buscar --> ApiHorarioMedico
+Buscar --> Datos
+Listar --> ApiHorarioMedico
+Listar --> Catalogo
+Actualizar --> ApiHorarioMedico
+Actualizar --> Mensaje
+Eliminar --> ApiHorarioMedico
+Eliminar --> Mensaje
+Disponibles --> ApiHorarioMedico
+Disponibles --> Listado
+MedicosDisponibles --> ApiHorarioMedico
+MedicosDisponibles --> Listado
+
+' API -> Servicio
+ApiHorarioMedico --> ServicioHorarioMedico
+
+' Persistencia
+ServicioHorarioMedico --> Repositorio
+Repositorio o--> JpaRepository
+Repositorio o..> HorarioMedico
+
+' Eureka
+ApiHorarioMedico ..> EurekaServer
+
+' Dependencias HTTP
+ServicioHorarioMedico ..> ApiMedico : <<HTTP>>\n/medico/listar | buscar
+
+@enduml

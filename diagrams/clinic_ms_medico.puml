@@ -1,0 +1,68 @@
+@startuml ClinicMsMedico
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Medico {
+  -id: Long
+  -dni: String
+  -nombre: String
+  -apellido: String
+  -telefono: String
+  -email: String
+  -especialidad: String
+  -estado: boolean
+}
+
+' Servicio
+class ServicioMedico {
+  +guardar(m: Medico): Medico
+  +listar(): List
+  +porEspecialidad(especialidad: String): List
+  +buscar(id: Long): Medico
+  +actualizar(id: Long, m: Medico): Medico
+  +eliminar(id: Long): void
+  +limpiar(): void
+}
+
+' Repositorio e infra
+interface Repositorio
+class JpaRepository
+class EurekaServer
+
+' API y controlador/operaciones
+circle ApiMedico
+class Guardar
+class Listar
+class PorEspecialidad
+class Buscar
+class Actualizar
+class Eliminar
+class Limpiar
+class Mensaje
+class Datos
+class Catalogo
+
+' Flujo
+Guardar --> ApiMedico
+Guardar --> Mensaje
+Listar --> ApiMedico
+Listar --> Catalogo
+PorEspecialidad --> ApiMedico
+PorEspecialidad --> Catalogo
+Buscar --> ApiMedico
+Buscar --> Datos
+Actualizar --> ApiMedico
+Actualizar --> Mensaje
+Eliminar --> ApiMedico
+Eliminar --> Mensaje
+Limpiar --> ApiMedico
+Limpiar --> Mensaje
+
+ApiMedico --> ServicioMedico
+ServicioMedico --> Repositorio
+Repositorio o--> JpaRepository
+Repositorio o..> Medico
+ApiMedico ..> EurekaServer
+
+@enduml

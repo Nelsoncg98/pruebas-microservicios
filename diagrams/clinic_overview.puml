@@ -1,0 +1,58 @@
+@startuml ClinicOverview
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Infraestructura
+class EurekaServer
+
+' APIs (círculos)
+circle ApiPaciente
+circle ApiMedico
+circle ApiHorarioMedico
+circle ApiCarritoHorario
+circle ApiProgramacionMedica
+circle ApiPersonalAdministrativo
+circle ApiEnfermera
+
+' Servicios (nombres lógicos)
+class ServicioPaciente
+class ServicioMedico
+class ServicioHorarioMedico
+class ServicioCarritoHorario
+class ServicioProgramacionMedica
+class ServicioPersonalAdministrativo
+class ServicioEnfermera
+
+' API -> Servicio (flujo interno por MS)
+ApiPaciente --> ServicioPaciente
+ApiMedico --> ServicioMedico
+ApiHorarioMedico --> ServicioHorarioMedico
+ApiCarritoHorario --> ServicioCarritoHorario
+ApiProgramacionMedica --> ServicioProgramacionMedica
+ApiPersonalAdministrativo --> ServicioPersonalAdministrativo
+ApiEnfermera --> ServicioEnfermera
+
+' Descubrimiento (dependencia)
+ApiPaciente ..> EurekaServer
+ApiMedico ..> EurekaServer
+ApiHorarioMedico ..> EurekaServer
+ApiCarritoHorario ..> EurekaServer
+ApiProgramacionMedica ..> EurekaServer
+ApiPersonalAdministrativo ..> EurekaServer
+ApiEnfermera ..> EurekaServer
+
+' Conexiones HTTP entre MS (direccionadas)
+ServicioProgramacionMedica ..> ApiCarritoHorario : <<HTTP>>\nlistar/total/nuevo
+ServicioProgramacionMedica ..> ApiHorarioMedico : <<HTTP>>\nbuscar/listar
+ServicioHorarioMedico ..> ApiMedico : <<HTTP>>\nvalidar medicoId / listar
+
+' Notas de contexto
+note right of ApiPaciente
+Actualmente de uso marginal\n(no conectado a otros MS)
+end note
+
+note right of ApiEnfermera
+Actualmente no usado en flujos\nprincipales
+end note
+
+@enduml

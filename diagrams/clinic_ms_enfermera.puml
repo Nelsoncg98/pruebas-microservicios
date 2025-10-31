@@ -1,0 +1,62 @@
+@startuml ClinicMsEnfermera
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Enfermera {
+  -id: Long
+  -nombre: String
+  -apellido: String
+  -area: String
+  -turno: String
+  -estado: boolean
+}
+
+' Servicio
+class ServicioEnfermera {
+  +guardar(e: Enfermera): Enfermera
+  +buscar(id: Long): Enfermera
+  +listar(): List
+  +actualizar(id: Long, e: Enfermera): Enfermera
+  +eliminar(id: Long): void
+  +limpiar(): void
+}
+
+' Repositorio e infra
+interface Repositorio
+class JpaRepository
+class EurekaServer
+
+' API y controlador/operaciones
+circle ApiEnfermera
+class Guardar
+class Buscar
+class Listar
+class Actualizar
+class Eliminar
+class Limpiar
+class Mensaje
+class Datos
+class Catalogo
+
+' Flujo
+Guardar --> ApiEnfermera
+Guardar --> Mensaje
+Buscar --> ApiEnfermera
+Buscar --> Datos
+Listar --> ApiEnfermera
+Listar --> Catalogo
+Actualizar --> ApiEnfermera
+Actualizar --> Mensaje
+Eliminar --> ApiEnfermera
+Eliminar --> Mensaje
+Limpiar --> ApiEnfermera
+Limpiar --> Mensaje
+
+ApiEnfermera --> ServicioEnfermera
+ServicioEnfermera --> Repositorio
+Repositorio o--> JpaRepository
+Repositorio o..> Enfermera
+ApiEnfermera ..> EurekaServer
+
+@enduml

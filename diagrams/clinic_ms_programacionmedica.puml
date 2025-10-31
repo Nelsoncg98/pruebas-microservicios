@@ -1,0 +1,84 @@
+@startuml ClinicMsProgramacionMedica
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidades (programación y snapshot de líneas)
+class ProgramacionMedica {
+  -id: Long
+  -administrativoId: Long
+  -fecha: LocalDateTime
+  -lineas: List
+  -activo: boolean
+}
+
+class LineaProgMedica {
+  -horarioId: Long
+  -fecha: LocalDate
+  -horaInicio: LocalTime
+  -horaFin: LocalTime
+  -medicoId: Long
+  -consultorio: String
+}
+
+' Servicio
+class ServicioProgramacionMedica {
+  +nueva(idAdministrativo: Long): ProgramacionMedica
+  +buscar(id: Long): ProgramacionMedica
+  +listar(page: int, size: int): List
+  +eliminar(id: Long): void  ' soft delete
+  +reactivar(id: Long): void
+  +limpiar(): void
+}
+
+' Repositorio e infra
+interface Repositorio
+class JpaRepository
+class EurekaServer
+
+' API, controlador y operaciones
+circle ApiProgramacionMedica
+class Nueva
+class Buscar
+class Listar
+class Eliminar
+class Reactivar
+class Limpiar
+class Mensaje
+class Datos
+class Catalogo
+
+' MS remotos
+class ApiCarritoHorario
+class ApiHorarioMedico
+
+' Operaciones -> API y vistas
+Nueva --> ApiProgramacionMedica
+Nueva --> Mensaje
+Buscar --> ApiProgramacionMedica
+Buscar --> Datos
+Listar --> ApiProgramacionMedica
+Listar --> Catalogo
+Eliminar --> ApiProgramacionMedica
+Eliminar --> Mensaje
+Reactivar --> ApiProgramacionMedica
+Reactivar --> Mensaje
+Limpiar --> ApiProgramacionMedica
+Limpiar --> Mensaje
+
+' API -> Servicio
+ApiProgramacionMedica --> ServicioProgramacionMedica
+
+' Persistencia
+ServicioProgramacionMedica --> Repositorio
+Repositorio o--> JpaRepository
+Repositorio o..> ProgramacionMedica
+ProgramacionMedica ..> LineaProgMedica
+
+' Eureka
+ApiProgramacionMedica ..> EurekaServer
+
+' Dependencias HTTP
+ServicioProgramacionMedica ..> ApiCarritoHorario : <<HTTP>>\nlistar | total | nuevo
+ServicioProgramacionMedica ..> ApiHorarioMedico : <<HTTP>>\nbuscar | listar (detalles)
+
+@enduml

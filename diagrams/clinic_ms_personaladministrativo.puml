@@ -1,0 +1,65 @@
+@startuml ClinicMsPersonalAdministrativo
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class PersonalAdministrativo {
+  -id: Long
+  -dni: String
+  -nombre: String
+  -apellido: String
+  -telefono: String
+  -email: String
+  -cargo: String
+  -fecha: LocalDate
+  -estado: String
+}
+
+' Servicio
+class ServicioPersonalAdministrativo {
+  +guardar(p: PersonalAdministrativo): PersonalAdministrativo
+  +buscar(id: Long): PersonalAdministrativo
+  +listar(): List
+  +actualizar(id: Long, p: PersonalAdministrativo): PersonalAdministrativo
+  +eliminar(id: Long): void
+  +limpiar(): void
+}
+
+' Repositorio e infra
+interface Repositorio
+class JpaRepository
+class EurekaServer
+
+' API y controlador/operaciones
+circle ApiPersonalAdministrativo
+class Guardar
+class Buscar
+class Listar
+class Actualizar
+class Eliminar
+class Limpiar
+class Mensaje
+class Datos
+class Catalogo
+
+' Flujo
+Guardar --> ApiPersonalAdministrativo
+Guardar --> Mensaje
+Buscar --> ApiPersonalAdministrativo
+Buscar --> Datos
+Listar --> ApiPersonalAdministrativo
+Listar --> Catalogo
+Actualizar --> ApiPersonalAdministrativo
+Actualizar --> Mensaje
+Eliminar --> ApiPersonalAdministrativo
+Eliminar --> Mensaje
+Limpiar --> ApiPersonalAdministrativo
+Limpiar --> Mensaje
+
+ApiPersonalAdministrativo --> ServicioPersonalAdministrativo
+ServicioPersonalAdministrativo --> Repositorio
+Repositorio o--> JpaRepository
+Repositorio o..> PersonalAdministrativo
+ApiPersonalAdministrativo ..> EurekaServer
+
+@enduml

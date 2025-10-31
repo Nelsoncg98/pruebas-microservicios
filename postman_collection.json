@@ -167,7 +167,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Pérez\",\n  \"telefono\": \"999-123\",\n  \"cargo\": \"Asistente\",\n  \"fecha\": \"2025-01-01\",\n  \"estado\": \"ACTIVO\"\n}"
+              "raw": "{\n  \"dni\": \"44556677\",\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Pérez\",\n  \"telefono\": \"999-123\",\n  \"email\": \"ana.perez@example.com\",\n  \"cargo\": \"Asistente\",\n  \"fecha\": \"2025-01-01\",\n  \"estado\": \"ACTIVO\"\n}"
             },
             "url": {
               "raw": "http://localhost:8081/personaladministrativo/guardar",
@@ -187,7 +187,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Pérez\",\n  \"telefono\": \"999-456\",\n  \"cargo\": \"Coordinadora\",\n  \"fecha\": \"2025-01-02\",\n  \"estado\": \"ACTIVO\"\n}"
+              "raw": "{\n  \"dni\": \"44556677\",\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Pérez\",\n  \"telefono\": \"999-456\",\n  \"email\": \"ana.perez@example.com\",\n  \"cargo\": \"Coordinadora\",\n  \"fecha\": \"2025-01-02\",\n  \"estado\": \"ACTIVO\"\n}"
             },
             "url": {
               "raw": "http://localhost:8081/personaladministrativo/actualizar/1",
@@ -319,7 +319,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8085/horariomedico/disponibles?fecha=2025-10-23&medicoId=1&consultorio=C1",
+              "raw": "http://localhost:8085/horariomedico/disponibles?fecha=2025-10-23&medicoId=1&consultorio=C1&disponible=true",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8085",
@@ -327,7 +327,8 @@
               "query": [
                 {"key":"fecha","value":"2025-10-23"},
                 {"key":"medicoId","value":"1"},
-                {"key":"consultorio","value":"C1"}
+                {"key":"consultorio","value":"C1"},
+                {"key":"disponible","value":"true"}
               ]
             }
           }
@@ -398,7 +399,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\",\n  \"especialidad\": \"Cardiologia\",\n  \"estado\": true\n}"
+              "raw": "{\n  \"dni\": \"7290132\",\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\",\n  \"telefono\": \"961234567\",\n  \"email\": \"juan.perez.med@example.com\",\n  \"especialidad\": \"Cardiologia\",\n  \"estado\": true\n}"
             },
             "url": {
               "raw": "http://localhost:8091/medico/guardar",
@@ -432,7 +433,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Carlos\",\n  \"apellido\": \"Gomez\",\n  \"especialidad\": \"Dermatologia\",\n  \"estado\": true\n}"
+              "raw": "{\n  \"dni\": \"7290132\",\n  \"nombre\": \"Carlos\",\n  \"apellido\": \"Gomez\",\n  \"telefono\": \"961111111\",\n  \"email\": \"carlos.gomez.med@example.com\",\n  \"especialidad\": \"Dermatologia\",\n  \"estado\": true\n}"
             },
             "url": {
               "raw": "http://localhost:8091/medico/actualizar/1",
@@ -500,7 +501,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Ramos\",\n  \"documento\": \"12345678\",\n  \"fechaNacimiento\": \"2000-01-01\",\n  \"telefono\": \"999-888\",\n  \"email\": \"luis@example.com\",\n  \"estado\": true\n}"
+              "raw": "{\n  \"dni\": \"12345678\",\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Ramos\",\n  \"fechaNacimiento\": \"2000-01-01\",\n  \"telefono\": \"999-888\",\n  \"direccion\": \"Av. Siempre Viva 123\",\n  \"email\": \"luis@example.com\",\n  \"estado\": true\n}"
             },
             "url": {
               "raw": "http://localhost:8092/paciente/guardar",
@@ -534,7 +535,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Ramos\",\n  \"documento\": \"12345678\",\n  \"fechaNacimiento\": \"2000-01-01\",\n  \"telefono\": \"999-888\",\n  \"email\": \"luis@example.com\",\n  \"estado\": true\n}"
+              "raw": "{\n  \"dni\": \"12345678\",\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Ramos\",\n  \"fechaNacimiento\": \"2000-01-01\",\n  \"telefono\": \"999-888\",\n  \"direccion\": \"Av. Siempre Viva 123\",\n  \"email\": \"luis@example.com\",\n  \"estado\": true\n}"
             },
             "url": {
               "raw": "http://localhost:8092/paciente/actualizar/1",

@@ -1,0 +1,103 @@
+@startuml ApiArticulo
+
+' Configuración
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad Articulo
+class Articulo {
+  -id: Long
+  -nom: String
+  -pre: double
+  -sto: int
+}
+
+' Servicio
+class Servicio {
+  +grabar(art: Articulo): Articulo
+  +buscar(id: Long): Articulo
+  +listar(): List
+  +actualizar(id: Long, art: Articulo): Articulo
+  +eliminar(id: Long): void
+}
+
+' Interfaz Repositorio
+interface Repositorio {
+}
+
+' JpaRepository
+class JpaRepository {
+}
+
+' EurekaServer
+class EurekaServer {
+}
+
+' Controladores
+class Grabar {
+}
+
+class Mensaje {
+}
+
+class Buscar {
+}
+
+class Datos {
+}
+
+class Listado {
+}
+
+class Catalogo {
+}
+
+' API Central
+circle ApiArticulo
+
+' Operaciones
+class "Grabar" as Grabar2 {
+}
+
+class "Buscar" as Buscar2 {
+}
+
+class "Listar" as Listar1 {
+}
+
+class "Listar" as Listar2 {
+}
+
+' Relaciones - Controladores a Operaciones
+Grabar --> Grabar2
+Grabar2 --> ApiArticulo
+
+Mensaje <-- Grabar2
+
+Buscar --> Buscar2
+Buscar2 --> ApiArticulo
+
+Datos <-- Buscar2
+
+Listado <-- Listar1
+Listar1 --> ApiArticulo
+
+Catalogo <-- Listar2
+Listar2 --> ApiArticulo
+
+' Relaciones - ApiArticulo a Servicio
+ApiArticulo --> Servicio
+
+' Relaciones - Servicio a Repositorio
+Servicio --> Repositorio
+
+' Relaciones - Repositorio a JpaRepository
+Repositorio o--> JpaRepository
+
+' Relaciones - Repositorio a Articulo
+Repositorio o..> Articulo
+
+' Relaciones - ApiArticulo a EurekaServer
+ApiArticulo ..> EurekaServer
+
+@enduml

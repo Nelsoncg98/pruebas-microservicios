@@ -23,10 +23,11 @@ public class PacienteServicio {
         Paciente existente = op.get();
         existente.setNombre(p.getNombre());
         existente.setApellido(p.getApellido());
-        existente.setDocumento(p.getDocumento());
+    existente.setDni(p.getDni());
         existente.setFechaNacimiento(p.getFechaNacimiento());
         existente.setTelefono(p.getTelefono());
         existente.setEmail(p.getEmail());
+        existente.setDireccion(p.getDireccion());
         existente.setEstado(p.isEstado());
         return repo.save(existente);
     }

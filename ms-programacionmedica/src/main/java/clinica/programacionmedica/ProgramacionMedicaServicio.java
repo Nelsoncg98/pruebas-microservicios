@@ -42,7 +42,7 @@ public class ProgramacionMedicaServicio {
             throw new IllegalArgumentException("El administrativo con id=" + idAdministrativo + " no existe");
         }
 
-    HorarioMedico[] horarios = resTem.getForObject("http://ms-carritohorariomedico/carritohorario/listar",
+        HorarioMedico[] horarios = resTem.getForObject("http://ms-carritohorariomedico/carritohorario/listar",
                 HorarioMedico[].class);
         List<Long> idsGuardados = new ArrayList<>();
         List<HorarioMedico> horariosCompletos = new ArrayList<>();
@@ -62,14 +62,15 @@ public class ProgramacionMedicaServicio {
 
         guardada.setHorarios(horariosCompletos);
 
-    resTem.delete("http://ms-carritohorariomedico/carritohorario/nuevo");
+        resTem.delete("http://ms-carritohorariomedico/carritohorario/nuevo");
 
         return guardada;
     }
 
     public ProgramacionMedica buscar(Long id) {
         ProgramacionMedica op = repo.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Programación médica no encontrada"));
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Programación médica no encontrada"));
 
         // Llenar los horarios completos
         List<HorarioMedico> horarios = new ArrayList<>();
@@ -79,17 +80,16 @@ public class ProgramacionMedicaServicio {
             if (h != null) {
                 horarios.add(h);
             }
-            
+
         }
         op.setHorarios(horarios);
-        
+
         return op;
     }
 
     public Page<ProgramacionMedica> listar(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
         Page<ProgramacionMedica> pagina = repo.findAll(pageable);
-
 
         for (ProgramacionMedica p : pagina.getContent()) {
             List<HorarioMedico> horarios = new ArrayList<>();
@@ -102,8 +102,6 @@ public class ProgramacionMedicaServicio {
             }
             p.setHorarios(horarios);
         }
-
-
 
         return pagina;
     }
