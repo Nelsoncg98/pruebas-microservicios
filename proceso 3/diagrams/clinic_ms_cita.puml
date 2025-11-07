@@ -1,0 +1,73 @@
+@startuml ClinicMsCita
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' ========== Entidad ==========
+class Cita {
+  -numero: Long
+  -pacienteId: Long
+  -horarioId: Long
+  -estado: String
+}
+
+' ========== Servicio ==========
+class ServicioCita {
+  +crear(dniPaciente: String, horarioId: Long): Cita
+  +cancelar(id: Long): Cita
+  +buscar(id: Long): Cita
+  +listar(): List
+}
+
+' ========== Repositorio / Infra ==========
+interface CitaRepositorio
+class JpaRepository
+class EurekaServer
+
+' ========== API y Operaciones (endpoints) ==========
+circle ApiCita
+class Crear
+class Cancelar
+class Buscar
+class Listar
+class Mensaje
+class Datos
+class Listado
+
+' ========== Flujo interno ==========
+Crear --> ApiCita
+Crear --> Mensaje
+Cancelar --> ApiCita
+Cancelar --> Mensaje
+Buscar --> ApiCita
+Buscar --> Datos
+Listar --> ApiCita
+Listar --> Listado
+
+ApiCita --> ServicioCita
+ServicioCita --> CitaRepositorio
+CitaRepositorio o--> JpaRepository
+CitaRepositorio o..> Cita
+ApiCita ..> EurekaServer
+
+' ========== Dependencias HTTP (a otros microservicios) ==========
+ServicioCita ..> ApiPaciente : <<HTTP>>\nGET /paciente?dni=...
+ServicioCita ..> ApiHorarioMedico : <<HTTP>>\nPATCH reservar/liberar
+
+' Notas explicativas
+note right of ServicioCita
+Orquesta la lógica de cita:
+- Validar paciente (por DNI)
+- Reservar horario
+- Persistir cita
+- Cancelar -> liberar horario
+end note
+
+note bottom of ApiCita
+Endpoints:
+POST /cita/crear
+DELETE /cita/cancelar/{id}
+GET /cita/buscar/{id}
+GET /cita/listar
+end note
+
+@enduml

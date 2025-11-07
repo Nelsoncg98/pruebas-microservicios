@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -111,5 +112,32 @@ public class HorarioMedicoControl {
         return ResponseEntity.ok(serv.medicosDisponibles(fecha, horaInicio, horaFin));
     }
     
+    // Marcar un horario como reservado (disponible=false)
+    @PatchMapping("/reservar/{id}")
+    public ResponseEntity<?> reservar(@PathVariable Long id){
+        try {
+            HorarioMedico h = serv.reservar(id);
+            if (h == null){
+                return ResponseEntity.status(404).body(Map.of("message", "Horario no encontrado"));
+            }
+            return ResponseEntity.ok(h);
+        } catch (IllegalStateException e){
+            return ResponseEntity.status(409).body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    // Liberar un horario (disponible=true)
+    @PatchMapping("/liberar/{id}")
+    public ResponseEntity<?> liberar(@PathVariable Long id){
+        try {
+            HorarioMedico h = serv.liberar(id);
+            if (h == null){
+                return ResponseEntity.status(404).body(Map.of("message", "Horario no encontrado"));
+            }
+            return ResponseEntity.ok(h);
+        } catch (IllegalStateException e){
+            return ResponseEntity.status(409).body(Map.of("message", e.getMessage()));
+        }
+    }
 
 }

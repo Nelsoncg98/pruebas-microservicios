@@ -16,6 +16,11 @@ public class PacienteServicio {
     public Paciente buscar(Long id){ Optional<Paciente> op = repo.findById(id); return op.orElse(null);} 
     public void limpiar(){ repo.deleteAll(); }
 
+    public Paciente buscarPorDni(String dni){
+        Optional<Paciente> op = repo.findByDni(dni);
+        return op.orElse(null);
+    }
+
     // Actualizar un paciente existente; devuelve la entidad actualizada o null si no existe
     public Paciente actualizar(Long id, Paciente p){
         Optional<Paciente> op = repo.findById(id);
