@@ -136,4 +136,28 @@ public class HorarioMedicoServicio {
 
     }
 
+    // Cambia el flag disponible=false si está true; lanza IllegalStateException si ya no está disponible
+    public HorarioMedico reservar(Long id){
+        Optional<HorarioMedico> op = repo.findById(id);
+        if (op.isEmpty()) return null; // 404 en el controlador
+        HorarioMedico h = op.get();
+        if (Boolean.FALSE.equals(h.getDisponible())){
+            throw new IllegalStateException("El horario ya está reservado/no disponible");
+        }
+        h.setDisponible(Boolean.FALSE);
+        return repo.save(h);
+    }
+
+    // Cambia el flag disponible=true si está false; lanza IllegalStateException si ya está disponible
+    public HorarioMedico liberar(Long id){
+        Optional<HorarioMedico> op = repo.findById(id);
+        if (op.isEmpty()) return null; // 404 en el controlador
+        HorarioMedico h = op.get();
+        if (Boolean.TRUE.equals(h.getDisponible())){
+            throw new IllegalStateException("El horario ya está disponible");
+        }
+        h.setDisponible(Boolean.TRUE);
+        return repo.save(h);
+    }
+
 }

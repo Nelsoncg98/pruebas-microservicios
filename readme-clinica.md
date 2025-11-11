@@ -32,50 +32,95 @@ Variables importantes detectadas en ApiArticuloN/Eureka:
 1. EurekaServerN (8761)
 2. Resto de servicios (ver puertos).
 
-## Microservicios del sistema (Sprint Semana 1)
-A continuación, los servicios a crear tomando como plantilla ApiArticuloN y ajustando nombres, entidad, puertos y endpoints. Todos exponen CRUD RESTful: GET (listar/buscar), POST (crear), PUT (actualizar), DELETE (borrar). Donde aplique, se añaden endpoints adicionales.
+## Microservicios del sistema — Estado actual y faltantes
+En lugar de listar sólo lo planificado, a continuación se presenta el estado real del repo ("YA ESTÁN") y los microservicios que faltan por implementar ("FALTA"). También se alinea esta lista con los requerimientos del cliente (procesos del caso de estudio).
 
-1. ms-personaladministrativo (8081)
-   - Entidad: PersonalAdministrativo { numero, nombre, apellido, telefono, cargo, fecha, estado }
-   - BD: personaladministrativo_db (H2)
-   - Endpoints: GET, POST, PUT, DELETE /personaladministrativo
-   - Dependencias externas: ninguna
+### Servicios presentes en el workspace (YA ESTÁN)
+- `EurekaServerN` (8761) — servidor de descubrimiento
+- `ms-personaladministrativo` (8081)
+- `ms-programacionmedica` (8082)
+- `ms-carritohorariomedico` (8083)
+- `ms-horariomedico` (8085)
+- `ms-enfermera` (8086)
+- `ms-paciente` (8087)
+- `ms-medico` (8091)
+- Otros módulos de ejemplo / soporte que están en el repo: `ApiArticuloN`, `ApiBoletaN`, `ArqEmpNBoletaCarrito`, `Carrito/`, `postman_collection.json` (usar solo como referencia)
 
-2. ms-programacionmedica (8082)
-   - Entidad: ProgramacionMedica { numero, fecha, personal, medico }
-   - BD: programacionmedica_db (H2)
-   - Endpoints: GET, POST, PUT, DELETE /programacionmedica
-   - Consume: GET /personaladministrativo/{id} (ms-personaladministrativo), GET /medico/{id} (a futuro ms-medico)
+> Nota: según su instrucción los servicios `ms-linea*` (por ejemplo `ms-lineahorariomedico`, `ms-lineareceta`, `ms-lineaanalisis`) no se contabilizan como servicios separados: su funcionalidad se asumirá dentro del servicio padre correspondiente.
 
-3. ms-carritohorariomedico (8083)
-   - Entidad: CarritoHorarioMedico { numero, fecha, programacion, total_horarios }
-   - BD: carritohorariomedico_db (H2)
-   - Endpoints: GET, POST, PUT, DELETE /carritohorariomedico
-   - Consume: GET /programacionmedica/{id} (ms-programacionmedica)
+### Servicios que faltan por implementar (FALTA)
+Estos servicios figuran en la tabla referencial y son necesarios para cubrir todos los procesos del cliente:
+- `ms-historia` — Historia clínica (8088)
+- `ms-cita` — Gestión de citas (8089)
+- `ms-cajero` — Caja / pagos (8090)
+- `ms-boleta` — Emisión de boletas (8092)
+- `ms-receta` — Recetas médicas (8093)
+- `ms-carritoreceta` — Carrito para recetas (8094)
+- `ms-medicamento` — Catálogo de medicamentos (8096)
+- `ms-atencionmedica` — Registro de atenciones (8097)
+- `ms-analisis` — Solicitudes de laboratorio (8098)
+- `ms-carritoanalisis` — Carrito para análisis (8099)
+- `ms-tipoanalisis` — Catálogo de tipos de análisis (8101)
 
-4. ms-lineahorariomedico (8084)
-   - Entidad: LineaHorarioMedico { numero, carrito, horario, especialidad }
-   - BD: lineahorariomedico_db (H2)
-   - Endpoints: GET, POST, PUT, DELETE /lineahorariomedico
-   - Consume: GET /carritohorariomedico/{id} (ms-carritohorariomedico), GET /horariomedico/{id} (ms-horariomedico)
+### Alineación con los procesos del cliente (caso de estudio)
+Los 7 procesos descritos por el cliente (programación, historia, solicitud de cita, pago, atención, receta, análisis) se mapean a los microservicios así:
 
-5. ms-horariomedico (8085)
-   - Entidad: HorarioMedico { numero, fecha, horaInicio, horaFin, medico, consultorio }
-   - BD: horariomedico_db (H2)
-   - Endpoints: GET, POST, PUT, DELETE /horariomedico; GET /horariomedico/disponibles
-   - Consume: GET /medico/{id} (a futuro ms-medico)
+- Proceso 1 — Programación de horarios de médicos:
+   - Servicios implicados: `ms-personaladministrativo` (actor), `ms-programacionmedica`, `ms-horariomedico`, `ms-medico`.
 
-6. ms-enfermera (8086)
-   - Entidad: Enfermera { numero, nombre, apellido, documento, cod_coleg, turno, area, estado }
-   - BD: enfermera_db (H2)
-   - Endpoints: GET, POST, PUT, DELETE /enfermera
-   - Dependencias externas: ninguna
+- Proceso 2 — Historia médica (registro inicial por enfermera):
+   - Servicios implicados: `ms-enfermera`, `ms-paciente`, `ms-historia` (faltante).
 
-7. ms-paciente (8087)
-   - Entidad: Paciente { numero, nombre, apellido, nroDoc, telefono, sexo, fechaNaci, direccion, nro_afiliado, nom_seguro }
-   - BD: paciente_db (H2)
-   - Endpoints: GET, POST, PUT, DELETE /paciente
-   - Dependencias externas: ninguna
+- Proceso 3 — Solicitud de cita médica (teléfono):
+   - Servicios implicados: `ms-cita` (faltante), `ms-programacionmedica`, `ms-horariomedico`, `ms-medico`.
+
+- Proceso 4 — Pago de cita:
+   - Servicios implicados: `ms-cajero` (faltante), `ms-boleta` (faltante), `ms-cita`.
+
+- Proceso 5 — Atención médica:
+   - Servicios implicados: `ms-atencionmedica` (faltante), `ms-cita`, `ms-boleta`, `ms-receta` (faltante), `ms-analisis` (faltante), `ms-historia`.
+
+- Proceso 6 — Receta médica:
+   - Servicios implicados: `ms-receta` (faltante), `ms-medicamento` (faltante).
+
+- Proceso 7 — Análisis clínico:
+   - Servicios implicados: `ms-analisis` (faltante), `ms-tipoanalisis` (faltante), `ms-carritoanalisis` (faltante).
+
+### Qué se cambió respecto al README anterior
+- Se eliminaron las referencias a `ms-linea*` como servicios independientes (su lógica irá dentro del servicio padre).
+- Se añadió una sección clara con el estado actual del repo (qué YA ESTÁ) y con el listado de lo que FALTA.
+- Se alineó la lista con los procesos del cliente, indicando para cada proceso qué microservicios implementan la funcionalidad y cuáles están pendientes.
+
+Si quieres, puedo ahora:
+- Generar automáticamente `estimates/missing_microservices.csv` con este listado (nombre, puerto sugerido, entidad, estado FALTA), o
+- Crear un `requirements/` README que incluya este mapeo más detallado (endpoints mínimos por servicio), o
+- Nada: dejar el README actualizado y volvemos a lo siguiente que indiques.
+
+## Procesos del cliente (caso de estudio: Centro Médico)
+Se incluyen a continuación los procesos funcionales que el cliente definió y que sirven como requisitos de negocio para el sistema.
+
+1. Proceso de programación de horarios de médicos:
+   - El personal administrativo consulta la disponibilidad al médico por especialidad y elabora la programación de médicos por día y hora, considerando la especialidad, fecha, día, hora y consultorio.
+
+2. Proceso de historia médica:
+   - Para ser atendido el paciente acude al centro médico, la enfermera registra sus datos personales y toma los datos médicos básicos como peso, talla, edad siempre y cuando sea la primera vez que asista, finalmente la enfermera elabora la historia médica del paciente.
+
+3. Proceso de solicitud de cita médica:
+   - Para ser atendido el paciente solicita vía telefónica una cita médica, el encargado solicita la especialidad y le informa los médicos disponibles la fecha, hora y costo de atención, una vez confirmado el médico, el encargado elabora la cita médica.
+
+4. Proceso de pago de cita:
+   - El paciente acude al centro médico y se acerca a caja; el cajero solicita sus datos personales y de la cita, finalmente el cajero elabora una boleta de venta, el paciente entrega el dinero y se retira con la boleta cancelada.
+
+5. Proceso de atención médica:
+   - El paciente acude a la cita, el médico verifica el pago de la cita y elabora la atención médica: examina al paciente, registra los datos de la atención médica como diagnóstico y tratamiento; a esa ficha se le añaden la receta de medicamentos y/o análisis clínico si se requiere; finalmente registra la atención y añade toda esta información a la historia médica.
+
+6. Proceso de receta médica:
+   - El médico selecciona los medicamentos de un listado de medicamentos y elabora la receta médica.
+
+7. Proceso de análisis clínico:
+   - El médico selecciona los tipos de análisis de una lista de tipos de análisis y elabora la solicitud de análisis clínico.
+
+Estas descripciones deben usarse como requisitos de negocio al diseñar los endpoints y el comportamiento de los microservicios listados más arriba.
 
 ## Convenciones por servicio
 - Paquete base: `clinica.<nombreServicio>` (o similar) para diferenciar del ejemplo `Tienda.ApiArticuloN`.

@@ -1,0 +1,54 @@
+@startuml Proceso3Detalle
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Infraestructura
+class EurekaServer
+
+' APIs circulares
+circle ApiPaciente
+circle ApiHorarioMedico
+circle ApiCita
+
+' Servicio nuevo
+class ServicioCita {
+  +crear(dniPaciente: String, horarioId: Long): Cita
+  +cancelar(id: Long): Cita
+  +buscar(id: Long): Cita
+  +listar(): List
+}
+
+' Entidad Cita
+class Cita {
+  -numero: Long
+  -pacienteId: Long
+  -horarioId: Long
+  -estado: String
+}
+
+' Operaciones (endpoints ms-cita)
+class Crear
+class Cancelar
+class BuscarCita
+class ListarCita
+
+' Repositorio
+interface CitaRepositorio
+class JpaRepository
+
+' Flujo interno ms-cita
+Crear --> ApiCita
+Cancelar --> ApiCita
+BuscarCita --> ApiCita
+ListarCita --> ApiCita
+ApiCita --> ServicioCita
+ServicioCita --> CitaRepositorio
+CitaRepositorio o--> JpaRepository
+CitaRepositorio o..> Cita
+ApiCita ..> EurekaServer
+
+' Dependencias HTTP salientes desde ServicioCita
+ServicioCita ..> ApiPaciente : <<HTTP>>\nGET /paciente?dni=...
+ServicioCita ..> ApiHorarioMedico : <<HTTP>>\nPATCH /horariomedico/reservar/{id}\nPATCH /horariomedico/liberar/{id}
+
+@enduml

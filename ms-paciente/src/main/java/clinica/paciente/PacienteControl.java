@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 import java.util.Map;
@@ -31,6 +32,16 @@ public class PacienteControl {
     public List<Paciente> listar(){ return serv.listar(); }
     @GetMapping("/buscar/{id}")
     public Paciente buscar(@PathVariable Long id){ return serv.buscar(id); }
+
+    // GET /paciente?dni=XXXXXXXX
+    @GetMapping(params = "dni")
+    public ResponseEntity<?> buscarPorDni(@RequestParam String dni){
+        Paciente p = serv.buscarPorDni(dni);
+        if (p == null){
+            return ResponseEntity.status(404).body(Map.of("message", "Paciente no encontrado"));
+        }
+        return ResponseEntity.ok(p);
+    }
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Paciente p){

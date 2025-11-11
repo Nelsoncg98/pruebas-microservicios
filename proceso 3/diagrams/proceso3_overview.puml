@@ -1,0 +1,34 @@
+@startuml Proceso3Overview
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Infraestructura
+class EurekaServer
+
+' APIs (círculos) y Servicios
+circle ApiPaciente
+class ServicioPaciente
+ApiPaciente --> ServicioPaciente
+ApiPaciente ..> EurekaServer
+
+circle ApiHorarioMedico
+class ServicioHorarioMedico
+ApiHorarioMedico --> ServicioHorarioMedico
+ApiHorarioMedico ..> EurekaServer
+
+circle ApiCita
+class ServicioCita
+ApiCita --> ServicioCita
+ApiCita ..> EurekaServer
+
+' Relaciones HTTP del Proceso 3
+ServicioCita ..> ApiPaciente : <<HTTP>>\nGET /paciente?dni=...
+ServicioCita ..> ApiHorarioMedico : <<HTTP>>\nPATCH /horariomedico/reservar/{id}\nPATCH /horariomedico/liberar/{id}
+
+note bottom of ApiCita
+Proceso 3 (agendamiento):
+- Crear cita valida paciente y reserva horario
+- Cancelar cita libera el horario
+end note
+
+@enduml
