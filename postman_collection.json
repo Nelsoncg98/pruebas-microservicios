@@ -578,6 +578,94 @@
     }
     ,
     {
+      "name": "ms-historiamedica",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8088/historiaMedica/listar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8088",
+              "path": ["historiaMedica","listar"]
+            }
+          }
+        },
+        {
+          "name": "Guardar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+             "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pacienteId\": 1,\n  \"tipoSangre\": \"O+\",\n  \"alergias\": \"Penicilina\",\n  \"enfermedadesCronicas\": \"Hipertensión\",\n  \"antecedentesFamiliares\": \"Diabetes\",\n  \"fechaCreacion\": \"2025-11-12\"\n}"
+            },
+
+            "url": {
+              "raw": "http://localhost:8088/historiaMedica/guardar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8088",
+              "path": ["historiaMedica","guardar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8088/historiaMedica/buscar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8088",
+              "path": ["historiaMedica","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"descripcion\": \"Actualización de historia\",\n  \"fecha\": \"2025-10-29\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8088/historiaMedica/actualizar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8088",
+              "path": ["historiaMedica","actualizar","1"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por pacienteId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8088/historiaMedica/buscar/paciente/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8088",
+              "path": ["historiaMedica","buscar","paciente","1"]
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "ms-enfermera",
       "item": [
         {
