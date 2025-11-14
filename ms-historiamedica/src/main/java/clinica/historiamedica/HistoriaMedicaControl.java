@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
+import org.springframework.web.server.ResponseStatusException;
 
 @CrossOrigin(origins = "http://localhost:5173") // habilitar CORS para el frontend en desarrollo
 @RestController
@@ -66,14 +65,41 @@ public class HistoriaMedicaControl {
     }
 
     // Buscar historia médica por pacienteId
+    // @GetMapping("/buscar/paciente/{pacienteId}")
+    // public ResponseEntity<?> buscarPorPaciente(@PathVariable Long pacienteId) {
+    // try {
+    // HistoriaMedica h = servicio.buscarPorPacienteId(pacienteId);
+    // return ResponseEntity.ok(h);
+    // } catch (RuntimeException e) {
+    // return ResponseEntity.status(HttpStatus.NOT_FOUND)
+    // .body(Map.of("mensaje", e.getMessage()));
+    // }
+    // }
     @GetMapping("/buscar/paciente/{pacienteId}")
     public ResponseEntity<?> buscarPorPaciente(@PathVariable Long pacienteId) {
         try {
             HistoriaMedica h = servicio.buscarPorPacienteId(pacienteId);
+            // Si existe historia, la devolvemos
             return ResponseEntity.ok(h);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            // Si no existe historia, devolvemos 204 No Content
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    // Eliminar historia médica por ID
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        try {
+            servicio.eliminar(id);
+            return ResponseEntity.ok(Map.of("mensaje", "Historia médica eliminada correctamente"));
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode())
+                    .body(Map.of("mensaje", e.getReason()));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("mensaje", e.getMessage()));
         }
     }
+
 }

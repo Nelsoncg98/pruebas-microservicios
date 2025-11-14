@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 @Service
 public class HistoriaMedicaServicio {
@@ -33,35 +36,29 @@ public class HistoriaMedicaServicio {
         }
     }
 
-    private boolean validarPaciente(Long idPaciente) {
-        if (idPaciente == null)
-            return false;
-
-        String url = "http://localhost:8092/paciente/buscar/" + idPaciente;
-        try {
-            PacienteDTO paciente = resTem.getForObject(url, PacienteDTO.class);
-            return paciente != null && paciente.getNumero() != null && paciente.getNumero().equals(idPaciente);
-        } catch (RestClientException e) {
-            return false;
-        }
-    }
+    
 
     // Guardar historia médica incluyendo todos los campos
     public HistoriaMedica guardar(HistoriaMedica h) {
         if (h.getPacienteId() == null) {
-            throw new RuntimeException("El idPaciente es obligatorio");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El idPaciente es obligatorio");
         }
 
-        // if (!validarPaciente(h.getPacienteId())) {
-        // throw new RuntimeException("El paciente no existe en el microservicio de
-        // pacientes");
-        // }
+        // comprobación previa (mejor tener también constraint DB)
+        if (repo.existsByPacienteId(h.getPacienteId())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El paciente ya tiene una historia médica");
+        }
 
         if (h.getFechaCreacion() == null) {
             h.setFechaCreacion(java.time.LocalDate.now());
         }
 
-        return repo.save(h);
+        try {
+            return repo.save(h);
+        } catch (DataIntegrityViolationException ex) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "El paciente ya tiene una historia médica (conflicto)");
+        }
     }
 
     public HistoriaMedica buscar(Long id) {
@@ -74,9 +71,7 @@ public class HistoriaMedicaServicio {
         if (op.isEmpty())
             return null;
 
-        if (!validarPaciente(h.getPacienteId())) {
-            throw new RuntimeException("El paciente no existe en el microservicio de pacientes");
-        }
+       
 
         HistoriaMedica existente = op.get();
         existente.setTipoSangre(h.getTipoSangre());
@@ -91,10 +86,6 @@ public class HistoriaMedicaServicio {
     }
 
     public HistoriaMedica buscarPorPacienteId(Long pacienteId) {
-        // if (!validarPaciente(pacienteId)) {
-        // throw new RuntimeException("El paciente no existe en el microservicio de
-        // pacientes");
-        // }
 
         Optional<HistoriaMedica> op = repo.findByPacienteId(pacienteId);
         if (op.isPresent()) {
@@ -103,4 +94,22 @@ public class HistoriaMedicaServicio {
             throw new RuntimeException("El paciente no tiene historia médica registrada");
         }
     }
+    
+
+    // Eliminar historia médica por ID
+    public void eliminar(Long idHistoriaMedica) {
+        Optional<HistoriaMedica> op = repo.findById(idHistoriaMedica);
+        if (op.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La historia médica no existe");
+        }
+
+        try {
+            repo.deleteById(idHistoriaMedica);
+        } catch (DataIntegrityViolationException ex) {
+            // Si por algún motivo hay restricciones de integridad
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "No se puede eliminar la historia médica debido a restricciones de integridad");
+        }
+    }
+
 }
