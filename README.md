@@ -8,7 +8,7 @@ Incluye:
 - Un carrito mínimo de horarios (`ms-carritohorariomedico`) para uso académico
 - Colección de Postman para probar localmente los endpoints de la clínica
 
-Tecnologías clave
+Tecnologías clase
 - Java 21
 - Spring Boot 3.5.6
 - Spring Cloud 2025.0.0 (Eureka Client)
