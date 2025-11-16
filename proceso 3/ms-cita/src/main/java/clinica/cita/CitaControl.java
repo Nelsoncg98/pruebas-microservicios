@@ -26,6 +26,11 @@ public class CitaControl {
     @GetMapping("/listar")
     public List<Cita> listar(){ return serv.listar(); }
 
+    @GetMapping("/porPaciente/{pacienteId}")
+    public List<Cita> listarPorPaciente(@PathVariable Long pacienteId){
+        return serv.listarPorPaciente(pacienteId);
+    }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<?> buscar(@PathVariable Long id){
         Cita c = serv.buscar(id);

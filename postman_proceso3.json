@@ -536,6 +536,20 @@
               "path": ["cita","cancelar","1"]
             }
           }
+        },
+        {
+          "name": "Listar por paciente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8089/cita/porPaciente/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8089",
+              "path": ["cita","porPaciente","1"]
+            }
+          }
         }
       ]
     },
@@ -576,6 +590,23 @@
                 {"key":"horarioId","value":"1"},
                 {"key":"motivo","value":"Consulta general"},
                 {"key":"tipoCita","value":"PRESENCIAL"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Citas por paciente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8189/solicitudcita/citasPorPaciente?idPaciente=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8189",
+              "path": ["solicitudcita","citasPorPaciente"],
+              "query": [
+                {"key":"idPaciente","value":"1"}
               ]
             }
           }

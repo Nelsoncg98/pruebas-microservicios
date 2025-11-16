@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 // Servicio compuesto para el proceso de solicitud de cita
 @Service
@@ -17,9 +20,80 @@ public class SolicitudCitaServicio {
      * Lista médicos disponibles por especialidad, delegando en ms-medico.
      * Ejemplo de endpoint remoto: http://localhost:8091/medico/porEspecialidad?especialidad=Cardiologia
      */
-    public Medico[] listarHorariosDisponiblesPorEspecialidad(String especialidad) {
-        String url = "http://ms-medico/medico/porEspecialidad?especialidad=" + especialidad;
-        return restTemplate.getForObject(url, Medico[].class);
+    public List<MedicoConHorarios> listarHorariosDisponiblesPorEspecialidad(String especialidad) {
+        String urlMedicos = "http://localhost:8091/medico/porEspecialidad?especialidad=" + especialidad;
+        Medico[] medicos;
+        try {
+            medicos = restTemplate.getForObject(urlMedicos, Medico[].class);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al invocar ms-medico: " + e.getMessage(), e);
+        }
+        if (medicos == null || medicos.length == 0) {
+            return List.of();
+        }
+
+        List<MedicoConHorarios> resultado = new ArrayList<>();
+        for (Medico m : medicos) {
+            MedicoConHorarios dto = new MedicoConHorarios();
+            dto.setNumero(m.getNumero());
+            dto.setNombre(m.getNombre());
+            dto.setEspecialidad(m.getEspecialidad());
+
+            String urlHorarios = "http://localhost:8185/disponibilidad/disponibles?medicoId=" + m.getNumero() + "&disponible=true";
+            HorarioMedico[] horarios;
+            try {
+                horarios = restTemplate.getForObject(urlHorarios, HorarioMedico[].class);
+            } catch (Exception e) {
+                throw new RuntimeException("Error al invocar ms-disponibilidadhorarios: " + e.getMessage(), e);
+            }
+            if (horarios != null && horarios.length > 0) {
+                dto.setHorarios(Arrays.asList(horarios));
+            } else {
+                dto.setHorarios(List.of());
+            }
+
+            resultado.add(dto);
+        }
+
+        return resultado;
+    }
+
+    public CitasPorPaciente obtenerCitasPorPaciente(Long pacienteId) {
+        if (pacienteId == null) {
+            throw new IllegalArgumentException("pacienteId es obligatorio");
+        }
+
+        // 1) Obtener datos del paciente desde ms-paciente
+        String urlPaciente = "http://localhost:8082/paciente/buscar/" + pacienteId;
+        Paciente paciente;
+        try {
+            paciente = restTemplate.getForObject(urlPaciente, Paciente.class);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al invocar ms-paciente: " + e.getMessage(), e);
+        }
+        if (paciente == null) {
+            throw new RuntimeException("Paciente no encontrado");
+        }
+
+        // 2) Obtener citas desde ms-cita
+        String urlCitas = "http://localhost:8093/cita/porPaciente/" + pacienteId;
+        Cita[] citasArray;
+        try {
+            citasArray = restTemplate.getForObject(urlCitas, Cita[].class);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al invocar ms-cita: " + e.getMessage(), e);
+        }
+        List<Cita> citas = (citasArray != null && citasArray.length > 0)
+            ?	Arrays.asList(citasArray)
+            :	List.of();
+
+        CitasPorPaciente dto = new CitasPorPaciente();
+        dto.setPacienteId(paciente.getIdPaciente().longValue());
+        dto.setNombres(paciente.getNombres());
+        dto.setApellidos(paciente.getApellidos());
+        dto.setDni(paciente.getDni());
+        dto.setCitas(citas);
+        return dto;
     }
 
     /**
