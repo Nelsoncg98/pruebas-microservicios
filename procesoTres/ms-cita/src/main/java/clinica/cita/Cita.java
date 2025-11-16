@@ -17,7 +17,6 @@ public class Cita {
     // paciente dni o id
     private Long pacienteId;
     private String dniPaciente;
-
     private Long horarioId; // 
     private String idDoctor; // identificador del médico asignado
     private String motivo; // motivo breve de la cita

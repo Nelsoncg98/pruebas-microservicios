@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import clinica.expedienteclinico.dto.CitaDTO;
 
-@FeignClient(name = "ms-citas", url = "${clients.citas.url:http://localhost:8070}")
+@FeignClient(name = "ms-citas", url = "${clients.citas.url:http://localhost:8089}")
 public interface ClienteCitas {
     @GetMapping("/citas/paciente/{pacienteId}")
     List<CitaDTO> listarPorPaciente(@PathVariable("pacienteId") Long pacienteId);
