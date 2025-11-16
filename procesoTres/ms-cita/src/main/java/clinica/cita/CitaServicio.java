@@ -21,6 +21,10 @@ public class CitaServicio {
         return repo.findById(id).orElse(null);
     }
 
+	public List<Cita> listarPorPaciente(Long pacienteId) {
+		return repo.findByPacienteId(pacienteId);
+	}
+
     
 
     // Servicio normalizado de entidad: asume que la orquestación
