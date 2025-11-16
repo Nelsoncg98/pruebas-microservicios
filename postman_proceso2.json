@@ -16,9 +16,7 @@
             "url": {
               "raw": "http://localhost:8761",
               "protocol": "http",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "8761"
             }
           }
@@ -27,7 +25,104 @@
     },
     {
       "name": "ms-paciente",
-      "item": []
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8092/paciente/listar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8092",
+              "path": ["paciente","listar"]
+            }
+          }
+        },
+        {
+          "name": "Guardar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dni\": \"12345678\",\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Ramos\",\n  \"fechaNacimiento\": \"2000-01-01\",\n  \"telefono\": \"999-888\",\n  \"direccion\": \"Av. Siempre Viva 123\",\n  \"email\": \"luis@example.com\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8092/paciente/guardar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8092",
+              "path": ["paciente","guardar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8092/paciente/buscar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8092",
+              "path": ["paciente","buscar","1"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dni\": \"12345678\",\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Ramos\",\n  \"fechaNacimiento\": \"2000-01-01\",\n  \"telefono\": \"999-888\",\n  \"direccion\": \"Av. Siempre Viva 123\",\n  \"email\": \"luis@example.com\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8092/paciente/actualizar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8092",
+              "path": ["paciente","actualizar","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar por id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8092/paciente/eliminar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8092",
+              "path": ["paciente","eliminar","1"]
+            }
+          }
+        },
+        {
+          "name": "Limpiar (borrar todos)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8092/paciente/limpiar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8092",
+              "path": ["paciente","limpiar"]
+            }
+          }
+        }
+      ]
     },
     {
       "name": "ms-historiamedica",
@@ -55,7 +150,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pacienteId\": 1,\n  \"descripcion\": \"Antecedentes: paciente con alergias...\",\n  \"fecha\": \"2025-10-28\"\n}"
+              "raw": "{\n  \"pacienteId\": 1,\n  \"tipoSangre\": \"O+\",\n  \"alergias\": \"Penicilina\",\n  \"enfermedadesCronicas\": \"Hipertensión\",\n  \"antecedentesFamiliares\": \"Diabetes\"\n}"
             },
             "url": {
               "raw": "http://localhost:8088/historiaMedica/guardar",
@@ -89,7 +184,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"descripcion\": \"Actualización: se añade nota clínica\",\n  \"fecha\": \"2025-10-29\"\n}"
+              "raw": "{\n  \"tipoSangre\": \"A+\",\n  \"alergias\": \"Ninguna\",\n  \"enfermedadesCronicas\": \"Ninguna\",\n  \"antecedentesFamiliares\": \"Sin antecedentes\"\n}"
             },
             "url": {
               "raw": "http://localhost:8088/historiaMedica/actualizar/1",
@@ -134,16 +229,16 @@
       "name": "ms-expedienteclinico",
       "item": [
         {
-          "name": "Obtener expediente por pacienteId",
+          "name": "Construir expediente por paciente",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8193/expediente/paciente/1",
+              "raw": "http://localhost:8188/expedienteclinico/paciente/1",
               "protocol": "http",
               "host": ["localhost"],
-              "port": "8193",
-              "path": ["expediente","paciente","1"]
+              "port": "8188",
+              "path": ["expedienteclinico","paciente","1"]
             }
           }
         }

@@ -344,7 +344,7 @@
         {
           "name": "Reservar horario",
           "request": {
-            "method": "PATCH",
+            "method": "POST",
             "header": [],
             "url": {
               "raw": "http://localhost:8085/horariomedico/reservar/1",
@@ -358,7 +358,7 @@
         {
           "name": "Liberar horario",
           "request": {
-            "method": "PATCH",
+            "method": "POST",
             "header": [],
             "url": {
               "raw": "http://localhost:8085/horariomedico/liberar/1",
@@ -372,7 +372,7 @@
       ]
     },
     {
-      "name": "ms-historiamedica",
+      "name": "ms-horariomedico (historia en Proceso 2)",
       "item": [
         {
           "name": "Listar",
