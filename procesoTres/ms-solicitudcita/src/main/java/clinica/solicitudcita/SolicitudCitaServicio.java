@@ -18,10 +18,11 @@ public class SolicitudCitaServicio {
 
     /**
      * Lista médicos disponibles por especialidad, delegando en ms-medico.
-     * Ejemplo de endpoint remoto: http://localhost:8091/medico/porEspecialidad?especialidad=Cardiologia
+     * Ejemplo de endpoint remoto:
+     * http://localhost:8091/medico/porEspecialidad?especialidad=Cardiologia
      */
     public List<MedicoConHorarios> listarHorariosDisponiblesPorEspecialidad(String especialidad) {
-        String urlMedicos = "http://localhost:8091/medico/porEspecialidad?especialidad=" + especialidad;
+        String urlMedicos = "http://ms-medico/medico/porEspecialidad?especialidad=" + especialidad;
         Medico[] medicos;
         try {
             medicos = restTemplate.getForObject(urlMedicos, Medico[].class);
@@ -38,8 +39,13 @@ public class SolicitudCitaServicio {
             dto.setNumero(m.getNumero());
             dto.setNombre(m.getNombre());
             dto.setEspecialidad(m.getEspecialidad());
+            dto.setEmail(m.getEmail());
+            dto.setTelefono(m.getTelefono());
+            dto.setDni(m.getDni());
+            dto.setApellido(m.getApellido());
 
-            String urlHorarios = "http://localhost:8185/disponibilidad/disponibles?medicoId=" + m.getNumero() + "&disponible=true";
+            String urlHorarios = "http://ms-disponibilidadhorarios/disponibilidad/disponibles?medicoId=" + m.getNumero()
+                    + "&disponible=true";
             HorarioMedico[] horarios;
             try {
                 horarios = restTemplate.getForObject(urlHorarios, HorarioMedico[].class);
@@ -64,7 +70,7 @@ public class SolicitudCitaServicio {
         }
 
         // 1) Obtener datos del paciente desde ms-paciente
-        String urlPaciente = "http://localhost:8082/paciente/buscar/" + pacienteId;
+        String urlPaciente = "http://ms-paciente/paciente/buscar/" + pacienteId;
         Paciente paciente;
         try {
             paciente = restTemplate.getForObject(urlPaciente, Paciente.class);
@@ -76,7 +82,7 @@ public class SolicitudCitaServicio {
         }
 
         // 2) Obtener citas desde ms-cita
-        String urlCitas = "http://localhost:8093/cita/porPaciente/" + pacienteId;
+        String urlCitas = "http://ms-cita/cita/porPaciente/" + pacienteId;
         Cita[] citasArray;
         try {
             citasArray = restTemplate.getForObject(urlCitas, Cita[].class);
@@ -84,38 +90,75 @@ public class SolicitudCitaServicio {
             throw new RuntimeException("Error al invocar ms-cita: " + e.getMessage(), e);
         }
         List<Cita> citas = (citasArray != null && citasArray.length > 0)
-            ?	Arrays.asList(citasArray)
-            :	List.of();
+                ? Arrays.asList(citasArray)
+                : List.of();
 
         CitasPorPaciente dto = new CitasPorPaciente();
-        dto.setPacienteId(paciente.getIdPaciente().longValue());
-        dto.setNombres(paciente.getNombres());
-        dto.setApellidos(paciente.getApellidos());
+        dto.setNumero(paciente.getNumero());
+        dto.setNombre(paciente.getNombre());
+        dto.setApellido(paciente.getApellido());
         dto.setDni(paciente.getDni());
+        dto.setFechaNacimiento(paciente.getFechaNacimiento());
+        dto.setTelefono(paciente.getTelefono());
+        dto.setEmail(paciente.getEmail());
+        dto.setDireccion(paciente.getDireccion());
+        dto.setEstado(paciente.isEstado());
         dto.setCitas(citas);
         return dto;
     }
 
     /**
      * Confirma una cita médica orquestando la creación de la cita en ms-cita.
-     * Si viene un costo explícito, se respeta; si no, se calcula en función del tipoCita.
+     * Si viene un costo explícito, se respeta; si no, se calcula en función del
+     * tipoCita.
      */
     public Cita confirmarCita(Integer idPaciente,
-                              Integer idDoctor,
-                              Integer horarioId,
-                              String motivo,
-                              String tipoCita,
-                              Double costoOpcional) {
+            Integer idDoctor,
+            Integer horarioId,
+            String motivo,
+            String tipoCita,
+            Double costoOpcional) {
 
         if (idPaciente == null || idDoctor == null || horarioId == null) {
             throw new IllegalArgumentException("idPaciente, idDoctor y horarioId son obligatorios");
+        }
+
+        // 0) Validar existencia de paciente, médico y horario antes de crear la cita
+        String urlPaciente = "http://ms-paciente/paciente/buscar/" + idPaciente;
+        try {
+            Paciente paciente = restTemplate.getForObject(urlPaciente, Paciente.class);
+            if (paciente == null) {
+                throw new RuntimeException("Paciente no encontrado");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error al invocar ms-paciente: " + e.getMessage(), e);
+        }
+
+        String urlMedico = "http://ms-medico/medico/buscar/" + idDoctor;
+        try {
+            Medico medico = restTemplate.getForObject(urlMedico, Medico.class);
+            if (medico == null) {
+                throw new RuntimeException("Médico no encontrado");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error al invocar ms-medico: " + e.getMessage(), e);
+        }
+
+        String urlHorario = "http://ms-horariomedico/horariomedico/buscar/" + horarioId;
+        try {
+            HorarioMedico horario = restTemplate.getForObject(urlHorario, HorarioMedico.class);
+            if (horario == null) {
+                throw new RuntimeException("Horario no encontrado");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error al invocar ms-horariomedico: " + e.getMessage(), e);
         }
 
         Cita nueva = new Cita();
         nueva.setPacienteId(idPaciente.longValue());
         nueva.setIdDoctor(String.valueOf(idDoctor));
         nueva.setHorarioId(horarioId.longValue());
-        nueva.setMotivo(motivo != null ? motivo : "Solicitud de cita" );
+        nueva.setMotivo(motivo != null ? motivo : "Solicitud de cita");
         nueva.setTipoCita(tipoCita != null ? tipoCita : "CONSULTA");
         nueva.setFecha(LocalDateTime.now());
 
@@ -127,16 +170,28 @@ public class SolicitudCitaServicio {
             nueva.setCosto(calcularCostoPorTipo(nueva.getTipoCita()));
         }
 
-        String url = "http://ms-cita/cita/crear";
+        // 1) Crear cita en ms-cita
+        String urlCita = "http://ms-cita/cita/crear";
+        Cita creada;
         try {
-            return restTemplate.postForObject(url, nueva, Cita.class);
+            creada = restTemplate.postForObject(urlCita, nueva, Cita.class);
         } catch (org.springframework.web.client.HttpClientErrorException e) {
-            // Error 4xx al invocar ms-cita (por ejemplo 400, 404, 409)
-            throw new RuntimeException("Error al invocar ms-cita: " + e.getMessage(), e);
+            throw new RuntimeException("Error al invocar ms-cita: " + e.getResponseBodyAsString(), e);
         } catch (Exception e) {
-            // Cualquier otro error inesperado
             throw new RuntimeException("Error inesperado al confirmar la cita: " + e.getMessage(), e);
         }
+
+        // 2) Reservar horario en ms-horariomedico (usando POST en vez de PATCH)
+        String urlReservar = "http://ms-horariomedico/horariomedico/reservar/" + horarioId;
+        try {
+            restTemplate.postForObject(urlReservar, null, Void.class);
+        } catch (org.springframework.web.client.HttpClientErrorException e) {
+            throw new RuntimeException("Error al reservar horario: " + e.getResponseBodyAsString(), e);
+        } catch (Exception e) {
+            throw new RuntimeException("Error inesperado al reservar el horario: " + e.getMessage(), e);
+        }
+
+        return creada;
     }
 
     /**

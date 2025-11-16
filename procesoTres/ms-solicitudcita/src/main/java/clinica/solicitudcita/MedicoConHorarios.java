@@ -4,9 +4,45 @@ import java.util.List;
 
 public class MedicoConHorarios {
 	private Long numero;
-	private String nombre;
-	private String especialidad;
+    private String nombre;
+    private String apellido;
+    private String especialidad;
+    private String dni;
+    private String telefono;
+    private String email;
 	private List<HorarioMedico> horarios;
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public Long getNumero() {
 		return numero;

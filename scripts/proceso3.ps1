@@ -25,7 +25,9 @@ $pM = Start-Mvn "ms-medico" "ms-medico"; $pids += $pM.Id
 Start-Sleep -Seconds 2
 $pP = Start-Mvn "ms-paciente" "ms-paciente"; $pids += $pP.Id
 Start-Sleep -Seconds 2
-$pHM = Start-Mvn "ms-historiamedica" "ms-historiamedica"; $pids += $pHM.Id
+$pHM = Start-Mvn "ms-horariomedico" "ms-horariomedico"; $pids += $pHM.Id
+Start-Sleep -Seconds 2
+$pDH = Start-Mvn "ms-disponibilidadhorarios" "ms-disponibilidadhorarios"; $pids += $pDH.Id
 Start-Sleep -Seconds 2
 # ms-cita y ms-solicitudcita ahora viven bajo carpeta 'proceso 3'
 $pCita = Start-Mvn "ms-cita" "proceso 3\ms-cita"; $pids += $pCita.Id

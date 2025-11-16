@@ -21,7 +21,7 @@ public class DisponibilidadHorariosServicio {
      * concentrado en el microservicio compuesto.
      */
     public List<HorarioMedicoEntrada> horariosDisponibles(LocalDate fecha, Long medicoId, String consultorio, Boolean disponible) {
-        String url = "http://localhost:8085/horariomedico/listar";
+        String url = "http://ms-horariomedico/horariomedico/listar";
 
         // Cargamos todos los horarios y filtramos aquí. Si el volumen crece, se
         // podría optimizar con parámetros en el propio ms-horariomedico.

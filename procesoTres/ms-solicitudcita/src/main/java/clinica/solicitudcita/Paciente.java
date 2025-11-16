@@ -1,41 +1,77 @@
 package clinica.solicitudcita;
 
+import java.time.LocalDate;
+
+
+
 // Representa al paciente tal como lo devuelve ms-paciente
 public class Paciente {
-    private Integer idPaciente;
-    private String nombres;
-    private String apellidos;
+    private Long numero;
+
+    private String nombre;
+    private String apellido;
+    
     private String dni;
-
-    public Integer getIdPaciente() {
-        return idPaciente;
+    private LocalDate fechaNacimiento;
+    private String telefono;
+    private String email;
+    // Nuevo: dirección postal
+    private String direccion;
+    private boolean estado;
+    public Long getNumero() {
+        return numero;
     }
-
-    public void setIdPaciente(Integer idPaciente) {
-        this.idPaciente = idPaciente;
+    public void setNumero(Long numero) {
+        this.numero = numero;
     }
-
-    public String getNombres() {
-        return nombres;
+    public String getNombre() {
+        return nombre;
     }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-
-    public String getApellidos() {
-        return apellidos;
+    public String getApellido() {
+        return apellido;
     }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
-
     public String getDni() {
         return dni;
     }
-
     public void setDni(String dni) {
         this.dni = dni;
     }
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+    public String getTelefono() {
+        return telefono;
+    }
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getDireccion() {
+        return direccion;
+    }
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+    public boolean isEstado() {
+        return estado;
+    }
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    
 }

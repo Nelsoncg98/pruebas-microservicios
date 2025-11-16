@@ -86,7 +86,7 @@ public class HorarioMedicoControl {
     }
 
     // Marcar un horario como reservado (disponible=false)
-    @PatchMapping("/reservar/{id}")
+    @PostMapping("/reservar/{id}")
     public ResponseEntity<?> reservar(@PathVariable Long id){
         try {
             HorarioMedico h = serv.reservar(id);
@@ -100,7 +100,7 @@ public class HorarioMedicoControl {
     }
 
     // Liberar un horario (disponible=true)
-    @PatchMapping("/liberar/{id}")
+    @PostMapping("/liberar/{id}")
     public ResponseEntity<?> liberar(@PathVariable Long id){
         try {
             HorarioMedico h = serv.liberar(id);

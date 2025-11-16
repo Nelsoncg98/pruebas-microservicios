@@ -1,52 +1,60 @@
 package clinica.solicitudcita;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 // Representa un horario médico tal como lo devuelve ms-horariomedico
 public class HorarioMedico {
-    private Integer idHorarioMedico;
-    private Integer idMedico;
-    private LocalDateTime fechaHoraInicio;
-    private LocalDateTime fechaHoraFin;
-    private String estado; // LIBRE, RESERVADO, etc.
+    private Long numero;
+    private LocalDate fecha;
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
+    private Long medicoId;
+    private String consultorio;
+    private String disponible; // LIBRE, RESERVADO, etc.
 
-    public Integer getIdHorarioMedico() {
-        return idHorarioMedico;
+    public Long getNumero() {
+        return numero;
+    }
+    public LocalDate getFecha() {
+        return fecha;
+    }
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+    public void setNumero(Long numero) {
+        this.numero = numero;
+    }
+    public Long getMedicoId() {
+        return medicoId;
+    }
+    public void setMedicoId(Long medicoId) {
+        this.medicoId = medicoId;
+    }
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+    public LocalTime getHoraFin() {
+        return horaFin;
+    }
+    public void setHoraFin(LocalTime horaFin) {
+        this.horaFin = horaFin;
+    }
+    public String getConsultorio() {
+        return consultorio;
+    }
+    public void setConsultorio(String consultorio) {
+        this.consultorio = consultorio;
+    }
+    public String getDisponible() {
+        return disponible;
+    }
+    public void setDisponible(String disponible) {
+        this.disponible = disponible;
     }
 
-    public void setIdHorarioMedico(Integer idHorarioMedico) {
-        this.idHorarioMedico = idHorarioMedico;
-    }
-
-    public Integer getIdMedico() {
-        return idMedico;
-    }
-
-    public void setIdMedico(Integer idMedico) {
-        this.idMedico = idMedico;
-    }
-
-    public LocalDateTime getFechaHoraInicio() {
-        return fechaHoraInicio;
-    }
-
-    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
-        this.fechaHoraInicio = fechaHoraInicio;
-    }
-
-    public LocalDateTime getFechaHoraFin() {
-        return fechaHoraFin;
-    }
-
-    public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
-        this.fechaHoraFin = fechaHoraFin;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+   
 }
