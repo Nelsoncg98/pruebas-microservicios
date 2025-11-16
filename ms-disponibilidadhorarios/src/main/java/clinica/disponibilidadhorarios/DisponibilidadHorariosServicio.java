@@ -21,11 +21,16 @@ public class DisponibilidadHorariosServicio {
      * concentrado en el microservicio compuesto.
      */
     public List<HorarioMedicoEntrada> horariosDisponibles(LocalDate fecha, Long medicoId, String consultorio, Boolean disponible) {
-        StringBuilder url = new StringBuilder("http://ms-horariomedico/horariomedico/listar");
+        String url = "http://localhost:8085/horariomedico/listar";
 
         // Cargamos todos los horarios y filtramos aquí. Si el volumen crece, se
         // podría optimizar con parámetros en el propio ms-horariomedico.
-        HorarioMedicoEntrada[] todos = resTem.getForObject(url.toString(), HorarioMedicoEntrada[].class);
+        HorarioMedicoEntrada[] todos;
+        try {
+            todos = resTem.getForObject(url, HorarioMedicoEntrada[].class);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al invocar ms-horariomedico: " + e.getMessage(), e);
+        }
         if (todos == null || todos.length == 0) {
             return List.of();
         }

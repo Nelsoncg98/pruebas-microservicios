@@ -358,6 +358,31 @@
       ]
     },
     {
+      "name": "ms-disponibilidadhorarios",
+      "item": [
+        {
+          "name": "Listar horarios disponibles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8185/disponibilidad/disponibles?fecha=2025-10-23&medicoId=1&consultorio=C1&disponible=true",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8185",
+              "path": ["disponibilidad","disponibles"],
+              "query": [
+                {"key": "fecha", "value": "2025-10-23"},
+                {"key": "medicoId", "value": "1"},
+                {"key": "consultorio", "value": "C1"},
+                {"key": "disponible", "value": "true"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "ms-carritohorariomedico",
       "item": [
         {

@@ -27,6 +27,8 @@ $pM = Start-Mvn "ms-medico" "ms-medico"; $pids += $pM.Id
 Start-Sleep -Seconds 2
 $pH = Start-Mvn "ms-horariomedico" "ms-horariomedico"; $pids += $pH.Id
 Start-Sleep -Seconds 2
+$pD = Start-Mvn "ms-disponibilidadhorarios" "ms-disponibilidadhorarios"; $pids += $pD.Id
+Start-Sleep -Seconds 2
 $pCH = Start-Mvn "ms-carritohorariomedico" "ms-carritohorariomedico"; $pids += $pCH.Id
 Start-Sleep -Seconds 2
 $pPM = Start-Mvn "ms-programacionmedica" "ms-programacionmedica"; $pids += $pPM.Id
