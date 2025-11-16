@@ -1,7 +1,10 @@
 package clinica.carritohorario;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +22,15 @@ public class CarritoHorarioMedicoControl {
     private CarritoHorarioMedicoServicio serv;
 
     @PostMapping("/agregar")
-    public Linea agregar(@RequestBody Linea horario){
-        return serv.agregar(horario);
+    public ResponseEntity<?>  agregar(@RequestBody Linea horario){
+        try{
+            Linea lineaAgregada = serv.agregar(horario);
+            return ResponseEntity.ok(lineaAgregada);
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        } catch (IllegalStateException e){
+            return ResponseEntity.status(409).body(Map.of("message", e.getMessage()));
+        }
     }
 
     @DeleteMapping("/quitar/{id}")

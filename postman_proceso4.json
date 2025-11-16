@@ -1,0 +1,12 @@
+{
+  "info": {
+    "name": "Clinica - Proceso 4 (Pagos)",
+    "description": "Colección para Proceso 4: pagos (y expediente si aplica).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    { "name": "Eureka", "item": [] },
+    { "name": "ms-pagos", "item": [] },
+    { "name": "ms-expedienteclinico", "item": [] }
+  ]
+}

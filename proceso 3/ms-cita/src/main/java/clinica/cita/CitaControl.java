@@ -35,16 +35,14 @@ public class CitaControl {
         return ResponseEntity.ok(c);
     }
 
-    // Entrada mínima: { "dniPaciente": "...", "pacienteId": 123 (op), "horarioId": 1 }
+    // Entrada de Cita:
+    // Con horario: { "dniPaciente": "..." | "pacienteId": Long, "horarioId": Long 1, "idDoctor": "45", "motivo": "Dolor", "tipoCita": "CONSULTA" }    
     @PostMapping("/crear")
-    public ResponseEntity<?> crear(@RequestBody Map<String,Object> body){
+    public ResponseEntity<?> crear(@RequestBody Cita cita ){
         try{
-            String dni = body.get("dniPaciente") != null ? String.valueOf(body.get("dniPaciente")) : null;
-            Long pacienteId = body.get("pacienteId") instanceof Number n ? n.longValue() : null;
-            Long horarioId = body.get("horarioId") instanceof Number n2 ? n2.longValue() : null;
-            Cita c = serv.crear(dni, pacienteId, horarioId);
-            URI loc = URI.create("/cita/buscar/" + c.getNumero());
-            return ResponseEntity.created(loc).body(c);
+
+            Cita citaCreada = serv.crear(cita);
+            return ResponseEntity.created(URI.create("/cita/buscar/" + citaCreada.getNumero())).body(citaCreada);
         } catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         } catch (IllegalStateException e){

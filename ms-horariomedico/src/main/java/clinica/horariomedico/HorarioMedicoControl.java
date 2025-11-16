@@ -1,13 +1,10 @@
 package clinica.horariomedico;
 
 import java.net.URI;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -89,29 +85,6 @@ public class HorarioMedicoControl {
         return ResponseEntity.noContent().build(); // 204
     }
 
-    @GetMapping("/disponibles") // lista de horarios disponibles con filtros opcionales
-    public ResponseEntity<List<HorarioMedico>> disponibles(
-        @RequestParam(required = false)
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-        LocalDate fecha,
-        @RequestParam(required = false) Long medicoId,
-        @RequestParam(required = false) String consultorio,
-        @RequestParam(required = false) Boolean disponible
-    ){
-        return ResponseEntity.ok(serv.disponibles(fecha, medicoId, consultorio, disponible));
-    }
-
-    @GetMapping("/medicosdisponibles") // lista de médicos disponibles en un rango de hora en una fecha dada
-    public ResponseEntity<List<?>> medicosDisponibles(
-        @RequestParam(required = true) 
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // yyyy-MM-dd
-        LocalDate fecha,
-        @RequestParam(required = true) LocalTime horaInicio, // HH:mm:ss
-        @RequestParam(required = true) LocalTime horaFin  // HH:mm:ss
-    ) {
-        return ResponseEntity.ok(serv.medicosDisponibles(fecha, horaInicio, horaFin));
-    }
-    
     // Marcar un horario como reservado (disponible=false)
     @PatchMapping("/reservar/{id}")
     public ResponseEntity<?> reservar(@PathVariable Long id){

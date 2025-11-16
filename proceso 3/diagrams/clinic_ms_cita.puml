@@ -7,12 +7,16 @@ class Cita {
   -numero: Long
   -pacienteId: Long
   -horarioId: Long
+  -idDoctor: String
+  -motivo: String
+  -fecha: LocalDateTime
+  -tipoCita: String
   -estado: String
 }
 
 ' ========== Servicio ==========
 class ServicioCita {
-  +crear(dniPaciente: String, horarioId: Long): Cita
+  +crear(dniPaciente: String, pacienteId: Long, horarioId: Long, idDoctor: String, motivo: String, fecha: LocalDateTime, tipoCita: String): Cita
   +cancelar(id: Long): Cita
   +buscar(id: Long): Cita
   +listar(): List
@@ -64,10 +68,11 @@ end note
 
 note bottom of ApiCita
 Endpoints:
-POST /cita/crear
+POST /cita/crear (cita con o sin horario)
 DELETE /cita/cancelar/{id}
 GET /cita/buscar/{id}
 GET /cita/listar
+Body crear → dniPaciente|pacienteId, horarioId?, idDoctor, motivo, fecha?, tipoCita
 end note
 
 @enduml

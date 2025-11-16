@@ -26,17 +26,22 @@ Este documento describe el flujo backend del Proceso 3 y el microservicio `ms-ci
 
 Nombre de aplicación: `ms-cita` (Eureka)
 
-Entidad mínima `Cita`:
+Entidad `Cita` (ampliada):
 - `numero` (Long)
 - `pacienteId` (Long)
-- `horarioId` (Long)
-- `estado` (String: RESERVADA | CANCELADA)
+- `horarioId` (Long, opcional si cita sin horario)
+- `idDoctor` (String, identificador del médico)
+- `motivo` (String, motivo breve)
+- `fecha` (LocalDateTime, fecha/hora efectiva; se deriva del horario si no se envía y existe `horarioId`)
+- `tipoCita` (String: CONSULTA | CONTROL | EMERGENCIA | TELECONSULTA, abierto)
+- `estado` (String: RESERVADA | CANCELADA | FINALIZADA)
 
-API mínima:
+API:
 - `POST /cita/crear`
-  - Body: `{ "dniPaciente": "...", "pacienteId": 123 (opcional), "horarioId": 1 }`
-  - Orquesta: valida paciente, reserva horario y registra cita.
-  - Respuestas: 201 (cita), 400 (faltan datos), 404 (paciente/horario), 409 (horario ya reservado).
+  - Con horario: `{ "dniPaciente": "..." | "pacienteId": 7, "horarioId": 15, "idDoctor": "45", "motivo": "Dolor de cabeza", "tipoCita": "CONSULTA" }` (fecha derivada)
+  - Sin horario (emergencia): `{ "dniPaciente": "...", "idDoctor": "45", "motivo": "Trauma", "fecha": "2025-11-14T10:35:00", "tipoCita": "EMERGENCIA" }`
+  - Reglas: requiere paciente (id o DNI), idDoctor, motivo; horarioId opcional si se provee fecha explícita.
+  - Respuestas: 201 (cita), 400 (faltan datos / formato fecha), 404 (paciente/horario), 409 (horario ya reservado/no disponible).
 - `DELETE /cita/cancelar/{id}`
   - Libera el horario asociado y marca la cita como CANCELADA.
   - Respuestas: 200 (cita), 404 (cita no encontrada).

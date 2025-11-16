@@ -1,0 +1,13 @@
+{
+  "info": {
+    "name": "Clinica - Proceso 2 (Historia + Expediente)",
+    "description": "Colección para Proceso 2: historia médica y expediente clínico.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    { "name": "Eureka", "item": [] },
+    { "name": "ms-paciente", "item": [] },
+    { "name": "ms-historiamedica", "item": [] },
+    { "name": "ms-expedienteclinico", "item": [] }
+  ]
+}
