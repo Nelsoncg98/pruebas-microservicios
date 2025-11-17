@@ -29,10 +29,10 @@ $pHM = Start-Mvn "ms-horariomedico" "ms-horariomedico"; $pids += $pHM.Id
 Start-Sleep -Seconds 2
 $pDH = Start-Mvn "ms-disponibilidadhorarios" "ms-disponibilidadhorarios"; $pids += $pDH.Id
 Start-Sleep -Seconds 2
-# ms-cita y ms-solicitudcita ahora viven bajo carpeta 'proceso 3'
-$pCita = Start-Mvn "ms-cita" "proceso 3\ms-cita"; $pids += $pCita.Id
+# ms-cita y ms-solicitudcita ahora viven bajo carpeta 'procesoTres'
+$pCita = Start-Mvn "ms-cita" "procesoTres\ms-cita"; $pids += $pCita.Id
 Start-Sleep -Seconds 2
-$pSol = Start-Mvn "ms-solicitudcita" "proceso 3\ms-solicitudcita"; $pids += $pSol.Id
+$pSol = Start-Mvn "ms-solicitudcita" "procesoTres\ms-solicitudcita"; $pids += $pSol.Id
 
 $null = Register-EngineEvent PowerShell.Exiting -Action {
   try {
