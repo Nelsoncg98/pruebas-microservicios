@@ -13,7 +13,7 @@ public class CitaDTO {
     private String tipoCita;
     private double costo;
     private String estado;
-
+    private String horario; 
 
     // Getters y Setters
     public Long getNumero() { 
@@ -84,5 +84,11 @@ public class CitaDTO {
     }
     public void setEstado(String estado) { 
         this.estado = estado; 
+    }
+    public String getHorario() { 
+        return horario; 
+    }
+    public void setHorario(String horario) { 
+        this.horario = horario; 
     }
 }
