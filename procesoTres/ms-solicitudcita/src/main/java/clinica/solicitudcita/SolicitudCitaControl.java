@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 @CrossOrigin(origins = "http://localhost:5173")
 // Controlador REST para el proceso de solicitud de cita
 @RestController
