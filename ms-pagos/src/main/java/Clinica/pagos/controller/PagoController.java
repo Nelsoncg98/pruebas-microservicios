@@ -1,39 +1,66 @@
 package clinica.pagos.controller;
 
-import clinica.pagos.dto.PagoRequestDto;
-import clinica.pagos.dto.PagoResponseDto;
-import clinica.pagos.model.EstadoPago;
+import clinica.pagos.dto.PagoDto;
 import clinica.pagos.service.PagoService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import clinica.pagos.service.PagoService;
-
 @RestController
-@RequestMapping("/pagos")
-
+@RequestMapping("/api/pagos")
+@RequiredArgsConstructor
 public class PagoController {
-    @Autowired
-    private PagoService pagoService;
-
-    @PostMapping("/elaborar") 
-    public ResponseEntity<PagoResponseDto> elaborarBoleta(@RequestBody PagoRequestDto pagoDTO) {
-        PagoResponseDto pagoCreado = pagoService.elaborarBoleta(pagoDTO);
-        return new ResponseEntity<>(pagoCreado, HttpStatus.CREATED);
+    
+    private final PagoService pagoService;
+    
+    @PostMapping
+    public ResponseEntity<PagoDto> crearPago(@RequestBody PagoDto pagoDto) {
+        try {
+            PagoDto nuevoPago = pagoService.crearPago(pagoDto);
+            return new ResponseEntity<>(nuevoPago, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
-
-     @PostMapping("/pagar")
-    public ResponseEntity<PagoResponseDto> pagarBoleta(@RequestBody PagoRequestDto pagoDTO) {
-        PagoResponseDto pago = pagoService.pagarBoleta(pagoDTO);
-        return ResponseEntity.ok(pago);
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<PagoDto> obtenerPagoPorId(@PathVariable Long id) {
+        try {
+            PagoDto pago = pagoService.obtenerPagoPorId(id);
+            return ResponseEntity.ok(pago);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
-
-   
+    
+    @GetMapping("/paciente/{pacienteId}")
+    public ResponseEntity<List<PagoDto>> obtenerPagosPorPaciente(@PathVariable Long pacienteId) {
+        try {
+            List<PagoDto> pagos = pagoService.obtenerPagosPorPaciente(pacienteId);
+            return ResponseEntity.ok(pagos);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<PagoDto>> obtenerTodosPagos() {
+        List<PagoDto> pagos = pagoService.obtenerTodosPagos();
+        return ResponseEntity.ok(pagos);
+    }
+    
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<PagoDto> actualizarEstadoPago(
+            @PathVariable Long id, 
+            @RequestParam String estado) {
+        try {
+            PagoDto pagoActualizado = pagoService.actualizarEstadoPago(id, estado);
+            return ResponseEntity.ok(pagoActualizado);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
