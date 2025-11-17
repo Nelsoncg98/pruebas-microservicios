@@ -8,6 +8,6 @@ import clinica.expedienteclinico.dto.CitaDTO;
 
 @FeignClient(name = "ms-citas", url = "${clients.citas.url:http://localhost:8089}")
 public interface ClienteCitas {
-    @GetMapping("/citas/paciente/{pacienteId}")
+    @GetMapping("/cita/porPaciente/{pacienteId}")
     List<CitaDTO> listarPorPaciente(@PathVariable("pacienteId") Long pacienteId);
 }
