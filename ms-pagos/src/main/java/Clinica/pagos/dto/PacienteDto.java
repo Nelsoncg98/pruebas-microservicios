@@ -1,14 +1,18 @@
 package clinica.pagos.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
+/**
+ * DTO para mapear la respuesta del microservicio de Pacientes
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PacienteDto {
-    private Long numero;
+    
+    private Long id;
     private String nombre;
     private String apellido;
     private String dni;
@@ -16,5 +20,5 @@ public class PacienteDto {
     private String telefono;
     private String email;
     private String direccion;
-    private Boolean estado;
+    private String estado;
 }

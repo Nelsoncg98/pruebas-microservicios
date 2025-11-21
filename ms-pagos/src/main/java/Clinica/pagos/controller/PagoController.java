@@ -1,66 +1,186 @@
 package clinica.pagos.controller;
 
-import clinica.pagos.dto.PagoDto;
+import clinica.pagos.model.Pago;
+import clinica.pagos.model.EstadoPago;
+import clinica.pagos.model.TipoPago;
 import clinica.pagos.service.PagoService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * Controlador REST para gestión de Pagos
+ * Pasos 4 y 5 del flujo: "Cajero procesa pago" y "Confirmación de pago"
+ */
 @RestController
 @RequestMapping("/api/pagos")
-@RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class PagoController {
-    
-    private final PagoService pagoService;
-    
-    @PostMapping
-    public ResponseEntity<PagoDto> crearPago(@RequestBody PagoDto pagoDto) {
+
+    @Autowired
+    private PagoService pagoService;
+
+    /**
+     * PASO 4: Cajero procesa pago
+     * POST /api/pagos/procesar
+     */
+
+    @PostMapping("/{id}/confirmar")
+    public ResponseEntity<?> confirmarPago(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> request) {
         try {
-            PagoDto nuevoPago = pagoService.crearPago(pagoDto);
-            return new ResponseEntity<>(nuevoPago, HttpStatus.CREATED);
+            String numeroComprobante = request.get("numeroComprobante");
+            String tipoComprobante = request.get("tipoComprobante");
+
+            Pago pagoConfirmado = pagoService.confirmarPago(id, numeroComprobante, tipoComprobante);
+            return ResponseEntity.ok(pagoConfirmado);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", e.getMessage()));
         }
     }
-    
-    @GetMapping("/{id}")
-    public ResponseEntity<PagoDto> obtenerPagoPorId(@PathVariable Long id) {
+
+    @PostMapping("/{id}/rechazar")
+    public ResponseEntity<?> rechazarPago(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> request) {
         try {
-            PagoDto pago = pagoService.obtenerPagoPorId(id);
-            return ResponseEntity.ok(pago);
+            String motivo = request.get("motivo");
+            Pago pagoRechazado = pagoService.rechazarPago(id, motivo);
+            return ResponseEntity.ok(pagoRechazado);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", e.getMessage()));
         }
     }
-    
-    @GetMapping("/paciente/{pacienteId}")
-    public ResponseEntity<List<PagoDto>> obtenerPagosPorPaciente(@PathVariable Long pacienteId) {
+
+    /**
+     * Anular pago
+     * POST /api/pagos/{id}/anular
+     */
+    @PostMapping("/{id}/anular")
+    public ResponseEntity<?> anularPago(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> request) {
         try {
-            List<PagoDto> pagos = pagoService.obtenerPagosPorPaciente(pacienteId);
-            return ResponseEntity.ok(pagos);
+            String motivo = request.get("motivo");
+            Pago pagoAnulado = pagoService.anularPago(id, motivo);
+            return ResponseEntity.ok(pagoAnulado);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", e.getMessage()));
         }
     }
-    
+
+    /**
+     * Listar todos los pagos
+     * GET /api/pagos
+     */
     @GetMapping
-    public ResponseEntity<List<PagoDto>> obtenerTodosPagos() {
-        List<PagoDto> pagos = pagoService.obtenerTodosPagos();
+    public ResponseEntity<List<Pago>> listarPagos() {
+        List<Pago> pagos = pagoService.listarTodosPagos();
         return ResponseEntity.ok(pagos);
     }
-    
-    @PutMapping("/{id}/estado")
-    public ResponseEntity<PagoDto> actualizarEstadoPago(
-            @PathVariable Long id, 
-            @RequestParam String estado) {
+
+    /**
+     * Buscar pago por ID
+     * GET /api/pagos/{id}
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscarPagoPorId(@PathVariable Long id) {
+        return pagoService.buscarPagoPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Buscar pago por número de transacción
+     * GET /api/pagos/transaccion/{numeroTransaccion}
+     */
+    @GetMapping("/transaccion/{numeroTransaccion}")
+    public ResponseEntity<?> buscarPagoPorTransaccion(@PathVariable String numeroTransaccion) {
+        return pagoService.buscarPagoPorNumeroTransaccion(numeroTransaccion)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Buscar pagos por paciente
+     * GET /api/pagos/paciente/{pacienteId}
+     */
+    @GetMapping("/paciente/{pacienteId}")
+    public ResponseEntity<List<Pago>> buscarPagosPorPaciente(@PathVariable Long pacienteId) {
+        List<Pago> pagos = pagoService.buscarPagosPorPaciente(pacienteId);
+        return ResponseEntity.ok(pagos);
+    }
+
+    /**
+     * Buscar pagos por estado
+     * GET /api/pagos/estado/{estado}
+     */
+    @GetMapping("/estado/{estado}")
+    public ResponseEntity<List<Pago>> buscarPagosPorEstado(@PathVariable EstadoPago estado) {
+        List<Pago> pagos = pagoService.buscarPagosPorEstado(estado);
+        return ResponseEntity.ok(pagos);
+    }
+
+    /**
+     * Buscar pagos por tipo de pago
+     * GET /api/pagos/tipo/{tipo}
+     */
+    @GetMapping("/tipo/{tipo}")
+    public ResponseEntity<List<Pago>> buscarPagosPorTipo(@PathVariable TipoPago tipo) {
+        List<Pago> pagos = pagoService.buscarPagosPorTipo(tipo);
+        return ResponseEntity.ok(pagos);
+    }
+
+    /**
+     * Buscar pagos por cajero
+     * GET /api/pagos/cajero/{cajeroId}
+     */
+    @GetMapping("/cajero/{cajeroId}")
+    public ResponseEntity<List<Pago>> buscarPagosPorCajero(@PathVariable Long cajeroId) {
+        List<Pago> pagos = pagoService.buscarPagosPorCajero(cajeroId);
+        return ResponseEntity.ok(pagos);
+    }
+
+    /**
+     * Obtener pago completo (incluye cita y paciente)
+     * GET /api/pagos/{id}/completo
+     */
+    @GetMapping("/{id}/completo")
+    public ResponseEntity<?> obtenerPagoCompleto(@PathVariable Long id) {
         try {
-            PagoDto pagoActualizado = pagoService.actualizarEstadoPago(id, estado);
-            return ResponseEntity.ok(pagoActualizado);
+            Map<String, Object> pagoCompleto = pagoService.obtenerPagoCompleto(id);
+            return ResponseEntity.ok(pagoCompleto);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    /**
+     * Estadísticas del cajero
+     * GET /api/pagos/estadisticas/cajero/{cajeroId}
+     */
+    @GetMapping("/estadisticas/cajero/{cajeroId}")
+    public ResponseEntity<?> obtenerEstadisticasCajero(
+            @PathVariable Long cajeroId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime inicio,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fin) {
+        try {
+            Map<String, Object> estadisticas = pagoService.obtenerEstadisticasCajero(cajeroId, inicio, fin);
+            return ResponseEntity.ok(estadisticas);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", e.getMessage()));
         }
     }
 }

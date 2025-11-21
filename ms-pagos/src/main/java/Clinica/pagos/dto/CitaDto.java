@@ -1,23 +1,26 @@
 package clinica.pagos.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 
+/**
+ * DTO para mapear la respuesta del microservicio de Citas
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CitaDto {
-    private Long numero;
+    
+    private Long id;
     private Long pacienteId;
     private String dniPaciente;
     private Long horarioId;
-    private String idDoctor;
+    private Long idDoctor;
     private String motivo;
-    private LocalDateTime fecha;
+    private String fecha;
     private String tipoCita;
     private Double costo;
     private String estado;
-    private Object horario;
+    private String horario;
 }
