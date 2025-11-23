@@ -22,15 +22,26 @@ import java.util.Map;
 @RequestMapping("/api/pagos")
 @CrossOrigin(origins = "*")
 public class PagoController {
-
+    
     @Autowired
     private PagoService pagoService;
-
+    
     /**
      * PASO 4: Cajero procesa pago
      * POST /api/pagos/procesar
      */
-
+    @PostMapping("/procesar")
+    public ResponseEntity<?> procesarPago(@RequestBody Pago pago) {
+        try {
+            Pago pagoCreado = pagoService.procesarPago(pago);
+            return ResponseEntity.status(HttpStatus.CREATED).body(pagoCreado);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error", e.getMessage()));
+        }
+    }
+    
+    
     @PostMapping("/{id}/confirmar")
     public ResponseEntity<?> confirmarPago(
             @PathVariable Long id,
@@ -38,15 +49,16 @@ public class PagoController {
         try {
             String numeroComprobante = request.get("numeroComprobante");
             String tipoComprobante = request.get("tipoComprobante");
-
+            
             Pago pagoConfirmado = pagoService.confirmarPago(id, numeroComprobante, tipoComprobante);
             return ResponseEntity.ok(pagoConfirmado);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", e.getMessage()));
+                .body(Map.of("error", e.getMessage()));
         }
     }
-
+    
+    
     @PostMapping("/{id}/rechazar")
     public ResponseEntity<?> rechazarPago(
             @PathVariable Long id,
@@ -57,14 +69,11 @@ public class PagoController {
             return ResponseEntity.ok(pagoRechazado);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", e.getMessage()));
+                .body(Map.of("error", e.getMessage()));
         }
     }
-
-    /**
-     * Anular pago
-     * POST /api/pagos/{id}/anular
-     */
+    
+    
     @PostMapping("/{id}/anular")
     public ResponseEntity<?> anularPago(
             @PathVariable Long id,
@@ -75,84 +84,38 @@ public class PagoController {
             return ResponseEntity.ok(pagoAnulado);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", e.getMessage()));
+                .body(Map.of("error", e.getMessage()));
         }
     }
-
-    /**
-     * Listar todos los pagos
-     * GET /api/pagos
-     */
+    
+    
     @GetMapping
     public ResponseEntity<List<Pago>> listarPagos() {
         List<Pago> pagos = pagoService.listarTodosPagos();
         return ResponseEntity.ok(pagos);
     }
+    
 
-    /**
-     * Buscar pago por ID
-     * GET /api/pagos/{id}
-     */
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPagoPorId(@PathVariable Long id) {
         return pagoService.buscarPagoPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
     }
-
-    /**
-     * Buscar pago por número de transacción
-     * GET /api/pagos/transaccion/{numeroTransaccion}
-     */
-    @GetMapping("/transaccion/{numeroTransaccion}")
-    public ResponseEntity<?> buscarPagoPorTransaccion(@PathVariable String numeroTransaccion) {
-        return pagoService.buscarPagoPorNumeroTransaccion(numeroTransaccion)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    /**
-     * Buscar pagos por paciente
-     * GET /api/pagos/paciente/{pacienteId}
-     */
+    
+   
     @GetMapping("/paciente/{pacienteId}")
     public ResponseEntity<List<Pago>> buscarPagosPorPaciente(@PathVariable Long pacienteId) {
         List<Pago> pagos = pagoService.buscarPagosPorPaciente(pacienteId);
         return ResponseEntity.ok(pagos);
     }
-
+    
+    
+    
+   
+    
     /**
-     * Buscar pagos por estado
-     * GET /api/pagos/estado/{estado}
-     */
-    @GetMapping("/estado/{estado}")
-    public ResponseEntity<List<Pago>> buscarPagosPorEstado(@PathVariable EstadoPago estado) {
-        List<Pago> pagos = pagoService.buscarPagosPorEstado(estado);
-        return ResponseEntity.ok(pagos);
-    }
-
-    /**
-     * Buscar pagos por tipo de pago
-     * GET /api/pagos/tipo/{tipo}
-     */
-    @GetMapping("/tipo/{tipo}")
-    public ResponseEntity<List<Pago>> buscarPagosPorTipo(@PathVariable TipoPago tipo) {
-        List<Pago> pagos = pagoService.buscarPagosPorTipo(tipo);
-        return ResponseEntity.ok(pagos);
-    }
-
-    /**
-     * Buscar pagos por cajero
-     * GET /api/pagos/cajero/{cajeroId}
-     */
-    @GetMapping("/cajero/{cajeroId}")
-    public ResponseEntity<List<Pago>> buscarPagosPorCajero(@PathVariable Long cajeroId) {
-        List<Pago> pagos = pagoService.buscarPagosPorCajero(cajeroId);
-        return ResponseEntity.ok(pagos);
-    }
-
-    /**
-     * Obtener pago completo (incluye cita y paciente)
+     * Obtener pago completo (incluye boleta y paciente)
      * GET /api/pagos/{id}/completo
      */
     @GetMapping("/{id}/completo")
@@ -162,25 +125,11 @@ public class PagoController {
             return ResponseEntity.ok(pagoCompleto);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("error", e.getMessage()));
+                .body(Map.of("error", e.getMessage()));
         }
     }
-
-    /**
-     * Estadísticas del cajero
-     * GET /api/pagos/estadisticas/cajero/{cajeroId}
-     */
-    @GetMapping("/estadisticas/cajero/{cajeroId}")
-    public ResponseEntity<?> obtenerEstadisticasCajero(
-            @PathVariable Long cajeroId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime inicio,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fin) {
-        try {
-            Map<String, Object> estadisticas = pagoService.obtenerEstadisticasCajero(cajeroId, inicio, fin);
-            return ResponseEntity.ok(estadisticas);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", e.getMessage()));
-        }
-    }
+    
+   
+    
 }
+
