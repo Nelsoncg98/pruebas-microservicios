@@ -21,6 +21,11 @@ $pids = @()
 $pE = Start-Mvn "Eureka" "EurekaServerN"; $pids += $pE.Id
 Start-Sleep -Seconds 7
 
+# Servicios Core del Proceso 2
+$pPac = Start-Mvn "ms-paciente" "ms-paciente"; $pids += $pPac.Id
+Start-Sleep -Seconds 2
+$pEnf = Start-Mvn "ms-enfermera" "ms-enfermera"; $pids += $pEnf.Id
+Start-Sleep -Seconds 2
 $pHM = Start-Mvn "ms-historiamedica" "ms-historiamedica"; $pids += $pHM.Id
 Start-Sleep -Seconds 2
 $pEC = Start-Mvn "ms-expedienteclinico" "ms-expedienteclinico"; $pids += $pEC.Id

@@ -43,6 +43,7 @@ public class SolicitudCitaServicio {
             dto.setTelefono(m.getTelefono());
             dto.setDni(m.getDni());
             dto.setApellido(m.getApellido());
+            dto.setPrecio(m.getPrecio());
 
             String urlHorarios = "http://ms-disponibilidadhorarios/disponibilidad/disponibles?medicoId=" + m.getNumero()
                     + "&disponible=true";
@@ -104,6 +105,14 @@ public class SolicitudCitaServicio {
         dto.setDireccion(paciente.getDireccion());
         dto.setEstado(paciente.isEstado());
         dto.setCitas(citas);
+        
+        // Campos enriquecidos
+        dto.setTotalCitas(citas.size());
+        long pendientes = citas.stream()
+                .filter(c -> "RESERVADA".equals(c.getEstado()))
+                .count();
+        dto.setCitasPendientes(pendientes);
+        
         return dto;
     }
 
@@ -135,8 +144,9 @@ public class SolicitudCitaServicio {
         }
 
         String urlMedico = "http://ms-medico/medico/buscar/" + idDoctor;
+        Medico medico = null;
         try {
-            Medico medico = restTemplate.getForObject(urlMedico, Medico.class);
+            medico = restTemplate.getForObject(urlMedico, Medico.class);
             if (medico == null) {
                 throw new RuntimeException("Médico no encontrado");
             }
@@ -166,8 +176,9 @@ public class SolicitudCitaServicio {
         if (costoOpcional != null) {
             nueva.setCosto(costoOpcional);
         } else {
-            // Caso contrario, se calcula en función del tipo de cita
-            nueva.setCosto(calcularCostoPorTipo(nueva.getTipoCita()));
+            // Caso contrario, se usa el precio del médico (o 100.0 por defecto)
+            Double precioMedico = medico.getPrecio() != null ? medico.getPrecio() : 100.0;
+            nueva.setCosto(precioMedico);
         }
 
         // 1) Crear cita en ms-cita

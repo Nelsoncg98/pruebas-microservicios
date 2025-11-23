@@ -10,7 +10,16 @@ public class MedicoConHorarios {
     private String dni;
     private String telefono;
     private String email;
+    private Double precio;
 	private List<HorarioMedico> horarios;
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
 
 	public String getApellido() {
 		return apellido;

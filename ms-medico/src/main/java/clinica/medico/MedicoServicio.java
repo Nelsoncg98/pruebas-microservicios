@@ -60,6 +60,7 @@ public class MedicoServicio {
         existente.setTelefono(m.getTelefono());
         existente.setEmail(m.getEmail());
         existente.setEstado(m.isEstado());
+        existente.setPrecio(m.getPrecio());
         return repo.save(existente);
     }
 

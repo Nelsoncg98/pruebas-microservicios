@@ -75,6 +75,7 @@ public class ProgramacionCompuestaServicio {
     // 4) Crea la ProgramacionMedica en ms-programacionmedica
     // 5) Limpia el carrito
     // 6) Devuelve ProgramacionMedica enriquecida con la lista de horarios
+    // 7) Además se enriquece con el objeto administrativo completo y médico
     public ProgramacionMedica nuevaProgramacion(Long idAdministrativo){
         verificarAdministrativo(idAdministrativo);
 
@@ -86,8 +87,20 @@ public class ProgramacionCompuestaServicio {
         List<HorarioMedico> horariosGuardados = guardarHorariosEnServicio(horarios);
         ProgramacionMedica programacion = crearProgramacionMedica(idAdministrativo, horariosGuardados);
         limpiarCarrito();
+        
+        // Enriquecer con el objeto médico (del primer horario)
+        if (!horariosGuardados.isEmpty() && horariosGuardados.get(0).getMedicoId() != null) {
+            programacion.setMedico(obtenerMedicoPorId(horariosGuardados.get(0).getMedicoId()));
+        }
+        
+        // Enriquecer con el objeto administrativo completo
+        programacion.setAdministrativo(obtenerAdministrativoPorId(idAdministrativo));
+        
+        // Agregar total de horarios
+        programacion.setTotalHorarios(horariosGuardados.size());
 
         return programacion;
+
     }
 
     
@@ -167,10 +180,29 @@ public class ProgramacionCompuestaServicio {
     // ==== Punto de entrada: buscar programación compuesta ====
     // Se obtiene la ProgramacionMedica desde el servicio de entidad y
     // luego se resuelven los HorarioMedico completos por cada id.
+    // Además se enriquece con el objeto administrativo completo y médico
     public ProgramacionMedica buscarProgramacion(Long id){
         ProgramacionMedica programacion = obtenerProgramacionMedica(id);
         List<HorarioMedico> horarios = obtenerHorariosPorIds(programacion.getHorarioMedicoIds());
+        
         programacion.setHorarios(horarios);
+        
+        // Enriquecer con el objeto administrativo completo
+        if (programacion.getAdministrativoId() != null) {
+            Object administrativo = obtenerAdministrativoPorId(programacion.getAdministrativoId());
+            programacion.setAdministrativo(administrativo);
+        }
+        
+        // Enriquecer con el objeto médico (solo UNO para toda la programación)
+        // Tomamos el medicoId del primer horario ya que todos son del mismo médico
+        if (!horarios.isEmpty() && horarios.get(0).getMedicoId() != null) {
+            Object medico = obtenerMedicoPorId(horarios.get(0).getMedicoId());
+            programacion.setMedico(medico);
+        }
+        
+        // Agregar total de horarios
+        programacion.setTotalHorarios(horarios.size());
+        
         return programacion;
     }
 
@@ -214,5 +246,33 @@ public class ProgramacionCompuestaServicio {
             }
         }
         return horarios;
+    }
+
+    // Obtiene el objeto administrativo completo desde ms-personaladministrativo
+    private Object obtenerAdministrativoPorId(Long id){
+        try {
+            return resTem.getForObject(
+                "http://ms-personaladministrativo/personaladministrativo/buscar/{id}",
+                Object.class,
+                id
+            );
+        } catch (HttpClientErrorException | HttpServerErrorException ex){
+            // Si falla, retornar null en lugar de lanzar excepción
+            return null;
+        }
+    }
+
+    // Obtiene el objeto médico completo desde ms-medico
+    private Object obtenerMedicoPorId(Long id){
+        try {
+            return resTem.getForObject(
+                "http://ms-medico/medico/buscar/{id}",
+                Object.class,
+                id
+            );
+        } catch (HttpClientErrorException | HttpServerErrorException ex){
+            // Si falla, retornar null en lugar de lanzar excepción
+            return null;
+        }
     }
 }

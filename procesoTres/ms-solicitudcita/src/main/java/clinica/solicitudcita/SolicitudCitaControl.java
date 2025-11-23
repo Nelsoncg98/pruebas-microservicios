@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
@@ -31,7 +32,7 @@ public class SolicitudCitaControl {
         return new ResponseEntity<>(medicos, HttpStatus.OK);
     }
 
-    // Endpoint para confirmar una cita
+    // Endpoint para confirmar una cita (query params - LEGACY)
     // POST /solicitudcita/confirmar?idPaciente=1&idDoctor=1&horarioId=1&motivo=...&tipoCita=...
     @PostMapping("/confirmar")
     public ResponseEntity<Cita> confirmar(
@@ -42,6 +43,22 @@ public class SolicitudCitaControl {
             @RequestParam String tipoCita,
             @RequestParam(required = false) Double costo) {
         Cita cita = servicio.confirmarCita(idPaciente, idDoctor, horarioId, motivo, tipoCita, costo);
+        return new ResponseEntity<>(cita, HttpStatus.CREATED);
+    }
+
+    // Endpoint para confirmar una cita (JSON body - RECOMENDADO)
+    // POST /solicitudcita/confirmarcita
+    // Body: { "idPaciente": 1, "idDoctor": 1, "horarioId": 1, "motivo": "...", "tipoCita": "PRESENCIAL", "costo": 50.0 }
+    @PostMapping("/confirmarcita")
+    public ResponseEntity<Cita> confirmarConBody(@RequestBody ConfirmarCitaRequest request) {
+        Cita cita = servicio.confirmarCita(
+            request.getIdPaciente(),
+            request.getIdDoctor(),
+            request.getHorarioId(),
+            request.getMotivo(),
+            request.getTipoCita(),
+            request.getCosto()
+        );
         return new ResponseEntity<>(cita, HttpStatus.CREATED);
     }
 
