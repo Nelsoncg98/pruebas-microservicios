@@ -9,6 +9,15 @@ public class Medico {
     private String dni;
     private String telefono;
     private String email;
+    private Double precio;
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
 
     public Long getNumero() {
         return numero;

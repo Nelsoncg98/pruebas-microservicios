@@ -17,6 +17,10 @@ public class CitasPorPaciente {
     private String direccion;
     private boolean estado;
 	private List<Cita> citas;
+	
+	// Campos enriquecidos
+	private Integer totalCitas; // Total de citas del paciente
+	private Long citasPendientes; // Citas en estado RESERVADA
 	public Long getNumero() {
 		return numero;
 	}
@@ -78,5 +82,18 @@ public class CitasPorPaciente {
 		this.citas = citas;
 	}
 
+	public Integer getTotalCitas() {
+		return totalCitas;
+	}
+	public void setTotalCitas(Integer totalCitas) {
+		this.totalCitas = totalCitas;
+	}
+
+	public Long getCitasPendientes() {
+		return citasPendientes;
+	}
+	public void setCitasPendientes(Long citasPendientes) {
+		this.citasPendientes = citasPendientes;
+	}
 	
 }

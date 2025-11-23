@@ -23,15 +23,18 @@ public class Medico {
     // Nuevos: datos de contacto
     private String telefono;
     private String email;
+    // Nuevo: Precio por consulta
+    private Double precio = 100.0;
 
     public Medico() {}
 
-    public Medico(Long numero, String nombre, String apellido, String especialidad, boolean estado) {
+    public Medico(Long numero, String nombre, String apellido, String especialidad, boolean estado, Double precio) {
         this.numero = numero;
         this.nombre = nombre;
         this.apellido = apellido;
         this.especialidad = especialidad;
         this.estado = estado;
+        this.precio = precio;
     }
 
     public Long getNumero() {
@@ -80,4 +83,6 @@ public class Medico {
     public void setTelefono(String telefono) { this.telefono = telefono; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+    public Double getPrecio() { return precio; }
+    public void setPrecio(Double precio) { this.precio = precio; }
 }

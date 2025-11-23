@@ -3,5 +3,6 @@
     "java.configuration.updateBuildConfiguration": "interactive",
     "java.project.sourcePaths": [
         "ms-historiamedica/src/main/java/clinica/historiamedica"
-    ]
+    ],
+    "editor.fontSize": 14
 }

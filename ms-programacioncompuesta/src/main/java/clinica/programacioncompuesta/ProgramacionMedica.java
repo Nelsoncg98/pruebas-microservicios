@@ -12,6 +12,11 @@ public class ProgramacionMedica {
     private boolean activo = true;
     private List<Long> horarioMedicoIds = new ArrayList<>();
     private List<HorarioMedico> horarios; // se llena en el compuesto
+    
+    // Campos enriquecidos para el servicio compuesto
+    private Object administrativo; // Objeto completo desde ms-personaladministrativo
+    private Object medico; // UN SOLO médico para toda la programación
+    private Integer totalHorarios; // Total de horarios en la programación
 
     public ProgramacionMedica(Long id, Long administrativoId, String fechaProgramacion, boolean activo,
             List<Long> horarioMedicoIds) {
@@ -63,5 +68,26 @@ public class ProgramacionMedica {
     }
     public void setHorarios(List<HorarioMedico> horarios) {
         this.horarios = horarios;
+    }
+
+    public Object getAdministrativo() {
+        return administrativo;
+    }
+    public void setAdministrativo(Object administrativo) {
+        this.administrativo = administrativo;
+    }
+
+    public Object getMedico() {
+        return medico;
+    }
+    public void setMedico(Object medico) {
+        this.medico = medico;
+    }
+
+    public Integer getTotalHorarios() {
+        return totalHorarios;
+    }
+    public void setTotalHorarios(Integer totalHorarios) {
+        this.totalHorarios = totalHorarios;
     }
 }

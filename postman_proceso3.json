@@ -16,7 +16,9 @@
             "url": {
               "raw": "http://localhost:8761",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8761"
             }
           }
@@ -34,9 +36,14 @@
             "url": {
               "raw": "http://localhost:8091/medico/listar",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8091",
-              "path": ["medico","listar"]
+              "path": [
+                "medico",
+                "listar"
+              ]
             }
           }
         },
@@ -48,11 +55,19 @@
             "url": {
               "raw": "http://localhost:8091/medico/porEspecialidad?especialidad=Cardiologia",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8091",
-              "path": ["medico","porEspecialidad"],
+              "path": [
+                "medico",
+                "porEspecialidad"
+              ],
               "query": [
-                {"key":"especialidad","value":"Cardiologia"}
+                {
+                  "key": "especialidad",
+                  "value": "Cardiologia"
+                }
               ]
             }
           }
@@ -62,18 +77,26 @@
           "request": {
             "method": "POST",
             "header": [
-              {"key":"Content-Type","value":"application/json"}
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dni\": \"7290132\",\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\",\n  \"telefono\": \"961234567\",\n  \"email\": \"juan.perez.med@example.com\",\n  \"especialidad\": \"Cardiologia\",\n  \"estado\": true\n}"
+              "raw": "{\n  \"dni\": \"7290132\",\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\",\n  \"telefono\": \"961234567\",\n  \"email\": \"juan.perez.med@example.com\",\n  \"especialidad\": \"Cardiologia\",\n  \"estado\": true,\n  \"precio\": 150.0\n}"
             },
             "url": {
               "raw": "http://localhost:8091/medico/guardar",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8091",
-              "path": ["medico","guardar"]
+              "path": [
+                "medico",
+                "guardar"
+              ]
             }
           }
         },
@@ -85,9 +108,15 @@
             "url": {
               "raw": "http://localhost:8091/medico/buscar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8091",
-              "path": ["medico","buscar","1"]
+              "path": [
+                "medico",
+                "buscar",
+                "1"
+              ]
             }
           }
         },
@@ -96,7 +125,10 @@
           "request": {
             "method": "PUT",
             "header": [
-              {"key":"Content-Type","value":"application/json"}
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
@@ -105,9 +137,15 @@
             "url": {
               "raw": "http://localhost:8091/medico/actualizar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8091",
-              "path": ["medico","actualizar","1"]
+              "path": [
+                "medico",
+                "actualizar",
+                "1"
+              ]
             }
           }
         },
@@ -119,9 +157,15 @@
             "url": {
               "raw": "http://localhost:8091/medico/eliminar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8091",
-              "path": ["medico","eliminar","1"]
+              "path": [
+                "medico",
+                "eliminar",
+                "1"
+              ]
             }
           }
         },
@@ -133,9 +177,14 @@
             "url": {
               "raw": "http://localhost:8091/medico/limpiar",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8091",
-              "path": ["medico","limpiar"]
+              "path": [
+                "medico",
+                "limpiar"
+              ]
             }
           }
         }
@@ -152,9 +201,14 @@
             "url": {
               "raw": "http://localhost:8092/paciente/listar",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8092",
-              "path": ["paciente","listar"]
+              "path": [
+                "paciente",
+                "listar"
+              ]
             }
           }
         },
@@ -163,7 +217,10 @@
           "request": {
             "method": "POST",
             "header": [
-              {"key":"Content-Type","value":"application/json"}
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
@@ -172,9 +229,14 @@
             "url": {
               "raw": "http://localhost:8092/paciente/guardar",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8092",
-              "path": ["paciente","guardar"]
+              "path": [
+                "paciente",
+                "guardar"
+              ]
             }
           }
         },
@@ -186,9 +248,15 @@
             "url": {
               "raw": "http://localhost:8092/paciente/buscar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8092",
-              "path": ["paciente","buscar","1"]
+              "path": [
+                "paciente",
+                "buscar",
+                "1"
+              ]
             }
           }
         },
@@ -197,7 +265,10 @@
           "request": {
             "method": "PUT",
             "header": [
-              {"key":"Content-Type","value":"application/json"}
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
@@ -206,9 +277,15 @@
             "url": {
               "raw": "http://localhost:8092/paciente/actualizar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8092",
-              "path": ["paciente","actualizar","1"]
+              "path": [
+                "paciente",
+                "actualizar",
+                "1"
+              ]
             }
           }
         },
@@ -220,9 +297,15 @@
             "url": {
               "raw": "http://localhost:8092/paciente/eliminar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8092",
-              "path": ["paciente","eliminar","1"]
+              "path": [
+                "paciente",
+                "eliminar",
+                "1"
+              ]
             }
           }
         },
@@ -234,9 +317,14 @@
             "url": {
               "raw": "http://localhost:8092/paciente/limpiar",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8092",
-              "path": ["paciente","limpiar"]
+              "path": [
+                "paciente",
+                "limpiar"
+              ]
             }
           }
         }
@@ -253,9 +341,14 @@
             "url": {
               "raw": "http://localhost:8085/horariomedico/listar",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8085",
-              "path": ["horariomedico","listar"]
+              "path": [
+                "horariomedico",
+                "listar"
+              ]
             }
           }
         },
@@ -264,7 +357,10 @@
           "request": {
             "method": "POST",
             "header": [
-              {"key":"Content-Type","value":"application/json"}
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
@@ -273,9 +369,14 @@
             "url": {
               "raw": "http://localhost:8085/horariomedico/guardar",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8085",
-              "path": ["horariomedico","guardar"]
+              "path": [
+                "horariomedico",
+                "guardar"
+              ]
             }
           }
         },
@@ -287,9 +388,15 @@
             "url": {
               "raw": "http://localhost:8085/horariomedico/buscar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8085",
-              "path": ["horariomedico","buscar","1"]
+              "path": [
+                "horariomedico",
+                "buscar",
+                "1"
+              ]
             }
           }
         },
@@ -298,7 +405,10 @@
           "request": {
             "method": "PUT",
             "header": [
-              {"key":"Content-Type","value":"application/json"}
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
@@ -307,9 +417,15 @@
             "url": {
               "raw": "http://localhost:8085/horariomedico/actualizar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8085",
-              "path": ["horariomedico","actualizar","1"]
+              "path": [
+                "horariomedico",
+                "actualizar",
+                "1"
+              ]
             }
           }
         },
@@ -321,9 +437,15 @@
             "url": {
               "raw": "http://localhost:8085/horariomedico/eliminar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8085",
-              "path": ["horariomedico","eliminar","1"]
+              "path": [
+                "horariomedico",
+                "eliminar",
+                "1"
+              ]
             }
           }
         },
@@ -335,9 +457,14 @@
             "url": {
               "raw": "http://localhost:8085/horariomedico/limpiar",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8085",
-              "path": ["horariomedico","limpiar"]
+              "path": [
+                "horariomedico",
+                "limpiar"
+              ]
             }
           }
         },
@@ -349,9 +476,15 @@
             "url": {
               "raw": "http://localhost:8085/horariomedico/reservar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8085",
-              "path": ["horariomedico","reservar","1"]
+              "path": [
+                "horariomedico",
+                "reservar",
+                "1"
+              ]
             }
           }
         },
@@ -363,9 +496,15 @@
             "url": {
               "raw": "http://localhost:8085/horariomedico/liberar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8085",
-              "path": ["horariomedico","liberar","1"]
+              "path": [
+                "horariomedico",
+                "liberar",
+                "1"
+              ]
             }
           }
         }
@@ -382,9 +521,14 @@
             "url": {
               "raw": "http://localhost:8088/historiaMedica/listar",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8088",
-              "path": ["historiaMedica","listar"]
+              "path": [
+                "historiaMedica",
+                "listar"
+              ]
             }
           }
         },
@@ -393,7 +537,10 @@
           "request": {
             "method": "POST",
             "header": [
-              {"key":"Content-Type","value":"application/json"}
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
@@ -402,9 +549,14 @@
             "url": {
               "raw": "http://localhost:8088/historiaMedica/guardar",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8088",
-              "path": ["historiaMedica","guardar"]
+              "path": [
+                "historiaMedica",
+                "guardar"
+              ]
             }
           }
         },
@@ -416,9 +568,15 @@
             "url": {
               "raw": "http://localhost:8088/historiaMedica/buscar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8088",
-              "path": ["historiaMedica","buscar","1"]
+              "path": [
+                "historiaMedica",
+                "buscar",
+                "1"
+              ]
             }
           }
         },
@@ -427,7 +585,10 @@
           "request": {
             "method": "PUT",
             "header": [
-              {"key":"Content-Type","value":"application/json"}
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
@@ -436,9 +597,15 @@
             "url": {
               "raw": "http://localhost:8088/historiaMedica/actualizar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8088",
-              "path": ["historiaMedica","actualizar","1"]
+              "path": [
+                "historiaMedica",
+                "actualizar",
+                "1"
+              ]
             }
           }
         },
@@ -450,9 +617,16 @@
             "url": {
               "raw": "http://localhost:8088/historiaMedica/buscar/paciente/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8088",
-              "path": ["historiaMedica","buscar","paciente","1"]
+              "path": [
+                "historiaMedica",
+                "buscar",
+                "paciente",
+                "1"
+              ]
             }
           }
         },
@@ -464,9 +638,15 @@
             "url": {
               "raw": "http://localhost:8088/historiaMedica/eliminar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8088",
-              "path": ["historiaMedica","eliminar","1"]
+              "path": [
+                "historiaMedica",
+                "eliminar",
+                "1"
+              ]
             }
           }
         }
@@ -483,9 +663,14 @@
             "url": {
               "raw": "http://localhost:8089/cita/listar",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8089",
-              "path": ["cita","listar"]
+              "path": [
+                "cita",
+                "listar"
+              ]
             }
           }
         },
@@ -497,9 +682,15 @@
             "url": {
               "raw": "http://localhost:8089/cita/buscar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8089",
-              "path": ["cita","buscar","1"]
+              "path": [
+                "cita",
+                "buscar",
+                "1"
+              ]
             }
           }
         },
@@ -508,7 +699,10 @@
           "request": {
             "method": "POST",
             "header": [
-              {"key":"Content-Type","value":"application/json"}
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
@@ -517,9 +711,14 @@
             "url": {
               "raw": "http://localhost:8089/cita/crear",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8089",
-              "path": ["cita","crear"]
+              "path": [
+                "cita",
+                "crear"
+              ]
             }
           }
         },
@@ -531,9 +730,15 @@
             "url": {
               "raw": "http://localhost:8089/cita/cancelar/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8089",
-              "path": ["cita","cancelar","1"]
+              "path": [
+                "cita",
+                "cancelar",
+                "1"
+              ]
             }
           }
         },
@@ -545,9 +750,15 @@
             "url": {
               "raw": "http://localhost:8089/cita/porPaciente/1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8089",
-              "path": ["cita","porPaciente","1"]
+              "path": [
+                "cita",
+                "porPaciente",
+                "1"
+              ]
             }
           }
         }
@@ -564,32 +775,88 @@
             "url": {
               "raw": "http://localhost:8189/solicitudcita/horariosdisponibles?especialidad=Cardiologia",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8189",
-              "path": ["solicitudcita","horariosdisponibles"],
+              "path": [
+                "solicitudcita",
+                "horariosdisponibles"
+              ],
               "query": [
-                {"key":"especialidad","value":"Cardiologia"}
+                {
+                  "key": "especialidad",
+                  "value": "Cardiologia"
+                }
               ]
             }
           }
         },
         {
-          "name": "Confirmar cita",
+          "name": "Confirmar cita (query params - LEGACY)",
           "request": {
             "method": "POST",
             "header": [],
             "url": {
               "raw": "http://localhost:8189/solicitudcita/confirmar?idPaciente=1&idDoctor=1&horarioId=1&motivo=Consulta%20general&tipoCita=PRESENCIAL",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8189",
-              "path": ["solicitudcita","confirmar"],
+              "path": [
+                "solicitudcita",
+                "confirmar"
+              ],
               "query": [
-                {"key":"idPaciente","value":"1"},
-                {"key":"idDoctor","value":"1"},
-                {"key":"horarioId","value":"1"},
-                {"key":"motivo","value":"Consulta general"},
-                {"key":"tipoCita","value":"PRESENCIAL"}
+                {
+                  "key": "idPaciente",
+                  "value": "1"
+                },
+                {
+                  "key": "idDoctor",
+                  "value": "1"
+                },
+                {
+                  "key": "horarioId",
+                  "value": "1"
+                },
+                {
+                  "key": "motivo",
+                  "value": "Consulta general"
+                },
+                {
+                  "key": "tipoCita",
+                  "value": "PRESENCIAL"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Confirmar cita (JSON body - RECOMENDADO)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idPaciente\": 1,\n  \"idDoctor\": 1,\n  \"horarioId\": 1,\n  \"motivo\": \"Consulta general\",\n  \"tipoCita\": \"PRESENCIAL\",\n  \"costo\": 50.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8189/solicitudcita/confirmarcita",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8189",
+              "path": [
+                "solicitudcita",
+                "confirmarcita"
               ]
             }
           }
@@ -602,11 +869,19 @@
             "url": {
               "raw": "http://localhost:8189/solicitudcita/citasPorPaciente?idPaciente=1",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8189",
-              "path": ["solicitudcita","citasPorPaciente"],
+              "path": [
+                "solicitudcita",
+                "citasPorPaciente"
+              ],
               "query": [
-                {"key":"idPaciente","value":"1"}
+                {
+                  "key": "idPaciente",
+                  "value": "1"
+                }
               ]
             }
           }

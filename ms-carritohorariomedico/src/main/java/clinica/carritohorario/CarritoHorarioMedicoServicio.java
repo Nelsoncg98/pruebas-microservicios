@@ -43,12 +43,53 @@ public class CarritoHorarioMedicoServicio {
         // 1) Verificamos que el médico exista en el microservicio ms-medico
         verificarMedico(horario.getMedicoId());
 
-        // 2) Verificamos que el nuevo horario NO se solape con otros
+        // 2) Verificamos que el horario sea del mismo médico que los ya existentes en el carrito
+        verificarMedicoUnico(horario);
+
+        // 3) Verificamos que el nuevo horario NO se solape con otros
         //    horarios ya agregados al carrito.
         verificarConflictos(horario);
 
-        // 3) Si todo está correcto, recién guardamos la línea en el carrito
+        // 4) Si todo está correcto, recién guardamos la línea en el carrito
         return repo.save(horario);
+    }
+
+    /**
+     * Verifica que el nuevo horario sea del mismo médico que los horarios
+     * ya existentes en el carrito. Si el carrito está vacío, permite cualquier médico.
+     * 
+     * Regla de negocio: Una programación médica es para UN SOLO médico,
+     * por lo tanto el carrito solo puede contener horarios de un mismo médico.
+     */
+    private void verificarMedicoUnico(Linea nuevo) {
+        List<Linea> existentes = repo.findAll();
+        
+        if (existentes.isEmpty()) {
+            // Carrito vacío, permite cualquier médico
+            log.info("[Carrito] Carrito vacío, se permite agregar horario del médico ID={}", nuevo.getMedicoId());
+            return;
+        }
+        
+        // Obtener el medicoId del primer horario en el carrito
+        Long medicoEnCarrito = existentes.get(0).getMedicoId();
+        
+        if (medicoEnCarrito == null || nuevo.getMedicoId() == null) {
+            throw new IllegalStateException("El horario debe tener un médico asignado");
+        }
+        
+        if (!medicoEnCarrito.equals(nuevo.getMedicoId())) {
+            String mensaje = String.format(
+                "El carrito ya contiene horarios del médico ID=%d. " +
+                "No se pueden agregar horarios de otro médico (ID=%d). " +
+                "Vacíe el carrito primero.",
+                medicoEnCarrito,
+                nuevo.getMedicoId()
+            );
+            log.warn("[Carrito] {}", mensaje);
+            throw new IllegalStateException(mensaje);
+        }
+        
+        log.info("[Carrito] Validación OK: horario del médico ID={} coincide con el carrito", nuevo.getMedicoId());
     }
 
     /**
