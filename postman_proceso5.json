@@ -1,0 +1,81 @@
+{
+    "info": {
+        "_postman_id": "proceso-5-collection",
+        "name": "Proceso 5 - Atención Médica",
+        "description": "Colección para probar el flujo de Atención Médica (Core y Composite)",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "1. Registrar Atención (Composite)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"idCita\": 1,\r\n  \"idHistoriaMedica\": 1,\r\n  \"idPaciente\": 1,\r\n  \"idMedico\": 1,\r\n  \"fechaAtencion\": \"2025-11-23T10:00:00\",\r\n  \"diagnostico\": \"Faringitis Aguda\",\r\n  \"tratamiento\": \"Gárgaras de sal y reposo absoluto\",\r\n  \"estado\": \"FINALIZADO\"\r\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8190/gestionatencion/registrar",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8190",
+                    "path": [
+                        "gestionatencion",
+                        "registrar"
+                    ]
+                },
+                "description": "Registra una atención médica a través del servicio compuesto. Devuelve la atención creada enriquecida con datos de Paciente, Médico, Cita e Historia."
+            },
+            "response": []
+        },
+        {
+            "name": "2. Buscar Atención por ID (Composite)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8190/gestionatencion/1",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8190",
+                    "path": [
+                        "gestionatencion",
+                        "1"
+                    ]
+                },
+                "description": "Busca una atención existente y devuelve los datos enriquecidos."
+            },
+            "response": []
+        },
+        {
+            "name": "3. Listar Atenciones (Core - Verificación)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8060/atencion",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8060",
+                    "path": [
+                        "atencion"
+                    ]
+                },
+                "description": "Lista todas las atenciones directamente del microservicio Core (solo para verificación, devuelve IDs)."
+            },
+            "response": []
+        }
+    ]
+}
