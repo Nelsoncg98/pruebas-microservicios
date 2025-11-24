@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class GestionAtencionService {
@@ -23,6 +25,28 @@ public class GestionAtencionService {
     private MedicoClient medicoClient;
     @Autowired
     private HistoriaMedicaClient historiaClient;
+
+    public List<SalidaAtencion> listarAtenciones() {
+        // 1. Obtener del Core
+        List<Map<String, Object>> atenciones = atencionClient.listar();
+        
+        // 2. Retornar Salida Enriquecida
+        return atenciones.stream().map(this::convertirATSalidaAtencion).collect(Collectors.toList());
+    }
+
+    private SalidaAtencion convertirATSalidaAtencion(Map<String, Object> atencion) {
+        SalidaAtencion salida = new SalidaAtencion();
+        salida.setIdAtencionMedica(getLong(atencion, "idAtencionMedica"));
+        salida.setCita(citaClient.buscarPorId(getLong(atencion, "idCita")));
+        salida.setPaciente(pacienteClient.buscarPorId(getLong(atencion, "idPaciente")));
+        salida.setMedico(medicoClient.buscarPorId(getLong(atencion, "idMedico")));
+        salida.setHistoriaMedica(historiaClient.buscarPorId(getLong(atencion, "idHistoriaMedica")));
+        salida.setDiagnostico((String) atencion.get("diagnostico"));
+        salida.setTratamiento((String) atencion.get("tratamiento"));
+        salida.setEstado((String) atencion.get("estado"));
+        salida.setFechaAtencion(getLocalDateTime(atencion, "fechaAtencion"));
+        return salida;
+    }
 
     public SalidaAtencion registrarAtencion(EntradaAtencion entrada) {
         // 1. Validar existencia de IDs (Regla de Negocio: Integridad)
@@ -128,6 +152,18 @@ public class GestionAtencionService {
         Object val = map.get(key);
         if (val instanceof Number) {
             return ((Number) val).longValue();
+        }
+        return null;
+    }
+
+    private LocalDateTime getLocalDateTime(Map<String, Object> map, String key) {
+        Object val = map.get(key);
+        if (val instanceof String) {
+            try {
+                return LocalDateTime.parse((String) val);
+            } catch (Exception e) {
+                return null;
+            }
         }
         return null;
     }

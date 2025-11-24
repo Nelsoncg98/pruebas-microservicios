@@ -58,7 +58,28 @@
             "response": []
         },
         {
-            "name": "3. Listar Atenciones (Core - Verificación)",
+            "name": "3. Listar Atenciones (Composite)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8197/gestionatencion/listar",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8197",
+                    "path": [
+                        "gestionatencion",
+                        "listar"
+                    ]
+                },
+                "description": "Lista todas las atenciones médicas enriquecidas con datos de Cita, Paciente, Médico e Historia."
+            },
+            "response": []
+        },
+        {
+            "name": "4. Listar Atenciones (Core - Verificación)",
             "request": {
                 "method": "GET",
                 "header": [],

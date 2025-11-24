@@ -6,8 +6,7 @@ import clinica.gestionatencion.service.GestionAtencionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
+import java.util.List;
 
 
 @RestController
@@ -26,5 +25,10 @@ public class GestionAtencionController {
     @GetMapping("/{id}")
     public ResponseEntity<SalidaAtencion> buscar(@PathVariable Long id) {
         return ResponseEntity.ok(service.buscarAtencion(id));
+    }
+    
+    @GetMapping("/listar")
+    public ResponseEntity<List<SalidaAtencion>> listar() {
+        return ResponseEntity.ok(service.listarAtenciones());
     }
 }
