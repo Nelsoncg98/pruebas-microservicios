@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin(origins = "http://localhost:5173") // habilitar CORS para el frontend en desarrollo
+
 @RestController
 @RequestMapping("/atencion")
 @CrossOrigin(origins = "http://localhost:5173")
