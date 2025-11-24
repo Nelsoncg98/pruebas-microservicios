@@ -21,12 +21,12 @@
                     "raw": "{\r\n  \"idCita\": 1,\r\n  \"idHistoriaMedica\": 1,\r\n  \"idPaciente\": 1,\r\n  \"idMedico\": 1,\r\n  \"fechaAtencion\": \"2025-11-23T10:00:00\",\r\n  \"diagnostico\": \"Faringitis Aguda\",\r\n  \"tratamiento\": \"Gárgaras de sal y reposo absoluto\",\r\n  \"estado\": \"FINALIZADO\"\r\n}"
                 },
                 "url": {
-                    "raw": "http://localhost:8190/gestionatencion/registrar",
+                    "raw": "http://localhost:8197/gestionatencion/registrar",
                     "protocol": "http",
                     "host": [
                         "localhost"
                     ],
-                    "port": "8190",
+                    "port": "8197",
                     "path": [
                         "gestionatencion",
                         "registrar"
@@ -42,12 +42,12 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                    "raw": "http://localhost:8190/gestionatencion/1",
+                    "raw": "http://localhost:8197/gestionatencion/1",
                     "protocol": "http",
                     "host": [
                         "localhost"
                     ],
-                    "port": "8190",
+                    "port": "8197",
                     "path": [
                         "gestionatencion",
                         "1"
@@ -63,12 +63,12 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                    "raw": "http://localhost:8060/atencion",
+                    "raw": "http://localhost:8097/atencion",
                     "protocol": "http",
                     "host": [
                         "localhost"
                     ],
-                    "port": "8060",
+                    "port": "8097",
                     "path": [
                         "atencion"
                     ]
