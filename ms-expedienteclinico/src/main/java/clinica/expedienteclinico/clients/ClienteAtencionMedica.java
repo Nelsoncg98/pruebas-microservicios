@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import clinica.expedienteclinico.dto.AtencionMedicaDTO;
 
 
-@FeignClient(name = "ms-atencion", url = "${clients.atencion.url:http://localhost:8060}")
+@FeignClient(name = "ms-atencion", url = "${clients.atencion.url:http://localhost:8097}")
 public interface ClienteAtencionMedica {
-    
     @GetMapping("/atencion/cita/{citaId}")
-    AtencionMedicaDTO obtenerPorCita(@PathVariable("citaId") Long citaId);
+    List<AtencionMedicaDTO> obtenerPorCita(@PathVariable("citaId") Long citaId);
 }
+

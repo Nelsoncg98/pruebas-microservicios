@@ -65,13 +65,23 @@ public class ExpedienteClinicoServicio {
             item.setCita(cita);
 
             AtencionMedicaDTO atencion = null;
+
             try {
-                // Cambiar a método que devuelva UNA atención por cita
-                atencion = clienteAtencion.obtenerPorCita(cita.getNumero());
+                // 1. Llamamos al cliente que ahora devuelve una LISTA
+                List<AtencionMedicaDTO> listaAtenciones = clienteAtencion.obtenerPorCita(cita.getNumero());
+
+                // 2. Verificamos si la lista no es nula y tiene algo
+                if (listaAtenciones != null && !listaAtenciones.isEmpty()) {
+                    atencion = listaAtenciones.get(0); // Tomamos el primer elemento
+                }
+
             } catch (FeignException.NotFound nf) {
-                atencion = null; // No tiene atención aún
-            } catch (Exception e) {
+                // Si el microservicio devuelve 404
                 atencion = null;
+            } catch (Exception e) {
+                // Otros errores de conexión
+                atencion = null;
+                // Opcional: log.error("Error al obtener atencion", e);
             }
 
             item.setAtencion(atencion);
