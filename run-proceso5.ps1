@@ -11,6 +11,9 @@ Start-Process -FilePath "mvn" -ArgumentList "spring-boot:run" -WorkingDirectory 
 Write-Host "Iniciando ms-gestionatencionmedica (Composite)..." -ForegroundColor Cyan
 Start-Process -FilePath "mvn" -ArgumentList "spring-boot:run" -WorkingDirectory ".\ms-gestionatencionmedica" -NoNewWindow
 
+Write-Host "Iniciando ms-nuevaatencion (Composite - Inicializador)..." -ForegroundColor Cyan
+Start-Process -FilePath "mvn" -ArgumentList "spring-boot:run" -WorkingDirectory ".\ms-nuevaatencion" -NoNewWindow
+
 # Iniciar servicios mock/dependencias si es necesario para que el composite no falle al buscar
 Write-Host "Iniciando Dependencias (Cita, Paciente, Medico, Historia)..." -ForegroundColor Yellow
 Start-Process -FilePath "mvn" -ArgumentList "spring-boot:run" -WorkingDirectory ".\procesoTres\ms-cita" -NoNewWindow
