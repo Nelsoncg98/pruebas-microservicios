@@ -14,6 +14,6 @@ public interface AtencionMedicaClient {
     @GetMapping("/atencion/{id}")
     Map<String, Object> buscarPorId(@PathVariable Long id);
 
-    @GetMapping("/atencion")
+    @GetMapping("/atencion/listar")
     java.util.List<Map<String, Object>> listar();
 }

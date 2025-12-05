@@ -35,7 +35,7 @@ public class AtencionMedicaController {
         return ResponseEntity.ok(service.buscarPorCita(idCita));
     }
 
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<List<AtencionMedica>> listarTodas() {
         return ResponseEntity.ok(service.listarTodas());
     }
