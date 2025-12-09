@@ -38,9 +38,22 @@ public class GestionAtencionService {
         SalidaAtencion salida = new SalidaAtencion();
         salida.setIdAtencionMedica(getLong(atencion, "idAtencionMedica"));
         salida.setCita(citaClient.buscarPorId(getLong(atencion, "idCita")));
-        salida.setPaciente(pacienteClient.buscarPorId(getLong(atencion, "idPaciente")));
         salida.setMedico(medicoClient.buscarPorId(getLong(atencion, "idMedico")));
-        salida.setHistoriaMedica(historiaClient.buscarPorId(getLong(atencion, "idHistoriaMedica")));
+        
+        // Historia Medica con Paciente Anidado
+        Map<String, Object> historia = historiaClient.buscarPorId(getLong(atencion, "idHistoriaMedica"));
+        if (historia != null) {
+            Long pacienteId = getLong(historia, "pacienteId");
+            if (pacienteId != null) {
+                try {
+                    historia.put("paciente", pacienteClient.buscarPorId(pacienteId));
+                } catch (Exception e) {
+                    // Log error
+                }
+            }
+        }
+        salida.setHistoriaMedica(historia);
+
         salida.setDiagnostico((String) atencion.get("diagnostico"));
         salida.setTratamiento((String) atencion.get("tratamiento"));
         salida.setEstado((String) atencion.get("estado"));
@@ -68,12 +81,6 @@ public class GestionAtencionService {
         }
 
         try {
-            if (entrada.getIdPaciente() != null) pacienteClient.buscarPorId(entrada.getIdPaciente());
-        } catch (Exception e) {
-            throw new RuntimeException("Error al registrar: El Paciente con ID " + entrada.getIdPaciente() + " no existe o no responde.");
-        }
-
-        try {
             if (entrada.getIdMedico() != null) medicoClient.buscarPorId(entrada.getIdMedico());
         } catch (Exception e) {
             throw new RuntimeException("Error al registrar: El Medico con ID " + entrada.getIdMedico() + " no existe o no responde.");
@@ -93,7 +100,6 @@ public class GestionAtencionService {
         
         // 2. Obtener IDs de manera segura
         Long idCita = getLong(atencion, "idCita");
-        Long idPaciente = getLong(atencion, "idPaciente");
         Long idMedico = getLong(atencion, "idMedico");
         Long idHistoria = getLong(atencion, "idHistoriaMedica");
         
@@ -103,11 +109,6 @@ public class GestionAtencionService {
             try { cita = citaClient.buscarPorId(idCita); } catch (Exception e) { System.err.println("Error buscando Cita: " + e.getMessage()); }
         }
         
-        Map<String, Object> paciente = null;
-        if (idPaciente != null) {
-            try { paciente = pacienteClient.buscarPorId(idPaciente); } catch (Exception e) { System.err.println("Error buscando Paciente: " + e.getMessage()); }
-        }
-        
         Map<String, Object> medico = null;
         if (idMedico != null) {
             try { medico = medicoClient.buscarPorId(idMedico); } catch (Exception e) { System.err.println("Error buscando Medico: " + e.getMessage()); }
@@ -115,14 +116,26 @@ public class GestionAtencionService {
         
         Map<String, Object> historia = null;
         if (idHistoria != null) {
-            try { historia = historiaClient.buscarPorId(idHistoria); } catch (Exception e) { System.err.println("Error buscando Historia: " + e.getMessage()); }
+            try { 
+                historia = historiaClient.buscarPorId(idHistoria);
+                // Anidar Paciente dentro de Historia
+                if (historia != null) {
+                    Long pacienteId = getLong(historia, "pacienteId");
+                    if (pacienteId != null) {
+                        try {
+                            historia.put("paciente", pacienteClient.buscarPorId(pacienteId));
+                        } catch (Exception e) {
+                            System.err.println("Error buscando Paciente anidado: " + e.getMessage());
+                        }
+                    }
+                }
+            } catch (Exception e) { System.err.println("Error buscando Historia: " + e.getMessage()); }
         }
         
         // 4. Construir Salida
         SalidaAtencion salida = new SalidaAtencion();
         salida.setIdAtencionMedica(id);
         salida.setCita(cita);
-        salida.setPaciente(paciente);
         salida.setMedico(medico);
         salida.setHistoriaMedica(historia);
         
@@ -168,4 +181,3 @@ public class GestionAtencionService {
         return null;
     }
 }
-

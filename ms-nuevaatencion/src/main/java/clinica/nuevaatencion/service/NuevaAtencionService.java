@@ -33,14 +33,6 @@ public class NuevaAtencionService {
             }
         }
 
-        if (entrada.getIdPaciente() != null) {
-            try {
-                salida.setPaciente(pacienteClient.buscarPorId(entrada.getIdPaciente()));
-            } catch (Exception e) {
-                // Log error
-            }
-        }
-
         if (entrada.getIdMedico() != null) {
             try {
                 salida.setMedico(medicoClient.buscarPorId(entrada.getIdMedico()));
@@ -51,7 +43,24 @@ public class NuevaAtencionService {
 
         if (entrada.getIdHistoriaMedica() != null) {
             try {
-                salida.setHistoriaMedica(historiaClient.buscarPorId(entrada.getIdHistoriaMedica()));
+                Map<String, Object> historia = historiaClient.buscarPorId(entrada.getIdHistoriaMedica());
+                // Anidar Paciente dentro de Historia
+                if (historia != null) {
+                    Object pacienteIdObj = historia.get("pacienteId");
+                    Long pacienteId = null;
+                    if (pacienteIdObj instanceof Number) {
+                        pacienteId = ((Number) pacienteIdObj).longValue();
+                    }
+                    
+                    if (pacienteId != null) {
+                        try {
+                            historia.put("paciente", pacienteClient.buscarPorId(pacienteId));
+                        } catch (Exception e) {
+                            // Log error
+                        }
+                    }
+                }
+                salida.setHistoriaMedica(historia);
             } catch (Exception e) {
                 // Log error
             }

@@ -14,7 +14,6 @@ public class AtencionMedica {
 
     private Long idCita;
     private Long idHistoriaMedica;
-    private Long idPaciente;
     private Long idMedico;
     
     private LocalDateTime fechaAtencion;

@@ -18,7 +18,7 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\r\n  \"idCita\": 1,\r\n  \"idHistoriaMedica\": 1,\r\n  \"idPaciente\": 1,\r\n  \"idMedico\": 1,\r\n  \"fechaAtencion\": \"2025-11-23T10:00:00\",\r\n  \"diagnostico\": \"Faringitis Aguda\",\r\n  \"tratamiento\": \"Gárgaras de sal y reposo absoluto\",\r\n  \"estado\": \"FINALIZADO\"\r\n}"
+                    "raw": "{\r\n  \"idCita\": 1,\r\n  \"idHistoriaMedica\": 1,\r\n  \"idMedico\": 1,\r\n  \"fechaAtencion\": \"2025-11-23T10:00:00\",\r\n  \"diagnostico\": \"Faringitis Aguda\",\r\n  \"tratamiento\": \"Gárgaras de sal y reposo absoluto\",\r\n  \"estado\": \"FINALIZADO\"\r\n}"
                 },
                 "url": {
                     "raw": "http://localhost:8197/gestionatencion/registrar",
@@ -80,135 +80,53 @@
         },
         {
             "name": "4. Listar Atenciones (Core - Verificación)",
-            {
-                "info": {
-                    "_postman_id": "proceso-5-collection",
-                    "name": "Proceso 5 - Atención Médica",
-                    "description": "Colección para probar el flujo de Atención Médica (Core y Composite)",
-                    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8097/atencion",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8097",
+                    "path": [
+                        "atencion"
+                    ]
                 },
-                "item": [
+                "description": "Lista todas las atenciones directamente del microservicio Core (solo para verificación, devuelve IDs)."
+            },
+            "response": []
+        },
+        {
+            "name": "5. Nueva Atención (Inicializar)",
+            "request": {
+                "method": "POST",
+                "header": [
                     {
-                        "name": "1. Registrar Atención (Composite)",
-                        "request": {
-                            "method": "POST",
-                            "header": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                }
-                            ],
-                            "body": {
-                                "mode": "raw",
-                                "raw": "{\r\n  \"idCita\": 1,\r\n  \"idHistoriaMedica\": 1,\r\n  \"idPaciente\": 1,\r\n  \"idMedico\": 1,\r\n  \"fechaAtencion\": \"2025-11-23T10:00:00\",\r\n  \"diagnostico\": \"Faringitis Aguda\",\r\n  \"tratamiento\": \"Gárgaras de sal y reposo absoluto\",\r\n  \"estado\": \"FINALIZADO\"\r\n}"
-                            },
-                            "url": {
-                                "raw": "http://localhost:8197/gestionatencion/registrar",
-                                "protocol": "http",
-                                "host": [
-                                    "localhost"
-                                ],
-                                "port": "8197",
-                                "path": [
-                                    "gestionatencion",
-                                    "registrar"
-                                ]
-                            },
-                            "description": "Registra una atención médica a través del servicio compuesto. Devuelve la atención creada enriquecida con datos de Paciente, Médico, Cita e Historia."
-                        },
-                        "response": []
-                    },
-                    {
-                        "name": "2. Buscar Atención por ID (Composite)",
-                        "request": {
-                            "method": "GET",
-                            "header": [],
-                            "url": {
-                                "raw": "http://localhost:8197/gestionatencion/1",
-                                "protocol": "http",
-                                "host": [
-                                    "localhost"
-                                ],
-                                "port": "8197",
-                                "path": [
-                                    "gestionatencion",
-                                    "1"
-                                ]
-                            },
-                            "description": "Busca una atención existente y devuelve los datos enriquecidos."
-                        },
-                        "response": []
-                    },
-                    {
-                        "name": "3. Listar Atenciones (Composite)",
-                        "request": {
-                            "method": "GET",
-                            "header": [],
-                            "url": {
-                                "raw": "http://localhost:8197/gestionatencion/listar",
-                                "protocol": "http",
-                                "host": [
-                                    "localhost"
-                                ],
-                                "port": "8197",
-                                "path": [
-                                    "gestionatencion",
-                                    "listar"
-                                ]
-                            },
-                            "description": "Lista todas las atenciones médicas enriquecidas con datos de Cita, Paciente, Médico e Historia."
-                        },
-                        "response": []
-                    },
-                    {
-                        "name": "4. Listar Atenciones (Core - Verificación)",
-                        "request": {
-                            "method": "GET",
-                            "header": [],
-                            "url": {
-                                "raw": "http://localhost:8097/atencion",
-                                "protocol": "http",
-                                "host": [
-                                    "localhost"
-                                ],
-                                "port": "8097",
-                                "path": [
-                                    "atencion"
-                                ]
-                            },
-                            "description": "Lista todas las atenciones directamente del microservicio Core (solo para verificación, devuelve IDs)."
-                        },
-                        "response": []
-                    },
-                    {
-                        "name": "5. Nueva Atención (Inicializar)",
-                        "request": {
-                            "method": "POST",
-                            "header": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                }
-                            ],
-                            "body": {
-                                "mode": "raw",
-                                "raw": "{\r\n  \"idCita\": 1,\r\n  \"idHistoriaMedica\": 1,\r\n  \"idPaciente\": 1,\r\n  \"idMedico\": 1\r\n}"
-                            },
-                            "url": {
-                                "raw": "http://localhost:8297/nuevaatencion/nuevo",
-                                "protocol": "http",
-                                "host": [
-                                    "localhost"
-                                ],
-                                "port": "8297",
-                                "path": [
-                                    "nuevaatencion",
-                                    "nuevo"
-                                ]
-                            },
-                            "description": "Inicializa el formulario de atención médica. Recibe IDs y devuelve datos enriquecidos con campos clínicos vacíos."
-                        },
-                        "response": []
+                        "key": "Content-Type",
+                        "value": "application/json"
                     }
-                ]
-            }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"idCita\": 1,\r\n  \"idHistoriaMedica\": 1,\r\n  \"idMedico\": 1\r\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8297/nuevaatencion/nuevo",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8297",
+                    "path": [
+                        "nuevaatencion",
+                        "nuevo"
+                    ]
+                },
+                "description": "Inicializa el formulario de atención médica. Recibe IDs y devuelve datos enriquecidos con campos clínicos vacíos."
+            },
+            "response": []
+        }
+    ]
+}

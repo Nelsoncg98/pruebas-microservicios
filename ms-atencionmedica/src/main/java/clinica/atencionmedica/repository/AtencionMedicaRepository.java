@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface AtencionMedicaRepository extends JpaRepository<AtencionMedica, Long> {
     List<AtencionMedica> findByIdCita(Long idCita);
-    List<AtencionMedica> findByIdPaciente(Long idPaciente);
 }
