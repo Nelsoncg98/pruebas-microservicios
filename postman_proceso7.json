@@ -1,0 +1,189 @@
+{
+    "info": {
+        "_postman_id": "proceso7-analisis-uuid-v2",
+        "name": "Proceso 7 - Análisis Clínico (Completo)",
+        "description": "Colección completa para el flujo de análisis clínico con estructura modular.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "1. Ms-TipoAnalisis (Catálogo)",
+            "item": [
+                {
+                    "name": "Listar Tipos",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8090/tipoanalisis/listar",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8090",
+                            "path": [
+                                "tipoanalisis",
+                                "listar"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar Tipo (ID 1)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8090/tipoanalisis/buscar/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8090",
+                            "path": [
+                                "tipoanalisis",
+                                "buscar",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "2. Ms-GestionAnalisis (Flujo Principal)",
+            "item": [
+                {
+                    "name": "1. Iniciar Nuevo Análisis",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"idAtencion\": 100,\n    \"idMedico\": 5\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8198/gestionanalisis/nuevo",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8198",
+                            "path": [
+                                "gestionanalisis",
+                                "nuevo"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "2. Ver Análisis",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8198/gestionanalisis/ver/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8198",
+                            "path": [
+                                "gestionanalisis",
+                                "ver",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "3. Finalizar Análisis",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8198/gestionanalisis/finalizar/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8198",
+                            "path": [
+                                "gestionanalisis",
+                                "finalizar",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "3. Ms-AgregarTipo (Accion)",
+            "item": [
+                {
+                    "name": "Agregar Tipo (Hemograma)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"idAnalisis\": 1,\n    \"idTipo\": 1,\n    \"indicaciones\": \"Ayunas completo\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8190/agregartipo/agregar",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8190",
+                            "path": [
+                                "agregartipo",
+                                "agregar"
+                            ]
+                        },
+                        "description": "Agrega Hemograma (ID 1). Realiza snapshot de costo."
+                    }
+                },
+                {
+                    "name": "Agregar Tipo (Glucosa)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"idAnalisis\": 1,\n    \"idTipo\": 2,\n    \"indicaciones\": \"Sin agua previa\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8190/agregartipo/agregar",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8190",
+                            "path": [
+                                "agregartipo",
+                                "agregar"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

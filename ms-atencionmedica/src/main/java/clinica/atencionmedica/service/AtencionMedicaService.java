@@ -29,4 +29,18 @@ public class AtencionMedicaService {
     public List<AtencionMedica> buscarPorCita(Long idCita) {
         return repository.findByIdCita(idCita);
     }
+
+    public AtencionMedica actualizarReceta(Long id, String recetaRef) {
+        return repository.findById(id).map(atencion -> {
+            atencion.setReceta(recetaRef);
+            return repository.save(atencion);
+        }).orElse(null);
+    }
+
+    public AtencionMedica actualizarAnalisis(Long id, String analisisRef) {
+        return repository.findById(id).map(atencion -> {
+            atencion.setAnalisisClinico(analisisRef);
+            return repository.save(atencion);
+        }).orElse(null);
+    }
 }

@@ -47,42 +47,60 @@ Se incluyen a continuación los procesos funcionales que el cliente definió y q
 - El personal administrativo consulta la disponibilidad al médico por especialidad y elabora la programación de médicos por día y hora, considerando la especialidad, fecha, día, hora y consultorio.
 - **Estado:** Implementado.
 - **Servicios:** 
-  - `ms-programacioncompuesta` (Puerto 8187): Orquestador que coordina la creación de programaciones.
-  - `ms-horariomedico` (Puerto 8085): Gestión de horarios individuales.
-  - `ms-programacionmedica` (Puerto 8087): Almacenamiento de programaciones.
-  - `ms-personaladministrativo` (Puerto 8081): Gestión del actor principal.
+  - `ms-programacioncompuesta` (Puerto 8187): Orquestador.
+  - `ms-horariomedico` (Puerto 8085): Entidad Horario.
+  - `ms-programacionmedica` (Puerto 8087): Entidad Programación.
+  - `ms-personaladministrativo` (Puerto 8081): Entidad Personal.
+  - `ms-medico` (Puerto 8091): Entidad Médico.
 
 ### 2. Proceso de historia médica
 - Para ser atendido el paciente acude al centro médico, la enfermera registra sus datos personales y toma los datos médicos básicos como peso, talla, edad siempre y cuando sea la primera vez que asista, finalmente la enfermera elabora la historia médica del paciente.
 - **Estado:** Implementado.
 - **Servicios:**
-  - `ms-enfermera` (Puerto 8093): Gestión del actor principal.
-  - `ms-paciente` (Puerto 8092): Registro de datos del paciente.
-  - `ms-historiamedica` (Puerto 8088): Creación y almacenamiento de la historia médica.
+  - `ms-enfermera` (Puerto 8093): Entidad Enfermera.
+  - `ms-paciente` (Puerto 8092): Entidad Paciente.
+  - `ms-historiamedica` (Puerto 8088): Entidad Historia Médica.
 
 ### 3. Proceso de solicitud de cita médica
 - Para ser atendido el paciente solicita vía telefónica una cita médica, el encargado solicita la especialidad y le informa los médicos disponibles la fecha, hora y costo de atención, una vez confirmado el médico, el encargado elabora la cita médica.
 - **Estado:** Implementado.
 - **Servicios:**
-  - `ms-solicitudcita` (Puerto 8189): Orquestador que coordina todo el flujo de solicitud.
-  - `ms-disponibilidadhorarios` (Puerto 8185): Consulta de disponibilidad de médicos.
-  - `ms-cita` (Puerto 8089): Creación y almacenamiento de la cita médica.
+  - `ms-solicitudcita` (Puerto 8189): Orquestador.
+  - `ms-disponibilidadhorarios` (Puerto 8185): Consulta Agregada.
+  - `ms-cita` (Puerto 8089): Entidad Cita.
 
 ### 4. Proceso de pago de cita
 - El paciente acude al centro médico y se acerca a caja; el cajero solicita sus datos personales y de la cita, finalmente el cajero elabora una boleta de venta, el paciente entrega el dinero y se retira con la boleta cancelada.
-- **Estado:** Implementado (`ms-pagos`).
+- **Estado:** Implementado (`ms-pagos` Puerto 8199).
 
 ### 5. Proceso de atención médica
 - El paciente acude a la cita, el médico verifica el pago de la cita y elabora la atención médica: examina al paciente, registra los datos de la atención médica como diagnóstico y tratamiento; a esa ficha se le añaden la receta de medicamentos y/o análisis clínico si se requiere; finalmente registra la atención y añade toda esta información a la historia médica.
-- **Estado:** **PENDIENTE**. (Existe estructura base en `ms-expedienteclinico` pero la lógica de negocio no está completa).
+- **Estado:** Implementado.
+- **Servicios:**
+    - `ms-gestionatencionmedica` (Puerto 8197): Orquestador principal.
+    - `ms-atencionmedica` (Puerto 8097): Entidad Atención Médica.
+    - `ms-nuevaatencion` (Puerto 8297): Orquestador alternativo/experimental.
+    - `ms-expedienteclinico` (Puerto 8193): Consulta consolidada.
 
 ### 6. Proceso de receta médica
 - El médico selecciona los medicamentos de un listado de medicamentos y elabora la receta médica.
-- **Estado:** **PENDIENTE**.
+- **Estado:** Implementado.
+- **Servicios:**
+  - `ms-gestionreceta` (Puerto 8196): Orquestador principal.
+  - `ms-agregarmedicamento` (Puerto 8195): Orquestador de apoyo.
+  - `ms-receta` (Puerto 8095): Entidad Receta.
+  - `ms-medicamento` (Puerto 8082): Catálogo de Medicamentos.
+  - `ms-detallereceta` (Puerto 8096): Entidad Detalle.
 
 ### 7. Proceso de análisis clínico
 - El médico selecciona los tipos de análisis de una lista de tipos de análisis y elabora la solicitud de análisis clínico.
-- **Estado:** **PENDIENTE**.
+- **Estado:** Implementado.
+- **Servicios:**
+  - `ms-gestionanalisis` (Puerto 8198): Orquestador principal.
+  - `ms-agregartipo` (Puerto 8190): Orquestador de apoyo.
+  - `ms-analisis` (Puerto 8099): Entidad Análisis.
+  - `ms-tipoanalisis` (Puerto 8090): Catálogo de Tipos.
+  - `ms-detalleanalisis` (Puerto 8098): Entidad Detalle.
 
 ---
 

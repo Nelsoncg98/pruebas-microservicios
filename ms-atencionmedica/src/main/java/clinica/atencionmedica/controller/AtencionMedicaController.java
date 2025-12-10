@@ -39,4 +39,18 @@ public class AtencionMedicaController {
     public ResponseEntity<List<AtencionMedica>> listarTodas() {
         return ResponseEntity.ok(service.listarTodas());
     }
+
+    @PutMapping("/actualizar-receta/{id}")
+    public ResponseEntity<?> actualizarReceta(@PathVariable Long id, @RequestBody String recetaRef) {
+        AtencionMedica acc = service.actualizarReceta(id, recetaRef);
+        if (acc == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(acc);
+    }
+
+    @PutMapping("/actualizar-analisis/{id}")
+    public ResponseEntity<?> actualizarAnalisis(@PathVariable Long id, @RequestBody String analisisRef) {
+        AtencionMedica acc = service.actualizarAnalisis(id, analisisRef);
+        if (acc == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(acc);
+    }
 }

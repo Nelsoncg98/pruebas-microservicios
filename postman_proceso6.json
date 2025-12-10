@@ -1,0 +1,218 @@
+{
+    "info": {
+        "_postman_id": "proceso6-receta-uuid-v2",
+        "name": "Proceso 6 - Receta Médica (Completo)",
+        "description": "Colección completa para el flujo de receta médica con estructura modular.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "1. Ms-Medicamento (Catálogo)",
+            "item": [
+                {
+                    "name": "Listar Medicamentos",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8082/medicamento/listar",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8082",
+                            "path": [
+                                "medicamento",
+                                "listar"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar Medicamento (ID 1)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8082/medicamento/buscar/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8082",
+                            "path": [
+                                "medicamento",
+                                "buscar",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Registrar Medicamento",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nombre\": \"Aspirina 100mg\",\n    \"laboratorio\": \"Bayer\",\n    \"precio\": 2.50,\n    \"stock\": 200\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8082/medicamento/registrar",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8082",
+                            "path": [
+                                "medicamento",
+                                "registrar"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "2. Ms-GestionReceta (Flujo Principal)",
+            "item": [
+                {
+                    "name": "1. Iniciar Nueva Receta",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"idAtencion\": 100,\n    \"idMedico\": 5\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8196/gestionreceta/nuevo",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8196",
+                            "path": [
+                                "gestionreceta",
+                                "nuevo"
+                            ]
+                        },
+                        "description": "Crea la cabecera de la receta."
+                    }
+                },
+                {
+                    "name": "2. Ver Receta (Borrador)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8196/gestionreceta/ver/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8196",
+                            "path": [
+                                "gestionreceta",
+                                "ver",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "3. Finalizar Receta",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8196/gestionreceta/finalizar/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8196",
+                            "path": [
+                                "gestionreceta",
+                                "finalizar",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "3. Ms-AgregarMedicamento (Accion)",
+            "item": [
+                {
+                    "name": "Agregar Item (Paracetamol)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"idReceta\": 1,\n    \"idMedicamento\": 1,\n    \"cantidad\": 3,\n    \"indicaciones\": \"Una tableta cada 8 horas por 3 dias\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8195/agregarmedicamento/agregar",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8195",
+                            "path": [
+                                "agregarmedicamento",
+                                "agregar"
+                            ]
+                        },
+                        "description": "Usa ID 1 que SI existe en data.sql. Realiza Snapshot de precio y nombre."
+                    }
+                },
+                {
+                    "name": "Agregar Item (Ibuprofeno)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"idReceta\": 1,\n    \"idMedicamento\": 2,\n    \"cantidad\": 1,\n    \"indicaciones\": \"Si hay dolor\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8195/agregarmedicamento/agregar",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8195",
+                            "path": [
+                                "agregarmedicamento",
+                                "agregar"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
