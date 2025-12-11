@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin(origins = "http://localhost:5173") // habilitar CORS para el frontend en desarrollo
 @RestController
 @RequestMapping("/receta")
 public class RecetaController {

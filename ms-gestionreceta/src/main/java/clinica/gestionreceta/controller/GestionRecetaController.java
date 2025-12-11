@@ -5,7 +5,9 @@ import clinica.gestionreceta.service.GestionRecetaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin(origins = "http://localhost:5173") // habilitar CORS para el frontend en desarrollo
 @RestController
 @RequestMapping("/gestionreceta")
 public class GestionRecetaController {

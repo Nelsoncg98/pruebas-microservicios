@@ -5,9 +5,10 @@ import clinica.analisis.repository.AnalisisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Optional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin(origins = "http://localhost:5173") // habilitar CORS para el frontend en desarrollo
 @RestController
 @RequestMapping("/analisis")
 public class AnalisisController {
