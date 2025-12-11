@@ -65,7 +65,7 @@ public class GestionRecetaService {
         salida.setMedico(medicoData);
         salida.setAtencion(atencionData);
         salida.setDetalles(new ArrayList<>());
-        salida.setTotalDetalles(0.0);
+
         
         return salida;
     }
@@ -113,8 +113,7 @@ public class GestionRecetaService {
         
         salida.setDetalles(detalles);
 
-        // Calcular Total usando metodos auxiliares (para UML)
-        salida.setTotalDetalles(calcularTotal(detalles));
+        // Sin calculo de total
         
         return salida;
     }
@@ -129,27 +128,5 @@ public class GestionRecetaService {
     }
 
     // Metodos para UML
-    private double calcularTotal(List<Map<String, Object>> detalles) {
-        double total = 0;
-        if (detalles != null) {
-            for (Map<String, Object> detalle : detalles) {
-                total += calcularImporte(detalle);
-            }
-        }
-        return total;
-    }
-
-    private double calcularImporte(Map<String, Object> detalle) {
-        if (detalle.get("importe") != null) {
-            return Double.parseDouble(detalle.get("importe").toString());
-        }
-        // Fallback (por si acaso datos viejos)
-        double precio = 0;
-        int cantidad = 0;
-        if (detalle.get("precio") != null) 
-            precio = Double.parseDouble(detalle.get("precio").toString());
-        if (detalle.get("cantidad") != null) 
-            cantidad = Integer.parseInt(detalle.get("cantidad").toString());
-        return precio * cantidad;
-    }
+    // (Removed calculation methods)
 }

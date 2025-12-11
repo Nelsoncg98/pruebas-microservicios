@@ -59,4 +59,8 @@ public class RecetaController {
         }
         return ResponseEntity.notFound().build();
     }
+    @GetMapping("/listar")
+    public java.util.List<Receta> listar() {
+        return repository.findAll();
+    }
 }

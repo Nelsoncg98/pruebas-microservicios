@@ -39,4 +39,8 @@ public class AnalisisController {
         }
         return ResponseEntity.notFound().build();
     }
+    @GetMapping("/listar")
+    public java.util.List<Analisis> listar() {
+        return repository.findAll();
+    }
 }

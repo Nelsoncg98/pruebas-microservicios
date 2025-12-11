@@ -29,6 +29,10 @@ public class GestionAnalisisController {
 
     @PostMapping("/finalizar/{id}")
     public ResponseEntity<?> finalizar(@PathVariable Long id) {
-        return ResponseEntity.ok(service.finalizar(id));
+        try {
+            return ResponseEntity.ok(service.finalizar(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

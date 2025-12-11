@@ -59,7 +59,7 @@ public class GestionAnalisisService {
         
         salida.setMedico(medicoData);
         salida.setAtencion(atencionData);
-        salida.setTotalDetalles(0.0);
+
         salida.setDetalles(new ArrayList<>());
         
         return salida;
@@ -98,27 +98,16 @@ public class GestionAnalisisService {
         if (detalles == null) detalles = new ArrayList<>();
         salida.setDetalles(detalles);
         
-        // Calcular Total usando metodos auxiliares (para UML)
-        salida.setTotalDetalles(calcularTotal(detalles));
-
+        // Sin calculo de total
+        
         return salida;
     }
 
-    public SalidaAnalisis finalizar(Long id) {
+    public SalidaAnalisis finalizar(Long id) throws Exception {
         analisisClient.actualizarEstado(id, "FINALIZADO");
         return ver(id); 
     }
 
-    // Metodos para UML (Ahora suma el 'importe' persistido)
-    private double calcularTotal(List<Map<String, Object>> detalles) {
-        double total = 0;
-        if (detalles != null) {
-            for (Map<String, Object> detalle : detalles) {
-                if (detalle.get("costoTipo") != null) {
-                    total += Double.parseDouble(detalle.get("costoTipo").toString());
-                }
-            }
-        }
-        return total;
-    }
+    // Metodos para UML
+    // (Removed calculation methods)
 }

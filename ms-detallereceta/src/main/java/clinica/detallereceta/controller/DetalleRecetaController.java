@@ -29,8 +29,6 @@ public class DetalleRecetaController {
             Integer cantidad = Integer.valueOf(body.get("cantidad").toString());
             String indicaciones = (String) body.get("indicaciones");
             
-            Double importe = body.get("importe") != null ? Double.valueOf(body.get("importe").toString()) : null;
-            
             DetalleReceta detalle = new DetalleReceta();
             detalle.setIdReceta(idReceta);
             detalle.setIdMedicamento(idMedicamento);
@@ -42,13 +40,6 @@ public class DetalleRecetaController {
             detalle.setCantidad(cantidad);
             detalle.setIndicaciones(indicaciones);
             
-            // Priority: 1. Logic received 2. Auto-calc
-            if (importe != null) {
-                detalle.setImporte(importe);
-            } else {
-                detalle.calcularImporte();
-            }
-            
             return ResponseEntity.ok(repository.save(detalle));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error al guardar detalle: " + e.getMessage());
@@ -58,5 +49,9 @@ public class DetalleRecetaController {
     @GetMapping("/listarPorReceta/{idReceta}")
     public List<DetalleReceta> listarPorReceta(@PathVariable Long idReceta) {
         return repository.findByIdReceta(idReceta);
+    }
+    @GetMapping("/listar")
+    public java.util.List<DetalleReceta> listar() {
+        return repository.findAll();
     }
 }

@@ -52,4 +52,8 @@ public class DetalleAnalisisController {
     public List<DetalleAnalisis> listarPorAnalisis(@PathVariable Long id) {
         return repository.findByIdAnalisis(id);
     }
+    @GetMapping("/listar")
+    public java.util.List<DetalleAnalisis> listar() {
+        return repository.findAll();
+    }
 }

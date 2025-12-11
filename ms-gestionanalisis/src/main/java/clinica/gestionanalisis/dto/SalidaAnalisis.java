@@ -13,8 +13,7 @@ public class SalidaAnalisis {
     private Map<String, Object> medico;
     private Map<String, Object> atencion;
     private List<Map<String, Object>> detalles;
-    private Double totalDetalles;
-
+    
     public Long getIdAnalisis() {
         return idAnalisis;
     }
@@ -61,13 +60,5 @@ public class SalidaAnalisis {
 
     public void setDetalles(List<Map<String, Object>> detalles) {
         this.detalles = detalles;
-    }
-
-    public Double getTotalDetalles() {
-        return totalDetalles;
-    }
-
-    public void setTotalDetalles(Double totalDetalles) {
-        this.totalDetalles = totalDetalles;
     }
 }

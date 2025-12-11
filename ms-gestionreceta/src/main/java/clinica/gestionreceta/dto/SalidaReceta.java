@@ -54,15 +54,7 @@ public class SalidaReceta {
         this.atencion = atencion;
     }
 
-    private Double totalDetalles;
 
-    public Double getTotalDetalles() {
-        return totalDetalles;
-    }
-
-    public void setTotalDetalles(Double totalDetalles) {
-        this.totalDetalles = totalDetalles;
-    }
 
     public List<Map<String, Object>> getDetalles() {
         return detalles;

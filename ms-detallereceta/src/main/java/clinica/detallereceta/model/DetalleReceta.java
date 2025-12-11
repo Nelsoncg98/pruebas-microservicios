@@ -84,21 +84,4 @@ public class DetalleReceta {
         this.indicaciones = indicaciones;
     }
 
-    private Double importe;
-
-    public Double getImporte() {
-        return importe;
-    }
-
-    public void setImporte(Double importe) {
-        this.importe = importe;
-    }
-
-    public void calcularImporte() {
-        if (this.precio != null && this.cantidad != null) {
-            this.importe = this.precio * this.cantidad;
-        } else {
-            this.importe = 0.0;
-        }
-    }
 }
