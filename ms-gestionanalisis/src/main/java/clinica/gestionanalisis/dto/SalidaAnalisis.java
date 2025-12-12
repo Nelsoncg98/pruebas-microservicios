@@ -11,7 +11,7 @@ public class SalidaAnalisis {
     private String estado;
     
     private Map<String, Object> medico;
-    private Map<String, Object> atencion;
+    // atencion field removed
     private List<Map<String, Object>> detalles;
     
     public Long getIdAnalisis() {
@@ -46,13 +46,7 @@ public class SalidaAnalisis {
         this.medico = medico;
     }
 
-    public Map<String, Object> getAtencion() {
-        return atencion;
-    }
 
-    public void setAtencion(Map<String, Object> atencion) {
-        this.atencion = atencion;
-    }
 
     public List<Map<String, Object>> getDetalles() {
         return detalles;

@@ -29,10 +29,9 @@ public class GestionAnalisisService {
     public SalidaAnalisis nuevo(EntradaAnalisis entrada) throws Exception {
         // 1. Validaciones
         Map<String, Object> medicoData = medicoClient.buscar(entrada.getIdMedico());
-        Map<String, Object> atencionData = atencionClient.buscar(entrada.getIdAtencion());
+        // Atencion validation removed
         
         if (medicoData == null) throw new Exception("Medico no encontrado");
-        if (atencionData == null) throw new Exception("Atencion no encontrada");
 
         // 2. Crear Analisis
         Map<String, Object> analisisMap = new HashMap<>();
@@ -45,7 +44,6 @@ public class GestionAnalisisService {
         try {
             Object idAnalisisObj = creado.get("idAnalisis");
             atencionClient.actualizarAnalisis(entrada.getIdAtencion(), String.valueOf(idAnalisisObj));
-            atencionData.put("analisisClinico", String.valueOf(idAnalisisObj));
         } catch (Exception e) {
             System.err.println("Error vinculando analisis: " + e.getMessage());
         }
@@ -58,7 +56,7 @@ public class GestionAnalisisService {
         salida.setEstado((String) creado.get("estado"));
         
         salida.setMedico(medicoData);
-        salida.setAtencion(atencionData);
+        // Atencion data removed from output
 
         salida.setDetalles(new ArrayList<>());
         
@@ -82,12 +80,6 @@ public class GestionAnalisisService {
             try {
                 Long idMed = Long.valueOf(analisis.get("idMedico").toString());
                 salida.setMedico(medicoClient.buscar(idMed));
-            } catch (Exception e) {
-                // Log and continue
-            }
-            try {
-                Long idAt = Long.valueOf(analisis.get("idAtencion").toString());
-                salida.setAtencion(atencionClient.buscar(idAt));
             } catch (Exception e) {
                 // Log and continue
             }

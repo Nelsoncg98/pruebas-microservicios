@@ -33,10 +33,7 @@ public class GestionRecetaService {
             throw new Exception("Medico no encontrado con ID: " + entrada.getIdMedico());
         }
         
-        Map<String, Object> atencionData = atencionClient.buscar(entrada.getIdAtencion());
-        if (atencionData == null) {
-             throw new Exception("Atencion no encontrada con ID: " + entrada.getIdAtencion());
-        }
+        // Atencion validation removed as per request to not call/show it
 
         // 2. Crear Receta (Cabecera)
         Map<String, Object> bodyReceta = new HashMap<>();
@@ -49,8 +46,6 @@ public class GestionRecetaService {
         try {
             Object idRecetaObj = recetaCreada.get("idReceta");
             atencionClient.actualizarReceta(entrada.getIdAtencion(), String.valueOf(idRecetaObj));
-            // Actualizamos el objeto local 'atencionData' para que salga en la respuesta
-            atencionData.put("receta", String.valueOf(idRecetaObj));
         } catch (Exception e) {
             System.err.println("No se pudo vincular receta a atencion: " + e.getMessage());
         }
@@ -63,7 +58,7 @@ public class GestionRecetaService {
         salida.setEstado((String) recetaCreada.get("estado"));
         
         salida.setMedico(medicoData);
-        salida.setAtencion(atencionData);
+        // Atencion data removed from output
         salida.setDetalles(new ArrayList<>());
 
         
@@ -82,7 +77,7 @@ public class GestionRecetaService {
             salida.setEstado((String) receta.get("estado"));
         }
         
-        // 2. Enriquecer con Datos Externos (Medico, Atencion)
+        // 2. Enriquecer con Datos Externos (Medico)
         if (receta != null) {
             // Medico
             try {
@@ -93,17 +88,6 @@ public class GestionRecetaService {
                 }
             } catch (Exception e) {
                System.err.println("Error buscando medico: " + e.getMessage());
-            }
-
-            // Atencion
-            try {
-                Object idAtencionObj = receta.get("idAtencion");
-                if (idAtencionObj != null) {
-                    Long idAtencion = Long.valueOf(idAtencionObj.toString());
-                    salida.setAtencion(atencionClient.buscar(idAtencion));
-                }
-            } catch (Exception e) {
-                System.err.println("Error buscando atencion: " + e.getMessage());
             }
         }
         

@@ -11,7 +11,7 @@ public class SalidaReceta {
     private String estado;
     
     private Map<String, Object> medico;
-    private Map<String, Object> atencion;
+    // atencion field removed
     private List<Map<String, Object>> detalles;
 
     public Long getIdReceta() {
@@ -46,13 +46,7 @@ public class SalidaReceta {
         this.medico = medico;
     }
 
-    public Map<String, Object> getAtencion() {
-        return atencion;
-    }
 
-    public void setAtencion(Map<String, Object> atencion) {
-        this.atencion = atencion;
-    }
 
 
 
