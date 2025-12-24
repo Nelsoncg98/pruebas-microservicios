@@ -1,0 +1,37 @@
+@startuml ms-analisis
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Analisis {
+  -idAnalisis: Long
+  -idAtencion: Long
+  -idMedico: Long
+  -fecha: LocalDateTime
+  -estado: String
+}
+
+' Servicio
+class ServicioAnalisis {
+  +guardar(a: Analisis): Analisis
+  +listar(): List<Analisis>
+  +buscar(id: Long): Analisis
+  +actualizar(a: Analisis): Analisis
+  +actualizarEstado(id: Long, estado: String): void
+  +eliminar(id: Long): void
+}
+
+' Infraestructura
+interface RepositorioAnalisis
+class JpaRepository
+
+' API
+interface ApiAnalisis
+
+' Flujo
+ApiAnalisis --> ServicioAnalisis
+ServicioAnalisis --> RepositorioAnalisis
+RepositorioAnalisis o--> JpaRepository
+RepositorioAnalisis o..> Analisis
+
+@enduml

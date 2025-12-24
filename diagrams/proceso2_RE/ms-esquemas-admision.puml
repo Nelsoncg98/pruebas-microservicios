@@ -1,0 +1,39 @@
+@startuml ms-esquemas-admision
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+package "Esquemas Admision" {
+
+  class EntradaAdmision {
+    -dniPaciente: String
+    -peso: Double
+    -talla: Double
+    -edad: Integer
+    -idEnfermera: Long
+  }
+  
+  class SalidaAdmision {
+    -idHistoria: Long
+    -fecha: LocalDateTime
+    -paciente: SalidaPaciente
+    -triaje: SalidaTriaje
+  }
+  
+  class SalidaPaciente {
+    -nombre: String
+    -dni: String
+    -edad: Integer
+  }
+  
+  class SalidaTriaje {
+    -peso: Double
+    -talla: Double
+    -imc: Double
+  }
+
+  ' Relaciones
+  SalidaAdmision *-- SalidaPaciente
+  SalidaAdmision *-- SalidaTriaje
+}
+
+@enduml

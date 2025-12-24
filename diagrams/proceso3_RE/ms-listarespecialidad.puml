@@ -1,0 +1,28 @@
+@startuml ms-listarespecialidad
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Referencias a Esquemas
+class SalidaEspecialidad
+
+' Servicio Orquestador (Verbo Especifico)
+class ServicioListarEspecialidad {
+  +listar(): List<SalidaEspecialidad>
+}
+
+' API
+interface ApiListarEspecialidad
+
+' Clientes
+circle ApiEspecialidad
+
+' Relaciones
+ApiListarEspecialidad --> ServicioListarEspecialidad
+
+' Flujo (Unico)
+ServicioListarEspecialidad ..> ApiEspecialidad : consultar catalogo
+
+' Salida (Unica)
+ServicioListarEspecialidad ..> SalidaEspecialidad
+
+@enduml

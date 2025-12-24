@@ -1,0 +1,49 @@
+@startuml ms-programacioncompuesta
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTOs
+class EntradaProgramacion {
+  -idAdministrativo: Long
+  -fecha: String
+  -horarios: List<HorarioDTO>
+}
+
+class SalidaProgramacion {
+  -idProgramacion: Long
+  -fecha: String
+  -estado: String
+  -administrativo: Object
+  -horarios: List<HorarioMedico>
+}
+
+' Servicio Orquestador
+class ServicioProgramacionCompuesta {
+  +crearProgramacion(entrada: EntradaProgramacion): SalidaProgramacion
+  +listarProgramaciones(): List<SalidaProgramacion>
+  +buscarProgramacion(id: Long): SalidaProgramacion
+}
+
+' API y Operaciones
+interface ApiProgramacionCompuesta
+
+' Clientes Externos (APIs)
+circle ApiProgramacionMedica
+circle ApiHorarioMedico
+circle ApiMedico
+circle ApiPersonalAdministrativo
+
+' Relaciones Controlador
+ApiProgramacionCompuesta --> ServicioProgramacionCompuesta
+
+' Relaciones Servicio -> Dependencias
+ServicioProgramacionCompuesta ..> ApiProgramacionMedica : crear / buscar
+ServicioProgramacionCompuesta ..> ApiHorarioMedico : crear (lote) / listar
+ServicioProgramacionCompuesta ..> ApiMedico : validar
+ServicioProgramacionCompuesta ..> ApiPersonalAdministrativo : validar
+
+' Objetos de uso
+ServicioProgramacionCompuesta ..> EntradaProgramacion
+ServicioProgramacionCompuesta ..> SalidaProgramacion
+
+@enduml

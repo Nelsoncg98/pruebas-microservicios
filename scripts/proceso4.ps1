@@ -1,54 +1,69 @@
-Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-function Require-Command($name){
-  if (-not (Get-Command $name -ErrorAction SilentlyContinue)){
-    Write-Error "Command '$name' not found. Please install it and try again."
-  }
-}
-
-function Start-Mvn($name, $module){
-  $workDir = Join-Path $PSScriptRoot "..\$module"
-  Write-Host "[run] $name (mvn spring-boot:run) -> $workDir" -ForegroundColor Yellow
-  $p = Start-Process -FilePath "mvn" -ArgumentList "spring-boot:run" -WorkingDirectory $workDir -PassThru -WindowStyle Minimized
-  return $p
-}
-
-Set-Location -Path (Join-Path $PSScriptRoot '..')
-Require-Command mvn
-
-$pids = @()
-$pE = Start-Mvn "Eureka" "EurekaServerN"; $pids += $pE.Id
-Start-Sleep -Seconds 7
-
-# Servicios Core del Proceso 4
-$pPac = Start-Mvn "ms-paciente" "ms-paciente"; $pids += $pPac.Id
-Start-Sleep -Seconds 2
-$pCita = Start-Mvn "ms-cita" "procesoTres\ms-cita"; $pids += $pCita.Id
-Start-Sleep -Seconds 2
-$pPagos = Start-Mvn "ms-pagos" "ms-pagos"; $pids += $pPagos.Id
-Start-Sleep -Seconds 2
-$pEC = Start-Mvn "ms-expedienteclinico" "ms-expedienteclinico"; $pids += $pEC.Id
-
-$null = Register-EngineEvent PowerShell.Exiting -Action {
-  try {
-    if ($global:pids){
-      Write-Host "[stop] Stopping services..." -ForegroundColor Cyan
-      foreach($pid in $global:pids){
-        try { Stop-Process -Id $pid -ErrorAction SilentlyContinue } catch {}
-      }
+function Require-Command ($command) {
+    if (-not (Get-Command $command -ErrorAction SilentlyContinue)) {
+        Write-Error "$command is required but not found."
+        exit 1
     }
-  } catch {}
 }
 
-Write-Host "[ok] Proceso 4 services started. Press Ctrl+C or close the window to stop." -ForegroundColor Green
+Require-Command mvn
+Require-Command java
+
+$pidsToKill = @()
+
+function Start-Mvn ($serviceName, $directory, $port) {
+    # Check if port is already in use
+    $portActive = Get-NetTCPConnection -LocalPort $port -ErrorAction SilentlyContinue
+    if ($portActive) {
+        Write-Host "SKIP: $serviceName is ALREADY RUNNING on port $port." -ForegroundColor Yellow
+        return
+    }
+
+    Write-Host "STARTING: $serviceName on port $port..." -ForegroundColor Cyan
+    $workDir = Join-Path "$PSScriptRoot\.." "$directory"
+    
+    $proc = Start-Process -FilePath "mvn" -ArgumentList "spring-boot:run" -WorkingDirectory $workDir -PassThru -NoNewWindow
+    $global:pidsToKill += $proc.Id
+    Write-Host "STARTED: $serviceName (PID $($proc.Id))." -ForegroundColor Green
+}
 
 try {
-  while ($true){
-    Start-Sleep -Seconds 2
-  }
+    Write-Host "=== PROCESO 4: PAGO DE CITA ===" -ForegroundColor Magenta
+
+    # 1. Infra
+    Start-Mvn "EurekaServerN" "EurekaServerN" 8761
+    Start-Sleep -Seconds 20
+
+    # 2. Dependencies (Reference)
+    # Note: If you want to force start them, uncomment. 
+    # Usually Proceso 4 assumes Cita exists.
+    Start-Mvn "ms-cita" "procesoTres\ms-cita" 8089
+    Start-Mvn "ms-paciente" "ms-paciente" 8092
+    
+    # 3. Core
+    Write-Host "Starting Core Services..." -ForegroundColor White
+    Start-Mvn "ms-boleta" "ms-boleta" 8083
+    Start-Mvn "ms-cajero" "ms-cajero" 8084
+    Start-Sleep -Seconds 10
+
+    # 4. Orchestrator
+    Write-Host "Starting Orchestrator..." -ForegroundColor White
+    Start-Mvn "ms-gestionboleta" "ms-gestionboleta" 8199
+    
+    Write-Host "--------------------------------------------------"
+    Write-Host "PROCESO 4 READY"
+    Write-Host "--------------------------------------------------"
+    Write-Host "Press Ctrl+C to stop services started by THIS script."
+
+    while ($true) {
+        Start-Sleep -Seconds 1
+    }
+
 } finally {
-  foreach($pid in $pids){
-    try { Stop-Process -Id $pid -ErrorAction SilentlyContinue } catch {}
-  }
+    Write-Host "Stopping services launched by this session..."
+    foreach ($pidKill in $pidsToKill) {
+        Stop-Process -Id $pidKill -Force -ErrorAction SilentlyContinue 
+        Start-Process -FilePath "taskkill" -ArgumentList "/PID $pidKill /T /F" -NoNewWindow -Wait
+    }
 }

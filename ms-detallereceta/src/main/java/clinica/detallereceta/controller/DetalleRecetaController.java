@@ -54,6 +54,15 @@ public class DetalleRecetaController {
     }
     @GetMapping("/listar")
     public java.util.List<DetalleReceta> listar() {
-        return repository.findAll();
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        try {
+            repository.deleteById(id);
+            return ResponseEntity.ok("Eliminado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al eliminar: " + e.getMessage());
+        }
     }
 }

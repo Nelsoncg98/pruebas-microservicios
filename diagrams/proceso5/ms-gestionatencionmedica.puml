@@ -1,0 +1,58 @@
+@startuml ms-gestionatencionmedica
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTOs
+class EntradaAtencion {
+  -idCita: Long
+  -idMedico: Long
+  -idHistoriaMedica: Long
+  -diagnostico: String
+  -tratamiento: String
+}
+
+class SalidaAtencion {
+  -idAtencionMedica: Long
+  -cita: Object
+  -medico: Object
+  -historiaMedica: Object
+  -diagnostico: String
+  -tratamiento: String
+  -estado: String
+  -fechaAtencion: LocalDateTime
+}
+
+' Servicio Orquestador
+class ServicioGestionAtencion {
+  +registrarAtencion(entrada: EntradaAtencion): SalidaAtencion
+  +buscarAtencion(id: Long): SalidaAtencion
+  +listarAtenciones(): List<SalidaAtencion>
+  -validarExistencia(entrada): void
+  -convertirATSalidaAtencion(map): SalidaAtencion
+}
+
+' API y Operaciones
+interface ApiGestionAtencion
+
+' Clientes Externos (APIs)
+circle ApiAtencionMedica
+circle ApiCita
+circle ApiMedico
+circle ApiHistoriaMedica
+circle ApiPaciente
+
+' Relaciones Controlador
+ApiGestionAtencion --> ServicioGestionAtencion
+
+' Relaciones Servicio -> Dependencias
+ServicioGestionAtencion ..> ApiAtencionMedica : guardar / buscar / listar
+ServicioGestionAtencion ..> ApiCita : buscar (validar)
+ServicioGestionAtencion ..> ApiMedico : buscar (validar / enriquecer)
+ServicioGestionAtencion ..> ApiHistoriaMedica : buscar (validar / enriquecer)
+ServicioGestionAtencion ..> ApiPaciente : buscar (para anidar en Historia)
+
+' Objetos de uso
+ServicioGestionAtencion ..> EntradaAtencion
+ServicioGestionAtencion ..> SalidaAtencion
+
+@enduml

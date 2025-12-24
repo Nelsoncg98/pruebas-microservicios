@@ -71,7 +71,13 @@ Se incluyen a continuación los procesos funcionales que el cliente definió y q
 
 ### 4. Proceso de pago de cita
 - El paciente acude al centro médico y se acerca a caja; el cajero solicita sus datos personales y de la cita, finalmente el cajero elabora una boleta de venta, el paciente entrega el dinero y se retira con la boleta cancelada.
-- **Estado:** Implementado (`ms-pagos` Puerto 8199).
+- **Estado:** Implementado.
+- **Servicios:**
+  - `ms-gestionboleta` (Puerto 8199): Orquestador principal.
+  - `ms-boleta` (Puerto 8083): Entidad Boleta.
+  - `ms-cajero` (Puerto 8084): Entidad Cajero.
+  - `ms-cita` (Puerto 8089): Entidad Cita.
+  - `ms-paciente` (Puerto 8092): Entidad Paciente.
 
 ### 5. Proceso de atención médica
 - El paciente acude a la cita, el médico verifica el pago de la cita y elabora la atención médica: examina al paciente, registra los datos de la atención médica como diagnóstico y tratamiento; a esa ficha se le añaden la receta de medicamentos y/o análisis clínico si se requiere; finalmente registra la atención y añade toda esta información a la historia médica.

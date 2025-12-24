@@ -1,0 +1,38 @@
+@startuml ms-detalleprogramacion
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad (Corregido tipos)
+class DetalleProgramacion {
+  -idDetalle: Long
+  -idProgramacion: Long
+  -idEspecialidad: Long
+  -fecha: LocalDate
+  -dia: String
+  -horaInicio: LocalTime
+  -horaFin: LocalTime
+  -consultorio: String
+  -estado: Boolean
+}
+
+' Servicio
+class ServicioDetalleProgramacion {
+  +guardar(d: DetalleProgramacion): DetalleProgramacion
+  +listarPorProgramacion(idProg: Long): List<DetalleProgramacion>
+  +eliminar(id: Long): void
+}
+
+' Infraestructura
+interface RepositorioDetalleProgramacion
+class JpaRepository
+
+' API
+interface ApiDetalleProgramacion
+
+' Flujo
+ApiDetalleProgramacion --> ServicioDetalleProgramacion
+ServicioDetalleProgramacion --> RepositorioDetalleProgramacion
+RepositorioDetalleProgramacion o--> JpaRepository
+RepositorioDetalleProgramacion o..> DetalleProgramacion
+
+@enduml

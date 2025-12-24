@@ -1,0 +1,43 @@
+@startuml ms-expedienteclinico
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTOs
+class ExpedienteClinicoDTO {
+  -paciente: Object
+  -historiaMedica: Object
+  -listaCitas: List<CitaConAtencion>
+}
+
+class CitaConAtencion {
+  -cita: Object
+  -atencion: Object
+}
+
+' Servicio Agregador
+class ServicioExpedienteClinico {
+  +obtenerExpediente(pacienteId: Long): ExpedienteClinicoDTO
+}
+
+' API y Operaciones
+interface ApiExpediente
+
+' Clientes Externos (APIs)
+circle ApiPaciente
+circle ApiHistoriaMedica
+circle ApiCita
+circle ApiAtencionMedica
+
+' Relaciones Controlador
+ApiExpediente --> ServicioExpedienteClinico
+
+' Relaciones Servicio -> Dependencias
+ServicioExpedienteClinico ..> ApiPaciente : buscar
+ServicioExpedienteClinico ..> ApiHistoriaMedica : buscar por paciente
+ServicioExpedienteClinico ..> ApiCita : listar por paciente
+ServicioExpedienteClinico ..> ApiAtencionMedica : buscar por cita
+
+' Objetos de uso
+ServicioExpedienteClinico ..> ExpedienteClinicoDTO
+
+@enduml

@@ -1,0 +1,37 @@
+@startuml ms-personaladministrativo
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class PersonalAdministrativo {
+  -idPersonal: Long
+  -dni: String
+  -nombre: String
+  -apellido: String
+  -cargo: String
+  -email: String
+}
+
+' Servicio
+class ServicioPersonalAdministrativo {
+  +guardar(p: PersonalAdministrativo): PersonalAdministrativo
+  +listar(): List<PersonalAdministrativo>
+  +buscar(id: Long): PersonalAdministrativo
+  +actualizar(p: PersonalAdministrativo): PersonalAdministrativo
+  +eliminar(id: Long): void
+}
+
+' Infraestructura
+interface RepositorioPersonalAdministrativo
+class JpaRepository
+
+' API
+interface ApiPersonalAdministrativo
+
+' Flujo
+ApiPersonalAdministrativo --> ServicioPersonalAdministrativo
+ServicioPersonalAdministrativo --> RepositorioPersonalAdministrativo
+RepositorioPersonalAdministrativo o--> JpaRepository
+RepositorioPersonalAdministrativo o..> PersonalAdministrativo
+
+@enduml

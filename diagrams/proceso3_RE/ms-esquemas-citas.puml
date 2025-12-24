@@ -1,0 +1,49 @@
+@startuml ms-esquemas-citas
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+package "Esquemas Citas" {
+
+  class EntradaBusqueda {
+    -idEspecialidad: Long
+    -fecha: LocalDate
+  }
+  
+  class EntradaReserva {
+    -idHorario: Long
+    -dniPaciente: String
+  }
+  
+  class SalidaCita {
+    -idCita: Long
+    -estado: String
+    -mensaje: String
+    -paciente: SalidaPaciente
+    -detalleCita: SalidaDisponibilidad
+  }
+
+  class SalidaDisponibilidad {
+    -idHorario: Long
+    -fecha: LocalDate
+    -horaInicio: LocalTime
+    -horaFin: LocalTime
+    -medico: String
+    -costo: Double
+  }
+
+  class SalidaPaciente {
+    -nombreCompleto: String
+    -dni: String
+  }
+  
+  class SalidaEspecialidad {
+    -id: Long
+    -nombre: String
+  }
+
+  ' Relaciones
+  SalidaCita *-- SalidaPaciente
+  SalidaCita *-- SalidaDisponibilidad
+}
+
+@enduml

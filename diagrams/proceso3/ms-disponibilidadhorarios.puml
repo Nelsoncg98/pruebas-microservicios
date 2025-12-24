@@ -1,0 +1,34 @@
+@startuml ms-disponibilidadhorarios
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTOs
+class HorarioMedicoEntrada {
+  -numero: Long
+  -medicoId: Long
+  -fecha: LocalDate
+  -consultorio: String
+  -disponible: Boolean
+}
+
+' Servicio Agregador / Consulta
+class ServicioDisponibilidadHorarios {
+  +horariosDisponibles(fecha: LocalDate, medicoId: Long, consultorio: String, disponible: Bool): List
+}
+
+' API y Operaciones
+interface ApiDisponibilidad
+
+' Clientes Externos (APIs)
+circle ApiHorarioMedico
+
+' Relaciones Controlador
+ApiDisponibilidad --> ServicioDisponibilidadHorarios
+
+' Relaciones Servicio -> Dependencias
+ServicioDisponibilidadHorarios ..> ApiHorarioMedico : listar todo (filtrado en memoria)
+
+' Objetos de uso
+ServicioDisponibilidadHorarios ..> HorarioMedicoEntrada
+
+@enduml

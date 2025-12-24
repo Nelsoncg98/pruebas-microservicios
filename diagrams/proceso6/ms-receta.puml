@@ -1,0 +1,37 @@
+@startuml ms-receta
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Receta {
+  -idReceta: Long
+  -idAtencion: Long
+  -idMedico: Long
+  -fecha: LocalDateTime
+  -estado: String
+}
+
+' Servicio
+class ServicioReceta {
+  +guardar(r: Receta): Receta
+  +listar(): List<Receta>
+  +buscar(id: Long): Receta
+  +actualizar(r: Receta): Receta
+  +actualizarEstado(id: Long, estado: String): void
+  +eliminar(id: Long): void
+}
+
+' Infraestructura
+interface RepositorioReceta
+class JpaRepository
+
+' API
+interface ApiReceta
+
+' Flujo
+ApiReceta --> ServicioReceta
+ServicioReceta --> RepositorioReceta
+RepositorioReceta o--> JpaRepository
+RepositorioReceta o..> Receta
+
+@enduml

@@ -1,0 +1,38 @@
+@startuml ms-medicamento
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Medicamento {
+  -idMedicamento: Long
+  -nombre: String
+  -descripcion: String
+  -precio: Double
+  -stock: Integer
+  -laboratorio: String
+}
+
+' Servicio
+class ServicioMedicamento {
+  +guardar(m: Medicamento): Medicamento
+  +listar(): List<Medicamento>
+  +buscar(id: Long): Medicamento
+  +actualizar(m: Medicamento): Medicamento
+  +eliminar(id: Long): void
+  +buscarPorNombre(nombre: String): List
+}
+
+' Infraestructura
+interface RepositorioMedicamento
+class JpaRepository
+
+' API
+interface ApiMedicamento
+
+' Flujo
+ApiMedicamento --> ServicioMedicamento
+ServicioMedicamento --> RepositorioMedicamento
+RepositorioMedicamento o--> JpaRepository
+RepositorioMedicamento o..> Medicamento
+
+@enduml

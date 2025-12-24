@@ -1,0 +1,35 @@
+@startuml ms-especialidad
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Especialidad {
+  -idEspecialidad: Long
+  -nombre: String
+  -descripcion: String
+}
+
+' Servicio
+class ServicioEspecialidad {
+  +guardar(e: Especialidad): Especialidad
+  +listar(): List<Especialidad>
+  +buscar(id: Long): Especialidad
+  +actualizar(e: Especialidad): Especialidad
+  +eliminar(id: Long): void
+  +buscarPorNombre(nombre: String): List
+}
+
+' Infraestructura
+interface RepositorioEspecialidad
+class JpaRepository
+
+' API
+interface ApiEspecialidad
+
+' Flujo
+ApiEspecialidad --> ServicioEspecialidad
+ServicioEspecialidad --> RepositorioEspecialidad
+RepositorioEspecialidad o--> JpaRepository
+RepositorioEspecialidad o..> Especialidad
+
+@enduml

@@ -1,0 +1,34 @@
+@startuml ms-registraradmision
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Referencias
+class EntradaAdmision
+class SalidaAdmision
+
+' Servicio
+class ServicioRegistrarAdmision {
+  +registrar(entrada: EntradaAdmision): SalidaAdmision
+}
+
+' API
+interface ApiRegistrarAdmision
+
+' Clientes
+circle ApiTriaje
+circle ApiHistoriaMedica
+circle ApiEnfermera
+
+' Relaciones
+ApiRegistrarAdmision --> ServicioRegistrarAdmision
+
+' Flujo
+ServicioRegistrarAdmision ..> ApiTriaje : guardar signos
+ServicioRegistrarAdmision ..> ApiHistoriaMedica : actualizar historia
+ServicioRegistrarAdmision ..> ApiEnfermera : validar enfermera
+
+' DTOs
+ServicioRegistrarAdmision ..> EntradaAdmision
+ServicioRegistrarAdmision ..> SalidaAdmision
+
+@enduml

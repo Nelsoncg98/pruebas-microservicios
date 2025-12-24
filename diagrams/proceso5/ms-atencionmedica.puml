@@ -1,0 +1,42 @@
+@startuml ms-atencionmedica
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class AtencionMedica {
+  -idAtencionMedica: Long
+  -idCita: Long
+  -idHistoriaMedica: Long
+  -idMedico: Long
+  -fechaAtencion: LocalDateTime
+  -diagnostico: String
+  -tratamiento: String
+  -estado: String
+  -receta: String
+  -analisisClinico: String
+}
+
+' Servicio
+class ServicioAtencionMedica {
+  +guardar(a: AtencionMedica): AtencionMedica
+  +listar(): List<AtencionMedica>
+  +buscar(id: Long): AtencionMedica
+  +actualizar(a: AtencionMedica): AtencionMedica
+  +eliminar(id: Long): void
+  +porHistoria(id: Long): List
+}
+
+' Infraestructura
+interface RepositorioAtencionMedica
+class JpaRepository
+
+' API
+interface ApiAtencionMedica
+
+' Flujo
+ApiAtencionMedica --> ServicioAtencionMedica
+ServicioAtencionMedica --> RepositorioAtencionMedica
+RepositorioAtencionMedica o--> JpaRepository
+RepositorioAtencionMedica o..> AtencionMedica
+
+@enduml

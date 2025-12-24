@@ -1,0 +1,34 @@
+@startuml ms-triaje
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad (Literal: "datos médicos básicos")
+class Triaje {
+  -idTriaje: Long
+  -dniPaciente: String
+  -peso: Double
+  -talla: Double
+  -edad: Integer
+  -fecha: LocalDateTime
+}
+
+' Servicio
+class ServicioTriaje {
+  +guardar(t: Triaje): Triaje
+  +buscarPorDni(dni: String): List<Triaje>
+}
+
+' Infraestructura
+interface RepositorioTriaje
+class JpaRepository
+
+' API
+interface ApiTriaje
+
+' Flujo
+ApiTriaje --> ServicioTriaje
+ServicioTriaje --> RepositorioTriaje
+RepositorioTriaje o--> JpaRepository
+RepositorioTriaje o..> Triaje
+
+@enduml

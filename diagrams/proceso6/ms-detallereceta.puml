@@ -1,0 +1,38 @@
+@startuml ms-detallereceta
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class DetalleReceta {
+  -idDetalle: Long
+  -idReceta: Long
+  -idMedicamento: Long
+  -nombreMedicamento: String
+  -precioUnitario: Double
+  -cantidad: Integer
+  -indicaciones: String
+}
+
+' Servicio
+class ServicioDetalleReceta {
+  +guardar(d: DetalleReceta): DetalleReceta
+  +listar(): List<DetalleReceta>
+  +buscar(id: Long): DetalleReceta
+  +listarPorReceta(idReceta: Long): List
+  +eliminar(id: Long): void
+}
+
+' Infraestructura
+interface RepositorioDetalleReceta
+class JpaRepository
+
+' API
+interface ApiDetalleReceta
+
+' Flujo
+ApiDetalleReceta --> ServicioDetalleReceta
+ServicioDetalleReceta --> RepositorioDetalleReceta
+RepositorioDetalleReceta o--> JpaRepository
+RepositorioDetalleReceta o..> DetalleReceta
+
+@enduml

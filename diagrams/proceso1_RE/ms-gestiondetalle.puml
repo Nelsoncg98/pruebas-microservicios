@@ -1,0 +1,54 @@
+@startuml ms-gestiondetalle
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTO Entrada
+class EntradaDetalle {
+  -idProgramacion: Long
+  -idEspecialidad: Long
+  -fecha: LocalDate
+  -dia: String
+  -horaInicio: LocalTime
+  -horaFin: LocalTime
+  -consultorio: String
+}
+
+' DTO Salida (Consistente con IniciarProgramacion)
+class SalidaProgramacion {
+  -idProgramacion: Long
+  -fecha: String
+  -estado: String
+  -medico: Medico
+  -administrativo: PersonalAdministrativo
+  -detalles: List<DetalleProgramacion>
+}
+
+' Servicio
+class ServicioGestionDetalle {
+  +agregar(entrada: EntradaDetalle): SalidaProgramacion
+  +quitar(idDetalle: Long): SalidaProgramacion
+}
+
+' API
+interface ApiGestionDetalle
+
+' Clientes
+circle ApiDetalleProgramacion
+circle ApiProgramacionMedica
+circle ApiMedico
+circle ApiPersonalAdministrativo
+
+' Relaciones
+ApiGestionDetalle --> ServicioGestionDetalle
+
+' Flujo
+ServicioGestionDetalle ..> ApiDetalleProgramacion : consultar / guardar / eliminar
+ServicioGestionDetalle ..> ApiProgramacionMedica : recuperar cabecera
+ServicioGestionDetalle ..> ApiMedico : recuperar datos medico
+ServicioGestionDetalle ..> ApiPersonalAdministrativo : recuperar datos administrativo
+
+' Uso
+ServicioGestionDetalle ..> EntradaDetalle
+ServicioGestionDetalle ..> SalidaProgramacion
+
+@enduml

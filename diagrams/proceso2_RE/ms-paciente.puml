@@ -1,0 +1,40 @@
+@startuml ms-paciente
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Paciente {
+  -idPaciente: Long
+  -dni: String
+  -nombre: String
+  -apellido: String
+  -telefono: String
+  -email: String
+  -direccion: String
+  -fechaNacimiento: LocalDate
+  -estado: boolean
+}
+
+' Servicio
+class ServicioPaciente {
+  +guardar(p: Paciente): Paciente
+  +listar(): List<Paciente>
+  +buscar(id: Long): Paciente
+  +actualizar(p: Paciente): Paciente
+  +buscarPorDni(dni: String): Paciente
+}
+
+' Infraestructura
+interface RepositorioPaciente
+class JpaRepository
+
+' API
+interface ApiPaciente
+
+' Flujo
+ApiPaciente --> ServicioPaciente
+ServicioPaciente --> RepositorioPaciente
+RepositorioPaciente o--> JpaRepository
+RepositorioPaciente o..> Paciente
+
+@enduml

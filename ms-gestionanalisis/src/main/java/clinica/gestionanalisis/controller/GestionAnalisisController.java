@@ -34,7 +34,17 @@ public class GestionAnalisisController {
         try {
             return ResponseEntity.ok(service.finalizar(id));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/eliminarDetalle/{id}")
+    public ResponseEntity<?> eliminarDetalle(@PathVariable Long id) {
+        try {
+            service.eliminarDetalle(id);
+            return ResponseEntity.ok("Detalle eliminado");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
 }

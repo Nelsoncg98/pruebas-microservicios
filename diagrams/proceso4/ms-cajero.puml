@@ -1,0 +1,38 @@
+@startuml ms-cajero
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Cajero {
+  -idCajero: Long
+  -nombre: String
+  -apellido: String
+  -dni: String
+  -telefono: String
+  -email: String
+  -codigoEmpleado: String
+}
+
+' Servicio
+class ServicioCajero {
+  +guardar(c: Cajero): Cajero
+  +listar(): List<Cajero>
+  +buscar(id: Long): Cajero
+  +actualizar(c: Cajero): Cajero
+  +eliminar(id: Long): void
+}
+
+' Infraestructura
+interface RepositorioCajero
+class JpaRepository
+
+' API
+interface ApiCajero
+
+' Flujo
+ApiCajero --> ServicioCajero
+ServicioCajero --> RepositorioCajero
+RepositorioCajero o--> JpaRepository
+RepositorioCajero o..> Cajero
+
+@enduml

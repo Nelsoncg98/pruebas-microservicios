@@ -1,0 +1,49 @@
+@startuml ms-iniciarprogramacion
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTOs Entrada (Inicio del Proceso)
+class EntradaProgramacion {
+  -idMedico: Long
+  -idAdmin: Long
+  -idEspecialidad: Long
+  -fecha: LocalDate
+}
+
+' DTOs Salida
+class SalidaProgramacion {
+  -idProgramacion: Long
+  -fecha: String
+  -estado: String
+  -medico: Medico
+  -administrativo: PersonalAdministrativo
+  -detalles: List<DetalleProgramacion>
+}
+
+' Servicio
+class ServicioIniciarProgramacion {
+  +iniciar(entrada: EntradaProgramacion): SalidaProgramacion
+}
+
+' API
+interface ApiIniciarProgramacion
+
+' Clientes
+circle ApiProgramacionMedica
+circle ApiMedico
+circle ApiPersonalAdministrativo
+circle ApiEspecialidad
+
+' Relaciones
+ApiIniciarProgramacion --> ServicioIniciarProgramacion
+
+' Flujo
+ServicioIniciarProgramacion ..> ApiMedico : validar
+ServicioIniciarProgramacion ..> ApiEspecialidad : validar
+ServicioIniciarProgramacion ..> ApiProgramacionMedica : guardar cabecera (inicial)
+
+' Uso (Al iniciar, detalles esta vacio)
+ServicioIniciarProgramacion ..> EntradaProgramacion
+ServicioIniciarProgramacion ..> SalidaProgramacion
+
+@enduml

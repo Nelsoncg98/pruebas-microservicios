@@ -1,0 +1,39 @@
+@startuml ms-historiamedica
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class HistoriaMedica {
+  -idHistoriaMedica: Long
+  -idPaciente: Long
+  -alergias: String
+  -tipoSangre: String
+  -enfermedadesCronicas: String
+  -antecedentesFamiliares: String
+  -fechaCreacion: LocalDate
+  -ultimaActualizacion: LocalDateTime
+}
+
+' Servicio
+class ServicioHistoriaMedica {
+  +guardar(h: HistoriaMedica): HistoriaMedica
+  +listar(): List<HistoriaMedica>
+  +buscar(id: Long): HistoriaMedica
+  +actualizar(h: HistoriaMedica): HistoriaMedica
+  +buscarPorPaciente(idPaciente: Long): HistoriaMedica
+}
+
+' Infraestructura
+interface RepositorioHistoriaMedica
+class JpaRepository
+
+' API
+interface ApiHistoriaMedica
+
+' Flujo
+ApiHistoriaMedica --> ServicioHistoriaMedica
+ServicioHistoriaMedica --> RepositorioHistoriaMedica
+RepositorioHistoriaMedica o--> JpaRepository
+RepositorioHistoriaMedica o..> HistoriaMedica
+
+@enduml

@@ -1,0 +1,40 @@
+@startuml ms-horariomedico
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class HorarioMedico {
+  -numero: Long
+  -fecha: LocalDate
+  -horaInicio: LocalTime
+  -horaFin: LocalTime
+  -medicoId: Long
+  -consultorio: String
+  -disponible: Boolean
+}
+
+' Servicio
+class ServicioHorarioMedico {
+  +guardar(h: HorarioMedico): HorarioMedico
+  +listar(): List<HorarioMedico>
+  +buscar(id: Long): HorarioMedico
+  +actualizar(h: HorarioMedico): HorarioMedico
+  +eliminar(id: Long): void
+  +listarPorMedico(medicoId: Long): List
+  +listarDisponibles(): List
+}
+
+' Infraestructura
+interface RepositorioHorarioMedico
+class JpaRepository
+
+' API
+interface ApiHorarioMedico
+
+' Flujo
+ApiHorarioMedico --> ServicioHorarioMedico
+ServicioHorarioMedico --> RepositorioHorarioMedico
+RepositorioHorarioMedico o--> JpaRepository
+RepositorioHorarioMedico o..> HorarioMedico
+
+@enduml

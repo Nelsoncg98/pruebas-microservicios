@@ -1,0 +1,38 @@
+@startuml ms-boleta
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Boleta {
+  -idBoleta: Long
+  -idCita: Long
+  -idCajero: Long
+  -monto: Double
+  -fecha: LocalDateTime
+  -estado: String
+  -dniPaciente: String
+}
+
+' Servicio
+class ServicioBoleta {
+  +guardar(b: Boleta): Boleta
+  +listar(): List<Boleta>
+  +buscar(id: Long): Boleta
+  +actualizar(b: Boleta): Boleta
+  +eliminar(id: Long): void
+}
+
+' Infraestructura
+interface RepositorioBoleta
+class JpaRepository
+
+' API
+interface ApiBoleta
+
+' Flujo
+ApiBoleta --> ServicioBoleta
+ServicioBoleta --> RepositorioBoleta
+RepositorioBoleta o--> JpaRepository
+RepositorioBoleta o..> Boleta
+
+@enduml

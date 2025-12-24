@@ -1,0 +1,29 @@
+@startuml ms-disponibilidadhorarios
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTOs
+class FiltroHorario {
+  -fechaInicio: LocalDate
+  -fechaFin: LocalDate
+  -idEspecialidad: Long
+}
+
+' Servicio Agregador
+class ServicioDisponibilidadHorarios {
+  +consultar(filtro: FiltroHorario): List<HorarioMedico>
+}
+
+' API
+interface ApiDisponibilidad
+
+' Clientes
+circle ApiHorarioMedico
+circle ApiMedico
+
+' Flujo
+ApiDisponibilidad --> ServicioDisponibilidadHorarios
+ServicioDisponibilidadHorarios ..> ApiHorarioMedico : listar raw
+ServicioDisponibilidadHorarios ..> ApiMedico : filtrar x especialidad (si es necesario)
+
+@enduml

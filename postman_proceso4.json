@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "Clinica - Proceso 4 (Pagos)",
-    "description": "Colección para Proceso 4: Pago de cita médica. Incluye gestión completa de pagos, consultas y estadísticas.",
+    "name": "Clinica - Proceso 4 (Pago de Cita)",
+    "description": "Colección actualizada para Proceso 4: Pago de cita médica v2. Incluye ms-gestionboleta (Orquestador), ms-boleta (Core) y ms-cajero (Core).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -16,9 +16,7 @@
             "url": {
               "raw": "http://localhost:8761",
               "protocol": "http",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "8761"
             }
           }
@@ -26,332 +24,125 @@
       ]
     },
     {
-      "name": "ms-pagos",
+      "name": "ms-gestionboleta (Orquestador)",
       "item": [
         {
-          "name": "Crear Pago",
+          "name": "Nuevo Pago (Crear Boleta)",
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
+              { "key": "Content-Type", "value": "application/json" }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"citaId\": 1,\n  \"pacienteId\": 1,\n  \"monto\": 100.00,\n  \"tipoPago\": \"EFECTIVO\",\n  \"cajeroId\": 1,\n  \"cajeroNombre\": \"Ana García\"\n}"
+              "raw": "{\n  \"idCita\": 1,\n  \"idCajero\": 1\n}"
             },
             "url": {
-              "raw": "http://localhost:8199/api/pagos/crear",
+              "raw": "http://localhost:8199/gestionboleta/nuevo",
               "protocol": "http",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "crear"
-              ]
+              "path": ["gestionboleta", "nuevo"]
+            }
+          }
+        },
+        {
+          "name": "Ver Pago (Boleta Enriquecida)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8199/gestionboleta/ver/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8199",
+              "path": ["gestionboleta", "ver", "1"]
             }
           }
         },
         {
           "name": "Confirmar Pago",
           "request": {
-            "method": "PUT",
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8199/gestionboleta/confirmar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8199",
+              "path": ["gestionboleta", "confirmar", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Pago",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8199/gestionboleta/eliminar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8199",
+              "path": ["gestionboleta", "eliminar", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-cajero (Core)",
+      "item": [
+        {
+          "name": "Crear Cajero",
+          "request": {
+            "method": "POST",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
+              { "key": "Content-Type", "value": "application/json" }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"detalleComprobante\": \"Pago recibido en efectivo. Cambio entregado.\"\n}"
+              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"García\",\n  \"dni\": \"12345678\",\n  \"codigoEmpleado\": \"CAJ001\"\n}"
             },
             "url": {
-              "raw": "http://localhost:8199/api/pagos/1/confirmar",
+              "raw": "http://localhost:8084/cajero/crear",
               "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "1",
-                "confirmar"
-              ]
+              "host": ["localhost"],
+              "port": "8084",
+              "path": ["cajero", "crear"]
             }
           }
         },
         {
-          "name": "Rechazar Pago",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"motivo\": \"Fondos insuficientes en tarjeta\"\n}"
-            },
-            "url": {
-              "raw": "http://localhost:8199/api/pagos/1/rechazar",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "1",
-                "rechazar"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Anular Pago",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"motivo\": \"Solicitud del paciente\"\n}"
-            },
-            "url": {
-              "raw": "http://localhost:8199/api/pagos/1/anular",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "1",
-                "anular"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Buscar por ID",
+          "name": "Listar Cajeros",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8199/api/pagos/1",
+              "raw": "http://localhost:8084/cajero/listar",
               "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "1"
-              ]
+              "host": ["localhost"],
+              "port": "8084",
+              "path": ["cajero", "listar"]
             }
           }
-        },
+        }
+      ]
+    },
+    {
+      "name": "ms-boleta (Core)",
+      "item": [
         {
-          "name": "Buscar Pago Completo (con Cita y Paciente)",
+          "name": "Listar Boletas (Directo)",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8199/api/pagos/1/completo",
+              "raw": "http://localhost:8083/boleta/listar",
               "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "1",
-                "completo"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Buscar por Número de Transacción",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8199/api/pagos/transaccion/TXN-20251121-0001",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "transaccion",
-                "TXN-20251121-0001"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Buscar por Número de Boleta",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8199/api/pagos/boleta/BOL-20251121-0001",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "boleta",
-                "BOL-20251121-0001"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Listar por Paciente",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8199/api/pagos/paciente/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "paciente",
-                "1"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Listar por Estado",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8199/api/pagos/estado/CONFIRMADO",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "estado",
-                "CONFIRMADO"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Listar por Tipo de Pago",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8199/api/pagos/tipo/EFECTIVO",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "tipo",
-                "EFECTIVO"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Listar por Cajero",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8199/api/pagos/cajero/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "cajero",
-                "1"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Estadísticas de Cajero",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8199/api/pagos/cajero/1/estadisticas",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos",
-                "cajero",
-                "1",
-                "estadisticas"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Listar Todos",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8199/api/pagos",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8199",
-              "path": [
-                "api",
-                "pagos"
-              ]
+              "host": ["localhost"],
+              "port": "8083",
+              "path": ["boleta", "listar"]
             }
           }
         }

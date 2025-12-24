@@ -1,58 +1,65 @@
-Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-function Require-Command($name){
-  if (-not (Get-Command $name -ErrorAction SilentlyContinue)){
-    Write-Error "Command '$name' not found. Please install it and try again."
-  }
+function Require-Command ($command) {
+    if (-not (Get-Command $command -ErrorAction SilentlyContinue)) {
+        Write-Error "$command is required but not found."
+        exit 1
+    }
 }
-
-function Start-Mvn($name, $module){
-  $workDir = Join-Path $PSScriptRoot "..\$module"
-  Write-Host "[run] $name (mvn spring-boot:run) -> $workDir" -ForegroundColor Yellow
-  $p = Start-Process -FilePath "mvn" -ArgumentList "spring-boot:run" -WorkingDirectory $workDir -PassThru -WindowStyle Minimized
-  return $p
-}
-
-Set-Location -Path (Join-Path $PSScriptRoot '..')
 Require-Command mvn
 
-$pids = @()
-$pE = Start-Mvn "Eureka" "EurekaServerN"; $pids += $pE.Id
-Start-Sleep -Seconds 7
+$pidsToKill = @()
 
-$pM = Start-Mvn "ms-medico" "ms-medico"; $pids += $pM.Id
-Start-Sleep -Seconds 2
-$pP = Start-Mvn "ms-paciente" "ms-paciente"; $pids += $pP.Id
-Start-Sleep -Seconds 2
-$pHM = Start-Mvn "ms-horariomedico" "ms-horariomedico"; $pids += $pHM.Id
-Start-Sleep -Seconds 2
-$pDH = Start-Mvn "ms-disponibilidadhorarios" "ms-disponibilidadhorarios"; $pids += $pDH.Id
-Start-Sleep -Seconds 2
-# ms-cita y ms-solicitudcita ahora viven bajo carpeta 'procesoTres'
-$pCita = Start-Mvn "ms-cita" "procesoTres\ms-cita"; $pids += $pCita.Id
-Start-Sleep -Seconds 2
-$pSol = Start-Mvn "ms-solicitudcita" "procesoTres\ms-solicitudcita"; $pids += $pSol.Id
-
-$null = Register-EngineEvent PowerShell.Exiting -Action {
-  try {
-    if ($global:pids){
-      Write-Host "[stop] Stopping services..." -ForegroundColor Cyan
-      foreach($pid in $global:pids){
-        try { Stop-Process -Id $pid -ErrorAction SilentlyContinue } catch {}
-      }
+function Start-Mvn ($serviceName, $directory, $port) {
+    $portActive = Get-NetTCPConnection -LocalPort $port -ErrorAction SilentlyContinue
+    if ($portActive) {
+        Write-Host "SKIP: $serviceName is ALREADY RUNNING on port $port." -ForegroundColor Yellow
+        return
     }
-  } catch {}
+
+    Write-Host "STARTING: $serviceName on port $port..." -ForegroundColor Cyan
+    $workDir = Join-Path "$PSScriptRoot\.." "$directory"
+    
+    $proc = Start-Process -FilePath "mvn" -ArgumentList "spring-boot:run" -WorkingDirectory $workDir -PassThru -NoNewWindow
+    $global:pidsToKill += $proc.Id
+    Write-Host "STARTED: $serviceName (PID $($proc.Id))." -ForegroundColor Green
 }
 
-Write-Host "[ok] Proceso 3 services started. Press Ctrl+C or close the window to stop." -ForegroundColor Green
-
 try {
-  while ($true){
-    Start-Sleep -Seconds 2
-  }
+    Write-Host "=== PROCESO 3: SOLICITUD DE CITA ===" -ForegroundColor Magenta
+
+    # 1. Eureka
+    Start-Mvn "Eureka Server" "EurekaServerN" 8761
+    Start-Sleep -Seconds 20
+
+    # 2. Infra / Dependencies
+    # Usually needs Medico, Horario, Paciente for logic
+    Start-Mvn "Ms-Medico" "ms-medico" 8091
+    Start-Mvn "Ms-Paciente" "ms-paciente" 8092
+    Start-Mvn "Ms-HorarioMedico" "ms-horariomedico" 8085
+    Start-Sleep -Seconds 10
+    
+    # 3. Process Specific (Note subfolder 'procesoTres' from previous structure)
+    Start-Mvn "Ms-DisponibilidadHorarios" "ms-disponibilidadhorarios" 8185
+    Start-Mvn "Ms-Cita" "procesoTres\ms-cita" 8089
+    Start-Sleep -Seconds 10
+
+    # 4. Orchestrator
+    Start-Mvn "Ms-SolicitudCita" "procesoTres\ms-solicitudcita" 8189
+
+    Write-Host "--------------------------------------------------"
+    Write-Host "PROCESO 3 READY"
+    Write-Host "--------------------------------------------------"
+    Write-Host "Press Ctrl+C to stop services started by THIS script."
+
+    while ($true) {
+        Start-Sleep -Seconds 1
+    }
+
 } finally {
-  foreach($pid in $pids){
-    try { Stop-Process -Id $pid -ErrorAction SilentlyContinue } catch {}
-  }
+    Write-Host "Stopping services..."
+    foreach ($pidKill in $pidsToKill) {
+        Stop-Process -Id $pidKill -Force -ErrorAction SilentlyContinue 
+        Start-Process -FilePath "taskkill" -ArgumentList "/PID $pidKill /T /F" -NoNewWindow -Wait
+    }
 }

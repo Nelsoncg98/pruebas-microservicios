@@ -1,0 +1,40 @@
+@startuml ms-buscarhorarios
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTO Entrada (Literal: "por especialidad")
+class EntradaBusqueda {
+  -idEspecialidad: Long
+  -fecha: LocalDate
+}
+
+' DTO Salida (Resultado Rico)
+class SalidaHorarios {
+  -especialidad: Especialidad
+  -horariosDisponibles: List<DetalleProgramacion>
+}
+
+' Servicio
+class ServicioBuscarHorarios {
+  +buscar(entrada: EntradaBusqueda): SalidaHorarios
+}
+
+' API
+interface ApiBuscarHorarios
+
+' Clientes (Entidades)
+circle ApiEspecialidad
+circle ApiDetalleProgramacion
+
+' Relaciones
+ApiBuscarHorarios --> ServicioBuscarHorarios
+
+' Flujo
+ServicioBuscarHorarios ..> ApiEspecialidad : 1. Obtener datos especialidad
+ServicioBuscarHorarios ..> ApiDetalleProgramacion : 2. Listar horarios libres (filtro)
+
+' Uso
+ServicioBuscarHorarios ..> EntradaBusqueda
+ServicioBuscarHorarios ..> SalidaHorarios
+
+@enduml

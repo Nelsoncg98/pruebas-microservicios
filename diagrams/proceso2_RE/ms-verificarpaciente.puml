@@ -1,0 +1,26 @@
+@startuml ms-verificarpaciente
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Referencias
+class SalidaAdmision
+
+' Servicio
+class ServicioVerificarPaciente {
+  +nuevo(dni: String): SalidaAdmision
+}
+
+' API
+interface ApiVerificarPaciente
+
+' Clientes
+circle ApiPaciente
+
+' Relaciones
+ApiVerificarPaciente --> ServicioVerificarPaciente
+ServicioVerificarPaciente ..> ApiPaciente : buscar DNI
+
+' Salida Unica
+ServicioVerificarPaciente ..> SalidaAdmision
+
+@enduml

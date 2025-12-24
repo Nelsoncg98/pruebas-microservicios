@@ -1,0 +1,36 @@
+@startuml ms-tipoanalisis
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class TipoAnalisis {
+  -idTipoAnalisis: Long
+  -nombre: String
+  -descripcion: String
+  -precio: Double
+}
+
+' Servicio
+class ServicioTipoAnalisis {
+  +guardar(t: TipoAnalisis): TipoAnalisis
+  +listar(): List<TipoAnalisis>
+  +buscar(id: Long): TipoAnalisis
+  +actualizar(t: TipoAnalisis): TipoAnalisis
+  +eliminar(id: Long): void
+  +buscarPorNombre(nombre: String): List
+}
+
+' Infraestructura
+interface RepositorioTipoAnalisis
+class JpaRepository
+
+' API
+interface ApiTipoAnalisis
+
+' Flujo
+ApiTipoAnalisis --> ServicioTipoAnalisis
+ServicioTipoAnalisis --> RepositorioTipoAnalisis
+RepositorioTipoAnalisis o--> JpaRepository
+RepositorioTipoAnalisis o..> TipoAnalisis
+
+@enduml

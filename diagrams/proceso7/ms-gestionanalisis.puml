@@ -1,0 +1,49 @@
+@startuml ms-gestionanalisis
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTOs
+class EntradaAnalisis {
+  -idAtencion: Long
+  -idMedico: Long
+}
+
+class SalidaAnalisis {
+  -idAnalisis: Long
+  -fecha: String
+  -estado: String
+  -medico: Object
+  -detalles: List<DetalleAnalisis>
+}
+
+' Servicio Orquestador
+class ServicioGestionAnalisis {
+  +nuevo(entrada: EntradaAnalisis): SalidaAnalisis
+  +ver(id: Long): SalidaAnalisis
+  +finalizar(id: Long): SalidaAnalisis
+  +eliminarDetalle(id: Long): void
+}
+
+' API y Operaciones
+interface ApiGestionAnalisis
+
+' Clientes Externos (APIs)
+circle ApiAnalisis
+circle ApiDetalleAnalisis
+circle ApiMedico
+circle ApiAtencionMedica
+
+' Relaciones Controlador
+ApiGestionAnalisis --> ServicioGestionAnalisis
+
+' Relaciones Servicio -> Dependencias
+ServicioGestionAnalisis ..> ApiAnalisis : crear / buscar / actualizar
+ServicioGestionAnalisis ..> ApiDetalleAnalisis : listar / eliminar
+ServicioGestionAnalisis ..> ApiMedico : buscar
+ServicioGestionAnalisis ..> ApiAtencionMedica : actualizar (vincular)
+
+' Objetos de uso
+ServicioGestionAnalisis ..> EntradaAnalisis
+ServicioGestionAnalisis ..> SalidaAnalisis
+
+@enduml

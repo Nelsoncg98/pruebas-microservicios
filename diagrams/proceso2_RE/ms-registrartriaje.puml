@@ -1,0 +1,50 @@
+@startuml ms-registrartriaje
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTO Entrada (Datos Basicos)
+class EntradaTriaje {
+  -dniPaciente: String
+  -peso: Double
+  -talla: Double
+  -edad: Integer
+  -idEnfermera: Long
+}
+
+' DTO Salida (Enriquecido)
+class SalidaTriaje {
+  -idTriaje: Long
+  -fecha: String
+  -paciente: Paciente
+  -enfermera: Enfermera
+  -triaje: Triaje
+}
+
+' Servicio
+class ServicioRegistrarTriaje {
+  +registrar(entrada: EntradaTriaje): SalidaTriaje
+}
+
+' API
+interface ApiRegistrarTriaje
+
+' Clientes (Entidades)
+circle ApiTriaje
+circle ApiPaciente
+circle ApiHistoriaMedica
+circle ApiEnfermera
+
+' Relaciones
+ApiRegistrarTriaje --> ServicioRegistrarTriaje
+
+' Flujo
+ServicioRegistrarTriaje ..> ApiPaciente : 1. Validar / Buscar Paciente
+ServicioRegistrarTriaje ..> ApiEnfermera : 2. Obtener datos enfermera
+ServicioRegistrarTriaje ..> ApiTriaje : 3. Guardar signos vitales
+ServicioRegistrarTriaje ..> ApiHistoriaMedica : 4. Actualizar/Vincular historia
+
+' Uso
+ServicioRegistrarTriaje ..> EntradaTriaje
+ServicioRegistrarTriaje ..> SalidaTriaje
+
+@enduml

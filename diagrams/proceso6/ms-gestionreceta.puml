@@ -1,0 +1,49 @@
+@startuml ms-gestionreceta
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTOs
+class EntradaReceta {
+  -idAtencion: Long
+  -idMedico: Long
+}
+
+class SalidaReceta {
+  -idReceta: Long
+  -fecha: String
+  -estado: String
+  -medico: Object
+  -detalles: List<Map>
+}
+
+' Servicio Orquestador
+class ServicioGestionReceta {
+  +nuevo(entrada: EntradaReceta): SalidaReceta
+  +ver(id: Long): SalidaReceta
+  +finalizar(id: Long): SalidaReceta
+  +eliminarDetalle(id: Long): void
+}
+
+' API y Operaciones
+interface ApiGestionReceta
+
+' Clientes Externos (APIs)
+circle ApiReceta
+circle ApiDetalleReceta
+circle ApiMedico
+circle ApiAtencionMedica
+
+' Relaciones Controlador
+ApiGestionReceta --> ServicioGestionReceta
+
+' Relaciones Servicio -> Dependencias
+ServicioGestionReceta ..> ApiReceta : crear / buscar / actualizar
+ServicioGestionReceta ..> ApiDetalleReceta : listar / eliminar
+ServicioGestionReceta ..> ApiMedico : buscar
+ServicioGestionReceta ..> ApiAtencionMedica : actualizar (vincular)
+
+' Objetos de uso
+ServicioGestionReceta ..> EntradaReceta
+ServicioGestionReceta ..> SalidaReceta
+
+@enduml

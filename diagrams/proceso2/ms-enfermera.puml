@@ -1,0 +1,37 @@
+@startuml ms-enfermera
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Enfermera {
+  -id: Long
+  -dni: String
+  -nombre: String
+  -apellido: String
+  -telefono: String
+  -email: String
+}
+
+' Servicio
+class ServicioEnfermera {
+  +guardar(e: Enfermera): Enfermera
+  +listar(): List<Enfermera>
+  +buscar(id: Long): Enfermera
+  +actualizar(e: Enfermera): Enfermera
+  +eliminar(id: Long): void
+}
+
+' Infraestructura
+interface RepositorioEnfermera
+class JpaRepository
+
+' API
+interface ApiEnfermera
+
+' Flujo
+ApiEnfermera --> ServicioEnfermera
+ServicioEnfermera --> RepositorioEnfermera
+RepositorioEnfermera o--> JpaRepository
+RepositorioEnfermera o..> Enfermera
+
+@enduml

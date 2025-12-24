@@ -1,0 +1,42 @@
+@startuml ms-cita
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Cita {
+  -numero: Long
+  -pacienteId: Long
+  -dniPaciente: String
+  -horarioId: Long
+  -idDoctor: String
+  -motivo: String
+  -fecha: LocalDateTime
+  -tipoCita: String
+  -costo: double
+  -estado: String
+}
+
+' Servicio
+class ServicioCita {
+  +guardar(c: Cita): Cita
+  +listar(): List<Cita>
+  +buscar(id: Long): Cita
+  +actualizar(c: Cita): Cita
+  +eliminar(id: Long): void
+  +porPaciente(pacienteId: Long): List
+}
+
+' Infraestructura
+interface RepositorioCita
+class JpaRepository
+
+' API
+interface ApiCita
+
+' Flujo
+ApiCita --> ServicioCita
+ServicioCita --> RepositorioCita
+RepositorioCita o--> JpaRepository
+RepositorioCita o..> Cita
+
+@enduml

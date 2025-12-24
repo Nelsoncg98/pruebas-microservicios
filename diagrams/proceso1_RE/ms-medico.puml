@@ -1,0 +1,40 @@
+@startuml ms-medico
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class Medico {
+  -idMedico: Long
+  -idEspecialidad: Long
+  -dni: String
+  -nombre: String
+  -apellido: String
+  -telefono: String
+  -email: String
+  -estado: boolean
+}
+
+' Servicio
+class ServicioMedico {
+  +guardar(m: Medico): Medico
+  +listar(): List<Medico>
+  +buscar(id: Long): Medico
+  +actualizar(m: Medico): Medico
+  +eliminar(id: Long): void
+  +listarPorEspecialidad(idEspecialidad: Long): List
+}
+
+' Infraestructura
+interface RepositorioMedico
+class JpaRepository
+
+' API
+interface ApiMedico
+
+' Flujo
+ApiMedico --> ServicioMedico
+ServicioMedico --> RepositorioMedico
+RepositorioMedico o--> JpaRepository
+RepositorioMedico o..> Medico
+
+@enduml

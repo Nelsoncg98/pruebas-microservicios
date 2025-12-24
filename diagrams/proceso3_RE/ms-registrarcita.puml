@@ -1,0 +1,50 @@
+@startuml ms-registrarcita
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTO Entrada (Seleccion)
+class EntradaReserva {
+  -idDetalleProgramacion: Long
+  -dniPaciente: String
+}
+
+' DTO Salida (Cita Generada y Enriquecida)
+class SalidaCita {
+  -idCita: Long
+  -numeroCita: String
+  -estado: String
+  -paciente: Paciente
+  -detalle: DetalleProgramacion
+  -medico: Medico
+}
+
+' Servicio
+class ServicioRegistrarCita {
+  +registrar(entrada: EntradaReserva): SalidaCita
+}
+
+' API
+interface ApiRegistrarCita
+
+' Clientes (Entidades)
+circle ApiCita
+circle ApiPaciente
+circle ApiDetalleProgramacion
+circle ApiProgramacionMedica
+circle ApiMedico
+
+' Relaciones
+ApiRegistrarCita --> ServicioRegistrarCita
+
+' Flujo
+ServicioRegistrarCita ..> ApiPaciente : 1. Validar/Buscar Paciente
+ServicioRegistrarCita ..> ApiDetalleProgramacion : 2. Validar disponibilidad y Bloquear
+ServicioRegistrarCita ..> ApiProgramacionMedica : 3. Obtener Medico (via Cabecera)
+ServicioRegistrarCita ..> ApiMedico : 4. Obtener Datos Medico
+ServicioRegistrarCita ..> ApiCita : 5. Generar Ticket Cita
+
+' Uso
+ServicioRegistrarCita ..> EntradaReserva
+ServicioRegistrarCita ..> SalidaCita
+
+@enduml

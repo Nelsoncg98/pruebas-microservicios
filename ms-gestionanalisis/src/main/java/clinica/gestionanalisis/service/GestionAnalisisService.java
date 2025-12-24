@@ -100,6 +100,10 @@ public class GestionAnalisisService {
         return ver(id); 
     }
 
+    public void eliminarDetalle(Long idDetalle) {
+        detalleClient.eliminar(idDetalle);
+    }
+
     // Metodos para UML
     // (Removed calculation methods)
 }

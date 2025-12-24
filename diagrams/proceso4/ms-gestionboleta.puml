@@ -1,0 +1,54 @@
+@startuml ms-gestionboleta
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTOs
+class EntradaBoleta {
+  -idCita: Long
+  -idCajero: Long
+}
+
+class SalidaBoleta {
+  -idBoleta: Long
+  -idCita: Long
+  -idCajero: Long
+  -monto: Double
+  -fecha: LocalDateTime
+  -estado: String
+  -cita: Object
+  -cajero: Object
+  -paciente: Object
+}
+
+' Servicio Orquestador
+class ServicioGestionBoleta {
+  +nuevo(entrada: EntradaBoleta): SalidaBoleta
+  +ver(id: Long): SalidaBoleta
+  +confirmar(id: Long): SalidaBoleta
+  +eliminar(id: Long): void
+  -construirSalida(boleta, cita, cajero): SalidaBoleta
+}
+
+' API y Operaciones
+interface ApiGestionBoleta
+
+' Clientes Externos (APIs)
+circle ApiBoleta
+circle ApiCita
+circle ApiCajero
+circle ApiPaciente
+
+' Relaciones Controlador
+ApiGestionBoleta --> ServicioGestionBoleta
+
+' Relaciones Servicio -> Dependencias
+ServicioGestionBoleta ..> ApiBoleta : crear / buscar / actualizar
+ServicioGestionBoleta ..> ApiCita : buscar / obtener costo
+ServicioGestionBoleta ..> ApiCajero : buscar
+ServicioGestionBoleta ..> ApiPaciente : buscar (para DNI)
+
+' Objetos de uso
+ServicioGestionBoleta ..> EntradaBoleta
+ServicioGestionBoleta ..> SalidaBoleta
+
+@enduml

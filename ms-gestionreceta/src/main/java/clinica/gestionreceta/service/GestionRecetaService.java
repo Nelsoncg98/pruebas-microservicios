@@ -111,6 +111,10 @@ public class GestionRecetaService {
         return ver(id);
     }
 
+    public void eliminarDetalle(Long idDetalle) {
+        detalleClient.eliminar(idDetalle);
+    }
+
     // Metodos para UML
     // (Removed calculation methods)
 }

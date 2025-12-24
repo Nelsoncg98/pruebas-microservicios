@@ -1,0 +1,36 @@
+@startuml ms-programacionmedica
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entidad
+class ProgramacionMedica {
+  -id: Long
+  -administrativoId: Long
+  -fechaProgramacion: String
+  -activo: boolean
+  -horarioMedicoIds: List<Long>
+}
+
+' Servicio
+class ServicioProgramacionMedica {
+  +guardar(p: ProgramacionMedica): ProgramacionMedica
+  +listar(): List<ProgramacionMedica>
+  +buscar(id: Long): ProgramacionMedica
+  +actualizar(p: ProgramacionMedica): ProgramacionMedica
+  +eliminar(id: Long): void
+}
+
+' Infraestructura
+interface RepositorioProgramacionMedica
+class JpaRepository
+
+' API
+interface ApiProgramacionMedica
+
+' Flujo
+ApiProgramacionMedica --> ServicioProgramacionMedica
+ServicioProgramacionMedica --> RepositorioProgramacionMedica
+RepositorioProgramacionMedica o--> JpaRepository
+RepositorioProgramacionMedica o..> ProgramacionMedica
+
+@enduml

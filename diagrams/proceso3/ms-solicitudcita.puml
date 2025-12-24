@@ -1,0 +1,55 @@
+@startuml ms-solicitudcita
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' DTOs y Objetos
+class MedicoConHorarios {
+  -numero: Long
+  -nombre: String
+  -especialidad: String
+  -horarios: List<HorarioMedico>
+  -precio: Double
+}
+
+class CitasPorPaciente {
+  -numero: Long
+  -nombre: String
+  -dni: String
+  -totalCitas: Integer
+  -citasPendientes: Long
+  -citas: List<Cita>
+}
+
+' Servicio Orquestador
+class ServicioSolicitudCita {
+  +listarHorariosDisponiblesPorEspecialidad(especialidad: String): List
+  +obtenerCitasPorPaciente(pacienteId: Long): CitasPorPaciente
+  +confirmarCita(pacienteId: Int, doctorId: Int, horarioId: Int, ...): Cita
+  -calcularCostoPorTipo(tipo: String): double
+}
+
+' API y Operaciones
+interface ApiSolicitudCita
+
+' Clientes Externos (APIs)
+circle ApiMedico
+circle ApiDisponibilidadHorarios
+circle ApiPaciente
+circle ApiCita
+circle ApiHorarioMedico
+
+' Relaciones Controlador
+ApiSolicitudCita --> ServicioSolicitudCita
+
+' Relaciones Servicio -> Dependencias
+ServicioSolicitudCita ..> ApiMedico : obtener x especialidad / buscar
+ServicioSolicitudCita ..> ApiDisponibilidadHorarios : consultar disponibles
+ServicioSolicitudCita ..> ApiPaciente : buscar
+ServicioSolicitudCita ..> ApiCita : buscar historial / crear
+ServicioSolicitudCita ..> ApiHorarioMedico : buscar / reservar
+
+' Objetos de uso
+ServicioSolicitudCita ..> MedicoConHorarios
+ServicioSolicitudCita ..> CitasPorPaciente
+
+@enduml
